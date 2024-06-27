@@ -1,3 +1,10 @@
 .next/*
 public/*
 src/__generated__/*
+<<<<<<< HEAD
+=======
+out/*
+node_modules
+build
+dist
+>>>>>>> a9141bf (feat(admin-po): no_issue project base)

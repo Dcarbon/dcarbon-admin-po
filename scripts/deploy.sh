@@ -32,12 +32,15 @@ function pushTelegramNotification() {
   echo $3
   if [ "$1" == "ERROR" ]; then
     MSG="❌ $SERVICE_UPPERCASE $2
+
 $3"
   elif [ "$1" == "SUCCESS" ]; then
     MSG="✅ $SERVICE_UPPERCASE $2
+
 $3"
   else
     MSG="🟡 $SERVICE_UPPERCASE $2
+
 $3"
   fi
   echo $MSG
@@ -58,7 +61,9 @@ TELEGRAM_MESSAGE="MODE: $EV_UPPERCASE
 BUILD MODE: $BUILD_MODE
 URL: $URL
 BUILD LOG: "$LOG_JENKINS'console'"
+
 - COMMIT INFO
+
 BRANCH: $(git name-rev --name-only HEAD)
 COMMIT: $(git log -2)"
 pushTelegramNotification "DOING" " is being deployed" "$TELEGRAM_MESSAGE"
