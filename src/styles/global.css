@@ -1,14 +1,17 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
-  color: rgb(255 255 255 / 87%);
-  background-color: #242424;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  margin: 0 auto;
+  width: 100vw;
+  overflow: hidden;
+  height: 100vh;
+  background-color: #f9fcff;
 }
 
 a {
@@ -25,8 +28,8 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 h1 {
@@ -41,31 +44,83 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 
-button:hover {
-  border-color: #646cff;
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.header-title {
+  margin: auto !important;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #fff;
-  }
+.btn-select-wallet {
+  width: 100%;
+}
 
-  a:hover {
-    color: #747bff;
-  }
+.btn-suggest-select-wallet {
+  flex: 1 1;
+}
 
-  button {
-    background-color: #f9f9f9;
-  }
+.login-container {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/public/image/login/login-bg.svg');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigate-back {
+  cursor: pointer;
+}
+
+.login-container .login-modal {
+  box-shadow: 6px 10px 14px 0 #0909090a;
+  max-width: 350px;
+  border-radius: 10px;
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
+}
+
+.login-container .login-title {
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+.spin {
+  width: '100%';
+  height: '100%';
+  display: 'flex';
+  justify-content: 'center';
+  align-items: 'center';
+}
+
+.site-layout-background {
+  height: 85vh;
+  background-color: #fff;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.project-action-bar {
+  margin: 20px 0;
+}
+
+.project-action-bar .project-search-bar {
+  width: 250px;
+}
+
+.not-found-layout {
+  height: 100vh;
+}
+
+.footer {
+  text-align: center;
 }

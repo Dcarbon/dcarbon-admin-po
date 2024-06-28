@@ -13,35 +13,101 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SigninImport } from './routes/signin'
+import { Route as AuthImport } from './routes/_auth'
 
 // Create Virtual Routes
 
-const IndexLazyImport = createFileRoute('/')()
+const AuthIndexLazyImport = createFileRoute('/_auth/')()
+const AuthProjectIndexLazyImport = createFileRoute('/_auth/project/')()
+const AuthProjectCreateProjectLazyImport = createFileRoute(
+  '/_auth/project/create-project',
+)()
 
 // Create/Update Routes
 
-const IndexLazyRoute = IndexLazyImport.update({
-  path: '/',
+const SigninRoute = SigninImport.update({
+  path: '/signin',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any)
+
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthIndexLazyRoute = AuthIndexLazyImport.update({
+  path: '/',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() => import('./routes/_auth/index.lazy').then((d) => d.Route))
+
+const AuthProjectIndexLazyRoute = AuthProjectIndexLazyImport.update({
+  path: '/project/',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth/project/index.lazy').then((d) => d.Route),
+)
+
+const AuthProjectCreateProjectLazyRoute =
+  AuthProjectCreateProjectLazyImport.update({
+    path: '/project/create-project',
+    getParentRoute: () => AuthRoute,
+  } as any).lazy(() =>
+    import('./routes/_auth/project/create-project.lazy').then((d) => d.Route),
+  )
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninImport
+      parentRoute: typeof rootRoute
+    }
+    '/_auth/': {
+      id: '/_auth/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthIndexLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/project/create-project': {
+      id: '/_auth/project/create-project'
+      path: '/project/create-project'
+      fullPath: '/project/create-project'
+      preLoaderRoute: typeof AuthProjectCreateProjectLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/project/': {
+      id: '/_auth/project/'
+      path: '/project'
+      fullPath: '/project'
+      preLoaderRoute: typeof AuthProjectIndexLazyImport
+      parentRoute: typeof AuthImport
     }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({ IndexLazyRoute })
+export const routeTree = rootRoute.addChildren({
+  AuthRoute: AuthRoute.addChildren({
+    AuthIndexLazyRoute,
+    AuthProjectCreateProjectLazyRoute,
+    AuthProjectIndexLazyRoute,
+  }),
+  SigninRoute,
+})
 
 /* prettier-ignore-end */
 
@@ -51,11 +117,32 @@ export const routeTree = rootRoute.addChildren({ IndexLazyRoute })
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/_auth",
+        "/signin"
       ]
     },
-    "/": {
-      "filePath": "index.lazy.tsx"
+    "/_auth": {
+      "filePath": "_auth.tsx",
+      "children": [
+        "/_auth/",
+        "/_auth/project/create-project",
+        "/_auth/project/"
+      ]
+    },
+    "/signin": {
+      "filePath": "signin.tsx"
+    },
+    "/_auth/": {
+      "filePath": "_auth/index.lazy.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/project/create-project": {
+      "filePath": "_auth/project/create-project.lazy.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/project/": {
+      "filePath": "_auth/project/index.lazy.tsx",
+      "parent": "/_auth"
     }
   }
 }
