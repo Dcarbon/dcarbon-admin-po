@@ -3,7 +3,16 @@
 import { useState } from 'react';
 import { WalletReadyState } from '@solana/wallet-adapter-base';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { Avatar, Button, Collapse, CollapseProps, Divider, Modal } from 'antd';
+import {
+  Avatar,
+  Button,
+  Collapse,
+  CollapseProps,
+  Divider,
+  Flex,
+  Modal,
+  Typography,
+} from 'antd';
 
 function NotConnectButton() {
   const { wallets, select, connecting } = useWallet();
@@ -30,13 +39,13 @@ function NotConnectButton() {
       key: '1',
       label: 'Other Wallets',
       children: (
-        <>
+        <Flex gap={10} wrap>
           {wallets
             .filter((wl) => !['Phantom'].includes(wl.adapter.name))
             .map((wl) => {
               return (
                 <button
-                  className="w-full py-2 px-2"
+                  className="btn-suggest-select-wallet"
                   key={wl.adapter.name}
                   onClick={async () => {
                     try {
@@ -48,9 +57,9 @@ function NotConnectButton() {
                     }
                   }}
                 >
-                  <div className="flex gap-2 justify-between items-center flex-wrap">
-                    <div className="flex items-center gap-3">
-                      <div className="min-w-9">
+                  <div>
+                    <div>
+                      <div>
                         <Avatar
                           src={wl.adapter.icon}
                           alt={wl.adapter.name}
@@ -72,11 +81,11 @@ function NotConnectButton() {
                 </button>
               );
             })}
-        </>
+        </Flex>
       ),
       extra: (
         <>
-          <div className="flex gap-1">
+          <div>
             {wallets
               .filter((wl) => !['Phantom'].includes(wl.adapter.name))
               .slice(0, 3)
@@ -103,16 +112,17 @@ function NotConnectButton() {
         open={open}
         onCancel={onClose}
         footer={null}
+        width={350}
         title="Connect to wallet"
         centered
       >
-        <div className="flex flex-col">
+        <div>
           {wallets
             .filter((wl) => ['Phantom'].includes(wl.adapter.name))
             .map((wl) => {
               return (
                 <button
-                  className="hover:bg-kyu-color-2 py-2 px-2"
+                  className="btn-select-wallet"
                   key={wl.adapter.name}
                   onClick={async () => {
                     try {
@@ -124,9 +134,9 @@ function NotConnectButton() {
                     }
                   }}
                 >
-                  <div className="flex gap-2 justify-between items-center flex-wrap">
-                    <div className="flex items-center gap-3">
-                      <div className="min-w-9">
+                  <div>
+                    <div>
+                      <div>
                         <Avatar
                           src={wl.adapter.icon}
                           alt={wl.adapter.name}
@@ -136,10 +146,10 @@ function NotConnectButton() {
                       {wl.adapter.name}
                     </div>
 
-                    <div className="flex gap-4">
-                      <div color="success">Recommended</div>
+                    <div>
+                      <Typography.Text>(Recommended)</Typography.Text>
 
-                      <div className="hidden sm:block">
+                      <div>
                         {wl.readyState === WalletReadyState.Installed ? (
                           wl.adapter.connected ? (
                             <div color="success">Connected</div>
@@ -156,7 +166,7 @@ function NotConnectButton() {
               );
             })}
 
-          <Divider className="mt-4" />
+          <Divider />
 
           <Collapse items={items} />
         </div>

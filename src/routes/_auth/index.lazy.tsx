@@ -1,12 +1,9 @@
+import ConnectButton from '@/components/common/button/connect-button';
 import { createLazyFileRoute } from '@tanstack/react-router';
 
 import viteLogo from '/vite.svg';
 
-import '@styles/app.css';
-
-import ConnectButton from '@/components/common/button/connect-button';
-
-export const Route = createLazyFileRoute('/')({
+export const Route = createLazyFileRoute('/_auth/')({
   component: Index,
 });
 
