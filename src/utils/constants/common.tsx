@@ -1,9 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import {
-  ApartmentOutlined,
-  ApiOutlined,
-  DeploymentUnitOutlined,
-} from '@ant-design/icons';
+import { ApartmentOutlined, ApiOutlined } from '@ant-design/icons';
 
 type MenuType = {
   key: string;
@@ -24,19 +20,13 @@ const QUERY_KEYS = {
 
 const MENU: MenuType = [
   {
-    key: '1',
+    key: 'Dashboard',
     label: 'Dashboard',
     path: '/',
     icon: <ApartmentOutlined />,
   },
   {
-    key: '2',
-    label: 'Users',
-    path: '/users',
-    icon: <DeploymentUnitOutlined />,
-  },
-  {
-    key: '3',
+    key: 'projects',
     label: 'projects',
     path: '/project',
     icon: <ApiOutlined />,

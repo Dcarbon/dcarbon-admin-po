@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { RightOutlined } from '@ant-design/icons';
 import { WalletReadyState } from '@solana/wallet-adapter-base';
 import { useWallet } from '@solana/wallet-adapter-react';
 import {
@@ -11,7 +12,8 @@ import {
   Divider,
   Flex,
   Modal,
-  Typography,
+  Space,
+  Tag,
 } from 'antd';
 
 function NotConnectButton() {
@@ -39,13 +41,13 @@ function NotConnectButton() {
       key: '1',
       label: 'Other Wallets',
       children: (
-        <Flex gap={10} wrap>
+        <Flex wrap>
           {wallets
             .filter((wl) => !['Phantom'].includes(wl.adapter.name))
             .map((wl) => {
               return (
                 <button
-                  className="btn-suggest-select-wallet"
+                  className="btn-select-wallet"
                   key={wl.adapter.name}
                   onClick={async () => {
                     try {
@@ -57,27 +59,22 @@ function NotConnectButton() {
                     }
                   }}
                 >
-                  <div>
-                    <div>
-                      <div>
-                        <Avatar
-                          src={wl.adapter.icon}
-                          alt={wl.adapter.name}
-                          size={32}
-                        />
-                      </div>
-                      {wl.adapter.name}
-                    </div>
-                    {wl.readyState === WalletReadyState.Installed ? (
-                      wl.adapter.connected ? (
-                        <div color="success">Connected</div>
-                      ) : (
-                        <div color="warning">Detected</div>
-                      )
-                    ) : (
-                      <div color="danger">Not Installed</div>
-                    )}
-                  </div>
+                  <Flex justify="space-between">
+                    <Space size={'middle'}>
+                      <Avatar
+                        shape="square"
+                        src={wl.adapter.icon}
+                        alt={wl.adapter.name}
+                        size={42}
+                      />
+                      <Flex justify="start" align="start" vertical>
+                        {wl.adapter.name}
+                      </Flex>
+                    </Space>
+                    <Space>
+                      <RightOutlined />
+                    </Space>
+                  </Flex>
                 </button>
               );
             })}
@@ -112,8 +109,19 @@ function NotConnectButton() {
         open={open}
         onCancel={onClose}
         footer={null}
-        width={350}
-        title="Connect to wallet"
+        width={380}
+        title={
+          <Space size={'small'} align="center">
+            <img
+              src="/public/image/wallet.svg"
+              width={40}
+              height={40}
+              alt="wallet"
+              draggable={false}
+            />
+            Connect to a wallet
+          </Space>
+        }
         centered
       >
         <div>
@@ -134,34 +142,39 @@ function NotConnectButton() {
                     }
                   }}
                 >
-                  <div>
-                    <div>
-                      <div>
-                        <Avatar
-                          src={wl.adapter.icon}
-                          alt={wl.adapter.name}
-                          size={32}
-                        />
-                      </div>
-                      {wl.adapter.name}
-                    </div>
-
-                    <div>
-                      <Typography.Text>(Recommended)</Typography.Text>
-
+                  <Flex justify="space-between">
+                    <Space size={'middle'}>
+                      <Avatar
+                        shape="square"
+                        src={wl.adapter.icon}
+                        alt={wl.adapter.name}
+                        size={42}
+                      />
+                      <Flex justify="start" align="start" vertical>
+                        {wl.adapter.name}
+                        <Tag
+                          color="rgba(0, 222, 242, 0.1)"
+                          className="text-recomended-black"
+                        >
+                          (Recommended)
+                        </Tag>
+                      </Flex>
+                    </Space>
+                    <Space>
                       <div>
                         {wl.readyState === WalletReadyState.Installed ? (
                           wl.adapter.connected ? (
-                            <div color="success">Connected</div>
+                            <Tag color="success">Connected</Tag>
                           ) : (
-                            <div color="warning">Detected</div>
+                            <Tag color="warning">Detected</Tag>
                           )
                         ) : (
-                          <div color="danger">Not Installed</div>
+                          <Tag color="danger">Not Installed</Tag>
                         )}
                       </div>
-                    </div>
-                  </div>
+                      <RightOutlined />
+                    </Space>
+                  </Flex>
                 </button>
               );
             })}
