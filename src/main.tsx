@@ -69,7 +69,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             colorPrimary: '#7bda08',
             colorPrimaryBgHover: '#5daf01',
             colorBgTextHover: '#B8FD59',
-            fontSize: 16,
+            fontSize: 20,
             borderRadius: 4,
             colorBorder: '#F6F6F6',
             lineHeight: 1.5,

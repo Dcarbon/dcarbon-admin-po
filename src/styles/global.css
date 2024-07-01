@@ -45,7 +45,19 @@ button {
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
+  margin: 8px 0;
   transition: border-color 0.25s;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.text-recomended-black {
+  color: #000 !important;
+  font-size: 12px;
+  padding: 2px;
+  border-radius: 10px;
 }
 
 .header-container {
@@ -60,19 +72,60 @@ button {
 
 .btn-select-wallet {
   width: 100%;
-}
-
-.btn-suggest-select-wallet {
-  flex: 1 1;
+  border: 1px solid #e4e7ec;
+  background-color: #fff;
 }
 
 .login-container {
   width: 100vw;
   height: 100vh;
-  background-image: url('/public/image/login/login-bg.svg');
+  position: relative;
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 70px;
+  padding: 32px 0;
+  z-index: 100;
+}
+
+.login-item-active {
+  color: #7bda08;
+}
+
+.navbar-box {
+  width: 52%;
+  padding: 10px 32px;
+  background-color: #ffffffb3;
+  border-radius: 10px;
+  border: 1px solid #fff;
+  box-shadow: 0 4px 21px 0 #00000012;
+}
+
+.login-container .login-side-left {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.login-container .login-side-right {
+  position: relative;
+}
+
+.login-side-right .login-side-right-logo {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  width: 100%;
+  height: 85%;
 }
 
 .navigate-back {
@@ -86,11 +139,16 @@ button {
   width: 100%;
   background-color: #fff;
   padding: 20px;
+  margin-left: 10%;
 }
 
-.login-container .login-title {
+.login-container .login-modal .login-title {
   font-size: 1em;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.login-container .login-modal .login-title .login-title-heading {
+  color: #5daf01;
 }
 
 .spin {
