@@ -5,7 +5,7 @@ import {
   REFRESH_TOKEN_STORAGE_KEY,
 } from '@/utils/constants';
 import { useMutation } from '@tanstack/react-query';
-import { message } from 'antd';
+import { message, notification } from 'antd';
 
 export interface AuthContext {
   isAuthenticated: boolean;
@@ -53,6 +53,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setStoredAccessToken(data.access_token);
       setStoredRefreshToken(data.refresh_token);
       message.success('Login success');
+    },
+    onError: (error: any) => {
+      console.info(error);
+      notification.error({
+        message: 'Login failed',
+        description: error,
+      });
     },
   });
   const logout = React.useCallback(async () => {

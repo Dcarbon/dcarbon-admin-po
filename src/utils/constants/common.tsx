@@ -20,14 +20,14 @@ const QUERY_KEYS = {
 
 const MENU: MenuType = [
   {
-    key: 'Dashboard',
+    key: '/',
     label: 'Dashboard',
     path: '/',
     icon: <ApartmentOutlined />,
   },
   {
-    key: 'projects',
-    label: 'projects',
+    key: '/project',
+    label: 'project',
     path: '/project',
     icon: <ApiOutlined />,
   },

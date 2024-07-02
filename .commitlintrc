@@ -1,8 +1,5 @@
 {
-<<<<<<< HEAD
-  "extends": []
+  "extends": [
+    "@commitlint/config-conventional"
+  ]
 }
-=======
-  "extends": ["@commitlint/config-conventional"]
-}
->>>>>>> a9141bf (feat(admin-po): no_issue project base)
