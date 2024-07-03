@@ -45,9 +45,6 @@ const LoginPage = () => {
           <Form
             name="normal_login"
             form={form}
-            initialValues={{
-              remember: true,
-            }}
             onFinish={login}
             layout="vertical"
             requiredMark="optional"

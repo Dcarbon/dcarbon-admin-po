@@ -27,5 +27,17 @@ const doLogin = async (data: { username: string; password: string }) => {
     throw error;
   }
 };
-
-export { doLogin, getUserInfo };
+const setPws = async (data: { password: string; token: string }) => {
+  try {
+    const response = await request<GeneralResponse<{ status: string }>>(
+      REQ_METHODS.POST,
+      API_ROUTES.SET_PWS,
+      data,
+    );
+    return response.data.data;
+  } catch (error) {
+    console.error('setPws error', error);
+    throw error;
+  }
+};
+export { doLogin, getUserInfo, setPws };

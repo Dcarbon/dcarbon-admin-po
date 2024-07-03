@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
-import { useAuth } from '@/contexts/auth-context';
+
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { createRootRoute, Outlet, useNavigate } from '@tanstack/react-router';
+import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 export const Route = createRootRoute({
@@ -10,15 +9,6 @@ export const Route = createRootRoute({
 });
 
 function Root() {
-  const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate({
-        to: '/signin',
-      });
-    }
-  }, [isAuthenticated, navigate]);
   return (
     <>
       <Outlet />
