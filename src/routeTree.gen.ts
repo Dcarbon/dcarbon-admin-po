@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SigninImport } from './routes/signin'
+import { Route as SetPasswordImport } from './routes/set-password'
 import { Route as AuthImport } from './routes/_auth'
 
 // Create Virtual Routes
@@ -28,6 +29,11 @@ const AuthProjectCreateProjectLazyImport = createFileRoute(
 
 const SigninRoute = SigninImport.update({
   path: '/signin',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SetPasswordRoute = SetPasswordImport.update({
+  path: '/set-password',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -65,6 +71,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/set-password': {
+      id: '/set-password'
+      path: '/set-password'
+      fullPath: '/set-password'
+      preLoaderRoute: typeof SetPasswordImport
       parentRoute: typeof rootRoute
     }
     '/signin': {
@@ -106,6 +119,7 @@ export const routeTree = rootRoute.addChildren({
     AuthProjectCreateProjectLazyRoute,
     AuthProjectIndexLazyRoute,
   }),
+  SetPasswordRoute,
   SigninRoute,
 })
 
@@ -118,6 +132,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/_auth",
+        "/set-password",
         "/signin"
       ]
     },
@@ -128,6 +143,9 @@ export const routeTree = rootRoute.addChildren({
         "/_auth/project/create-project",
         "/_auth/project/"
       ]
+    },
+    "/set-password": {
+      "filePath": "set-password.tsx"
     },
     "/signin": {
       "filePath": "signin.tsx"

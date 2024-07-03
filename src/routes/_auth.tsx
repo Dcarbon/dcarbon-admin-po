@@ -1,5 +1,12 @@
+import { useEffect } from 'react';
 import AdminLayout from '@/components/common/admin-layout';
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
+import { useAuth } from '@/contexts/auth-context';
+import {
+  createFileRoute,
+  Outlet,
+  redirect,
+  useNavigate,
+} from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_auth')({
   beforeLoad: ({ context }) => {
@@ -10,9 +17,23 @@ export const Route = createFileRoute('/_auth')({
       });
     }
   },
-  component: () => (
+
+  component: () => <AuthLayout />,
+});
+const AuthLayout = () => {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate({
+        to: '/signin',
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
+  return (
     <AdminLayout>
       <Outlet />
     </AdminLayout>
-  ),
-});
+  );
+};
