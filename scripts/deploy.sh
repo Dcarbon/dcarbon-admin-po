@@ -93,21 +93,21 @@ else
   echo "---AWS CONFIGURE ERROR---"
   pushTelegramNotification "ERROR" "deployment errors: AWS CONFIGURE ERROR" "$TELEGRAM_MESSAGE"
 fi
-aws s3 rm s3://$S3_BUCKET --recursive
+aws s3 rm s3://$S3_BUCKET_2 --recursive
 if [ "$?" -eq 0 ]; then
   echo "---S3 RM DONE---"
 else
   echo "---S3 RM ERROR---"
   pushTelegramNotification "ERROR" "deployment error: S3 RM ERROR" "$TELEGRAM_MESSAGE"
 fi
-aws s3 sync ./dist/ s3://$S3_BUCKET
+aws s3 sync ./dist/ s3://$S3_BUCKET_2
 if [ "$?" -eq 0 ]; then
   echo "---S3 SYNC DONE---"
 else
   echo "---S3 SYNC ERROR---"
   pushTelegramNotification "ERROR" "deployment error: S3 SYNC ERROR" "$TELEGRAM_MESSAGE"
 fi
-aws cloudfront create-invalidation --distribution-id=$CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
+aws cloudfront create-invalidation --distribution-id=$CLOUDFRONT_DISTRIBUTION_ID_2 --paths "/*"
 if [ "$?" -eq 0 ]; then
   echo "---CLOUDFRONT CREATE-INVALIDATION DONE---"statu
 else

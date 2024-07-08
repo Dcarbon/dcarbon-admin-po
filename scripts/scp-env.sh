@@ -15,4 +15,4 @@ echo "$INSTANCE_IP"
 PWD=$PWD
 eval $(ssh-agent)
 ssh-add $PEM_PATH
-scp -i $PEM_PATH "$PWD/.env" "$INSTANCE_HOST:/my-app/env/${TYPE}/${SERVICE}/.env"
+scp -i $PEM_PATH "$PWD/.env.${TYPE}" "$INSTANCE_HOST:/my-app/env/${TYPE}/${SERVICE}/.env"
