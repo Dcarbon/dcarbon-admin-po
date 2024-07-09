@@ -27,6 +27,19 @@ const doLogin = async (data: { username: string; password: string }) => {
     throw error;
   }
 };
+const verifyLoginCode = async (data: { code: string }) => {
+  try {
+    const response = await request<GeneralResponse<IAuth>>(
+      REQ_METHODS.POST,
+      API_ROUTES.VERIFY_LOGIN_CODE,
+      data,
+    );
+    return response.data.data;
+  } catch (error) {
+    console.error('setPws error', error);
+    throw error;
+  }
+};
 const setPws = async (data: { password: string; token: string }) => {
   try {
     const response = await request<GeneralResponse<{ status: string }>>(
@@ -40,4 +53,5 @@ const setPws = async (data: { password: string; token: string }) => {
     throw error;
   }
 };
-export { doLogin, getUserInfo, setPws };
+
+export { doLogin, getUserInfo, setPws, verifyLoginCode };
