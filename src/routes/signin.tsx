@@ -1,15 +1,52 @@
 import { useEffect } from 'react';
 import { useAuth } from '@/contexts/auth-context';
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Button, Col, Flex, Form, Input, Typography } from 'antd';
+import {
+  ACCESS_TOKEN_STORAGE_KEY,
+  REFRESH_TOKEN_STORAGE_KEY,
+} from '@/utils/constants';
+import {
+  createFileRoute,
+  redirect,
+  useNavigate,
+  useSearch,
+} from '@tanstack/react-router';
+import { Button, Col, Flex, Form, Input, Spin, Typography } from 'antd';
 
+type ProductSearch = {
+  code?: string;
+};
 export const Route = createFileRoute('/signin')({
+  validateSearch: (search: Record<string, unknown>): ProductSearch => {
+    return {
+      code: search.code as string,
+    };
+  },
+  beforeLoad: async ({
+    search,
+    context,
+  }: {
+    search: ProductSearch;
+    context: any;
+  }) => {
+    const { code } = search;
+    const { loginBycode } = context as any;
+    if (code) {
+      localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
+      localStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY);
+      await loginBycode({ code });
+      throw redirect({
+        to: '/',
+      });
+    }
+    return;
+  },
   component: () => <LoginPage />,
 });
 
 const LoginPage = () => {
   const { login, isAuthenticated, isLoading } = useAuth();
   const { Text, Title } = Typography;
+  const search = useSearch({ from: '/signin' });
   const navigate = useNavigate();
   const [form] = Form.useForm();
   useEffect(() => {
@@ -20,7 +57,9 @@ const LoginPage = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
-
+  if (search.code && !isAuthenticated && isLoading) {
+    return <Spin size="large" fullscreen spinning />;
+  }
   return (
     <Flex className="login-container" justify="center">
       <Flex justify="center" align="center" className="navbar">
