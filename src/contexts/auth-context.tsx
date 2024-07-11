@@ -57,7 +57,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       message.success('Login success');
     },
     onError: (error: any) => {
-      console.info(error);
       notification.error({
         message: 'Login failed',
         description: error,
@@ -73,7 +72,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       message.success('Login success');
     },
     onError: (error: any) => {
-      console.info(error);
       notification.error({
         message: 'Login failed',
         description: error,
@@ -103,7 +101,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     setUser(getStoredAccessToken());
   }, []);
-
   return (
     <AuthContext.Provider
       value={{
@@ -111,7 +108,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         login,
         logout,
-        isLoading: handleLogin.isPending || handleLoginByCode.isPending,
+        isLoading: handleLogin.isSuccess || handleLoginByCode.isSuccess,
         loginBycode,
       }}
     >

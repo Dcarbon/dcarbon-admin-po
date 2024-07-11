@@ -1,35 +1,27 @@
-import { setPws } from '@/adapters/auth';
-import AuthLayout from '@/components/common/auth-layout';
+import { updatePassword } from '@/adapters/auth';
 import { validatePassword } from '@/utils/helpers';
 import { useMutation } from '@tanstack/react-query';
+import { createFileRoute } from '@tanstack/react-router';
 import {
-  createFileRoute,
-  useNavigate,
-  useSearch,
-} from '@tanstack/react-router';
-import { Button, Flex, Form, Input, message, notification } from 'antd';
+  Button,
+  Flex,
+  Form,
+  Input,
+  message,
+  notification,
+  Typography,
+} from 'antd';
 
-export const Route = createFileRoute('/set-password')({
-  validateSearch: (search: Record<string, unknown>): { code: string } => {
-    return {
-      code: search.code as string,
-    };
-  },
-  component: () => <SetPsw />,
+export const Route = createFileRoute('/_auth/update-password')({
+  component: () => <UpdatePassword />,
 });
-const SetPsw = () => {
-  const navigate = useNavigate();
+const UpdatePassword = () => {
   const [form] = Form.useForm();
-  const search = useSearch({ from: '/set-password' });
-  const handleSetPsw = useMutation({
-    mutationFn: ({ password }: { password: string }) =>
-      setPws({ password: password, token: search.code }),
+  const updatePsw = useMutation({
+    mutationFn: updatePassword,
     onSuccess: () => {
       message.success('Password updated successfully');
-      navigate({
-        from: '/set-password',
-        to: '/signin',
-      });
+      form.resetFields();
     },
     onError: (error: string) => {
       notification.error({
@@ -38,23 +30,33 @@ const SetPsw = () => {
       });
     },
   });
-
   return (
-    <AuthLayout
-      title="Change password"
-      description="Change your password the first time you log in"
-    >
+    <div className="update-password-modal">
+      <div className="auth-title update-password-mr">
+        <Typography.Title level={2}>Change Password</Typography.Title>
+        <Typography.Text className="auth-title-description ">
+          Change your password
+        </Typography.Text>
+      </div>
       <Form
         form={form}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={(value) => handleSetPsw.mutate(value)}
+        onFinish={(value) => updatePsw.mutate(value)}
         layout="vertical"
-        requiredMark="optional"
       >
         <Form.Item
-          name="password"
+          label="Current Password"
+          name="current_password"
+          rules={[
+            {
+              required: true,
+              whitespace: false,
+            },
+          ]}
+        >
+          <Input.Password type="password" allowClear />
+        </Form.Item>
+        <Form.Item
+          name="new_password"
           label="New password"
           rules={[
             {
@@ -77,12 +79,12 @@ const SetPsw = () => {
         </Form.Item>
         <Form.Item
           name="repassword"
-          label="Confirm New password"
+          label="Confirm new password"
           rules={[
             {
               required: true,
               validator(_, value) {
-                if (value !== form.getFieldValue('password')) {
+                if (value !== form.getFieldValue('new_password')) {
                   return Promise.reject(
                     new Error(
                       'The two passwords that you entered do not match!',
@@ -93,7 +95,7 @@ const SetPsw = () => {
               },
             },
           ]}
-          dependencies={['password']}
+          dependencies={['new_password']}
         >
           <Input.Password type="password" allowClear />
         </Form.Item>
@@ -103,12 +105,12 @@ const SetPsw = () => {
             className="w-full"
             type="primary"
             htmlType="submit"
-            loading={handleSetPsw.isPending}
+            loading={updatePsw.isPending}
           >
             Save
           </Button>
         </Flex>
       </Form>
-    </AuthLayout>
+    </div>
   );
 };
