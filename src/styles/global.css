@@ -6,6 +6,74 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.primary-color-50 {
+  color: #f7ffe5;
+}
+
+.primary-color-100 {
+  color: #eaffc7;
+}
+
+.primary-color-200 {
+  color: #d5ff96;
+}
+
+.primary-color-300 {
+  color: #b8fd59;
+}
+
+.primary-color-400 {
+  color: #a7f541;
+}
+
+.primary-color-500 {
+  color: #7bda08;
+}
+
+.primary-color-600 {
+  color: #5daf01;
+}
+
+.neutral-color-50 {
+  color: #f6f6f6;
+}
+
+.neutral-color-100 {
+  color: #efefef;
+}
+
+.neutral-color-200 {
+  color: #e4e4e4;
+}
+
+.neutral-color-300 {
+  color: #c8c8c8;
+}
+
+.neutral-color-400 {
+  color: #a8a8a8;
+}
+
+.neutral-color-500 {
+  color: #848484;
+}
+
+.neutral-color-600 {
+  color: #727272;
+}
+
+.neutral-color-700 {
+  color: #545454;
+}
+
+.neutral-color-800 {
+  color: #292929;
+}
+
+.neutral-color-900 {
+  color: #1b1b1b;
+}
+
 #root {
   margin: 0 auto;
   width: 100vw;
@@ -76,7 +144,7 @@ button {
   background-color: #fff;
 }
 
-.login-container {
+.auth-container {
   width: 100vw;
   height: 100vh;
   position: relative;
@@ -92,10 +160,6 @@ button {
   z-index: 100;
 }
 
-.login-item-active {
-  color: #7bda08;
-}
-
 .navbar-box {
   width: 52%;
   padding: 10px 32px;
@@ -105,7 +169,7 @@ button {
   box-shadow: 0 4px 21px 0 #00000012;
 }
 
-.login-container .login-side-left {
+.auth-container .auth-side-left {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -113,11 +177,11 @@ button {
   height: 100%;
 }
 
-.login-container .login-side-right {
+.auth-container .auth-side-right {
   position: relative;
 }
 
-.login-side-right .login-side-right-logo {
+.auth-side-right .auth-side-right-logo {
   position: absolute;
   z-index: 10;
   display: flex;
@@ -132,7 +196,7 @@ button {
   cursor: pointer;
 }
 
-.login-container .login-modal {
+.auth-container .auth-modal {
   box-shadow: 6px 10px 14px 0 #0909090a;
   max-width: 350px;
   border-radius: 10px;
@@ -142,12 +206,12 @@ button {
   margin-left: 10%;
 }
 
-.login-container .login-modal .login-title {
+.auth-container .auth-modal .auth-title {
   font-size: 1em;
   margin-bottom: 30px;
 }
 
-.login-container .login-modal .login-title .login-title-heading {
+.auth-container .auth-modal .auth-title .auth-title-heading {
   color: #5daf01;
 }
 
@@ -181,4 +245,31 @@ button {
 
 .footer {
   text-align: center;
+}
+
+.update-password-modal {
+  max-width: 350px;
+  margin: 10px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.auth-title-description {
+  color: #4f4f4f;
+  font-weight: 300;
+  line-height: 20px;
+}
+
+.update-password-mr {
+  margin-bottom: 20px;
+}
+
+.count-down-timer {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 35px !important;
 }

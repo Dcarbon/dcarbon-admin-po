@@ -15,7 +15,9 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as SigninImport } from './routes/signin'
 import { Route as SetPasswordImport } from './routes/set-password'
+import { Route as ResetPasswordImport } from './routes/reset-password'
 import { Route as AuthImport } from './routes/_auth'
+import { Route as AuthUpdatePasswordImport } from './routes/_auth/update-password'
 
 // Create Virtual Routes
 
@@ -37,6 +39,11 @@ const SetPasswordRoute = SetPasswordImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ResetPasswordRoute = ResetPasswordImport.update({
+  path: '/reset-password',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AuthRoute = AuthImport.update({
   id: '/_auth',
   getParentRoute: () => rootRoute,
@@ -46,6 +53,11 @@ const AuthIndexLazyRoute = AuthIndexLazyImport.update({
   path: '/',
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/index.lazy').then((d) => d.Route))
+
+const AuthUpdatePasswordRoute = AuthUpdatePasswordImport.update({
+  path: '/update-password',
+  getParentRoute: () => AuthRoute,
+} as any)
 
 const AuthProjectIndexLazyRoute = AuthProjectIndexLazyImport.update({
   path: '/project/',
@@ -73,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordImport
+      parentRoute: typeof rootRoute
+    }
     '/set-password': {
       id: '/set-password'
       path: '/set-password'
@@ -86,6 +105,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/signin'
       preLoaderRoute: typeof SigninImport
       parentRoute: typeof rootRoute
+    }
+    '/_auth/update-password': {
+      id: '/_auth/update-password'
+      path: '/update-password'
+      fullPath: '/update-password'
+      preLoaderRoute: typeof AuthUpdatePasswordImport
+      parentRoute: typeof AuthImport
     }
     '/_auth/': {
       id: '/_auth/'
@@ -115,10 +141,12 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   AuthRoute: AuthRoute.addChildren({
+    AuthUpdatePasswordRoute,
     AuthIndexLazyRoute,
     AuthProjectCreateProjectLazyRoute,
     AuthProjectIndexLazyRoute,
   }),
+  ResetPasswordRoute,
   SetPasswordRoute,
   SigninRoute,
 })
@@ -132,6 +160,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/_auth",
+        "/reset-password",
         "/set-password",
         "/signin"
       ]
@@ -139,16 +168,24 @@ export const routeTree = rootRoute.addChildren({
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
+        "/_auth/update-password",
         "/_auth/",
         "/_auth/project/create-project",
         "/_auth/project/"
       ]
+    },
+    "/reset-password": {
+      "filePath": "reset-password.tsx"
     },
     "/set-password": {
       "filePath": "set-password.tsx"
     },
     "/signin": {
       "filePath": "signin.tsx"
+    },
+    "/_auth/update-password": {
+      "filePath": "_auth/update-password.tsx",
+      "parent": "/_auth"
     },
     "/_auth/": {
       "filePath": "_auth/index.lazy.tsx",

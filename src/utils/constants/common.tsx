@@ -1,5 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
-import { ApartmentOutlined, ApiOutlined } from '@ant-design/icons';
+import {
+  ApartmentOutlined,
+  ApiOutlined,
+  SettingFilled,
+} from '@ant-design/icons';
 
 type MenuType = {
   key: string;
@@ -24,6 +28,12 @@ const MENU: MenuType = [
     label: 'Dashboard',
     path: '/',
     icon: <ApartmentOutlined />,
+  },
+  {
+    key: 'update-password',
+    label: 'Settings',
+    path: '/update-password',
+    icon: <SettingFilled />,
   },
   {
     key: '/project',
