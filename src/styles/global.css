@@ -1,9 +1,17 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Lexend, sans-serif !important;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  margin: 0 auto;
+  width: 100vw;
+  overflow: hidden;
+  height: 100vh;
+  background-color: #f9fcff;
 }
 
 .primary-color-50 {
@@ -74,14 +82,6 @@
   color: #1b1b1b;
 }
 
-#root {
-  margin: 0 auto;
-  width: 100vw;
-  overflow: hidden;
-  height: 100vh;
-  background-color: #f9fcff;
-}
-
 a {
   font-weight: 500;
   color: #646cff;
@@ -105,6 +105,10 @@ h1 {
   line-height: 1.1;
 }
 
+p {
+  margin: 0;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -113,12 +117,80 @@ button {
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  margin: 8px 0;
+  min-height: 40px !important;
   transition: border-color 0.25s;
+}
+
+.ant-layout-sider-children {
+  height: 100%;
+}
+
+.sidebar-container {
+  height: 100%;
+  padding: 5px;
+}
+
+.ant-menu-item-icon {
+  padding: 7px;
+  border-radius: 5px;
+}
+
+.ant-menu {
+  border-right: none !important;
+  padding-top: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
+  position: relative;
+}
+
+.ant-menu::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 83%;
+  height: 1px;
+  background-color: #f0f0f0;
+}
+
+.ant-menu-item {
+  padding: 0 10px !important;
+  gap: 8px;
+}
+
+.ant-menu-inline .ant-menu-item {
+  height: 50px !important;
+}
+
+.ant-menu-item .ant-menu-item-icon {
+  color: #7bda08 !important;
+  background-color: #f6f6f6;
+}
+
+.ant-menu-title-content {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.ant-menu-item-selected .ant-menu-title-content {
+  font-weight: 500;
+}
+
+.ant-menu-item-selected .ant-menu-item-icon {
+  background-color: #7bda08;
+  color: #1b1b1b !important;
 }
 
 .w-full {
   width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.breadcrumbs-container {
+  margin: 12px 0 4px 12px;
 }
 
 .text-recomended-black {
@@ -132,6 +204,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 25px;
 }
 
 .header-title {
@@ -142,6 +215,14 @@ button {
   width: 100%;
   border: 1px solid #e4e7ec;
   background-color: #fff;
+}
+
+.btn-connect-wallet {
+  padding: 0 32px !important;
+}
+
+.btn-auth {
+  color: #1b1b1b;
 }
 
 .auth-container {
@@ -158,6 +239,10 @@ button {
   height: 70px;
   padding: 32px 0;
   z-index: 100;
+}
+
+.auth-item-active {
+  color: #7bda08;
 }
 
 .navbar-box {
@@ -194,41 +279,81 @@ button {
 
 .navigate-back {
   cursor: pointer;
+  margin: 0;
+}
+
+.ant-layout-sider-zero-width-trigger {
+  background-color: #888 !important;
+}
+
+.auth-modal .ant-input-outlined {
+  background-color: #f6f6f6 !important;
+}
+
+.auth-modal .ant-input::placeholder {
+  font-size: 14px;
 }
 
 .auth-container .auth-modal {
-  box-shadow: 6px 10px 14px 0 #0909090a;
   max-width: 350px;
   border-radius: 10px;
   width: 100%;
-  background-color: #fff;
   padding: 20px;
   margin-left: 10%;
 }
 
 .auth-container .auth-modal .auth-title {
   font-size: 1em;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 .auth-container .auth-modal .auth-title .auth-title-heading {
   color: #5daf01;
+  font-size: 35px;
+  font-weight: 400;
 }
 
-.spin {
-  width: '100%';
-  height: '100%';
-  display: 'flex';
-  justify-content: 'center';
-  align-items: 'center';
+.auth-container .auth-modal .auth-title .auth-title-description {
+  color: #4f4f4f;
+  font-weight: 300;
 }
 
 .site-layout-background {
-  height: 85vh;
-  background-color: #fff;
+  height: 91vh;
   margin: 10px;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
+}
+
+.sidebar-helper {
+  width: 100%;
+  height: 170px;
+  background-image: url('/image/bg-helper.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.sidebar-helper .helper-img {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  width: fit-content;
+  background: #fff;
+}
+
+.sidebar-helper .helper-title {
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.sidebar-helper .helper-description {
+  color: #fff;
+  font-weight: 400;
+  font-size: 12px;
 }
 
 .project-action-bar {
@@ -247,29 +372,114 @@ button {
   text-align: center;
 }
 
+.copy-successs {
+  color: #5daf01;
+}
+
+.ant-table-thead th {
+  background-color: #fff !important;
+}
+
+.ant-table-thead th::before {
+  display: none;
+}
+
+.ant-table-tbody .ant-table-row:nth-child(even) {
+  background-color: #f6f6f6;
+}
+
+.breadcrumb {
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 400;
+}
+
+.dashboard-row {
+  height: 50%;
+}
+
+.dashboard-card {
+  height: 100%;
+}
+
+.ant-card {
+  border-radius: 8px !important;
+}
+
+.dashboard-card > .ant-card {
+  height: 100%;
+}
+
 .update-password-modal {
-  max-width: 350px;
+  max-width: 380px;
   margin: 10px auto;
   padding: 20px;
   border-radius: 8px;
   background-color: #fff;
 }
 
-.auth-title-description {
-  color: #4f4f4f;
-  font-weight: 300;
-  line-height: 20px;
-}
-
 .update-password-mr {
   margin-bottom: 20px;
 }
 
-.count-down-timer {
-  font-size: 14px;
-  font-weight: 400;
+.ant-typography {
+  margin-top: 1rem;
 }
 
-h2 {
-  font-size: 35px !important;
+.ant-notification-notice-message,
+.ant-notification-notice-description {
+  margin-left: 50px !important;
+}
+
+.ant-notification-notice-icon-success {
+  content: url('/image/common/success.svg');
+}
+
+.ant-notification-notice-icon {
+  width: 50px;
+  top: 24px;
+  left: 15px;
+}
+
+.ant-notification-notice-icon-warning {
+  content: url('/image/common/warning.svg');
+}
+
+.ant-notification-notice-icon-error {
+  content: url('/image/common/error.svg');
+}
+
+/* stylelint-disable-next-line media-feature-range-notation */
+@media screen and (max-width: 1024px) {
+  .navbar-box {
+    width: 100%;
+    margin: 0 15px;
+  }
+
+  .auth-container .auth-side-right {
+    width: 100%;
+  }
+
+  .auth-container .auth-modal {
+    margin-left: 0;
+  }
+
+  .ant-layout-sider {
+    position: fixed !important;
+    height: 94%;
+    z-index: 100;
+    transition: all 0.3s linear !important;
+  }
+
+  .site-layout-background {
+    overflow-y: auto;
+  }
+
+  .dashboard-row {
+    height: 100%;
+  }
+
+  .h-full {
+    height: auto;
+  }
 }

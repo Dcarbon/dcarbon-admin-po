@@ -1,9 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import {
-  ApartmentOutlined,
-  ApiOutlined,
-  SettingFilled,
-} from '@ant-design/icons';
+import { ApartmentOutlined, SettingFilled } from '@ant-design/icons';
 
 type MenuType = {
   key: string;
@@ -19,14 +15,16 @@ type MenuType = {
 const QUERY_KEYS = {
   SIGN_IN: 'SIGN_IN',
   GET_USER: 'GET_USER',
-  CREATE_PO: 'CREATE_PO',
 };
-
+const ROUTES_URL = {
+  HOME: '/',
+  PROJECT: '/project',
+};
 const MENU: MenuType = [
   {
     key: '/',
     label: 'Dashboard',
-    path: '/',
+    path: ROUTES_URL.HOME,
     icon: <ApartmentOutlined />,
   },
   {
@@ -34,12 +32,6 @@ const MENU: MenuType = [
     label: 'Settings',
     path: '/update-password',
     icon: <SettingFilled />,
-  },
-  {
-    key: '/project',
-    label: 'project',
-    path: '/project',
-    icon: <ApiOutlined />,
   },
 ];
 const REQ_METHODS = {
@@ -60,4 +52,5 @@ export {
   QUERY_KEYS,
   MENU,
   REFRESH_TOKEN_STORAGE_KEY,
+  ROUTES_URL,
 };

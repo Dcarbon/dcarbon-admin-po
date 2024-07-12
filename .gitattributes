@@ -50,7 +50,6 @@
 *.tsx             text eol=lf
 *.xml             text
 *.xhtml           text diff=html
-
 # Docker
 Dockerfile        text
 

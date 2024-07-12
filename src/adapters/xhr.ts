@@ -4,7 +4,6 @@ import {
 } from '@/utils/constants';
 import { AUTH_METHOD } from '@/utils/constants/jwt';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-
 import { THROW_EXCEPTION } from './exceptions';
 
 const DEFAULT_TIMEOUT = 20000;
@@ -32,13 +31,13 @@ axiosInstance.interceptors.response.use(
       window.location.href = '/login';
     }
     return Promise.reject(error);
-  },
+  }
 );
 const request = async <T>(
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
   url: string,
   data?: any,
-  options?: AxiosRequestConfig,
+  options?: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => {
   const controller = new AbortController();
 

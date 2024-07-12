@@ -1,26 +1,41 @@
 import { useEffect, useState } from 'react';
-import { MENU } from '@/utils/constants';
+import { useAuth } from '@/contexts/auth-context';
+import { MENU, ROUTES_URL } from '@/utils/constants';
+import { getInfoDevice } from '@/utils/helpers';
+import { LogoutOutlined } from '@ant-design/icons';
 import { Link, useLocation } from '@tanstack/react-router';
 import { Menu } from 'antd';
 
+import ConnectButton from './button/connect-button';
+
 const NavBar = () => {
   const location = useLocation();
-  const [selectedKey, setSelectedKey] = useState(
-    MENU?.find((route) => location.pathname.startsWith(route.path))?.key || '1',
+  const { logout } = useAuth();
+  const [selectedKey, setSelectedKey] = useState<string>(
+    MENU.find((route) => location.pathname.startsWith(route.path))?.key ||
+      ROUTES_URL.HOME,
   );
   useEffect(() => {
-    setSelectedKey(
-      MENU?.find((route) => location.pathname.startsWith(route.path))?.key ||
-        '1',
-    );
+    const matchedRoute = MENU.find((route) => {
+      return route.path === ROUTES_URL.HOME
+        ? location.pathname === ROUTES_URL.HOME
+        : location.pathname.startsWith(route.path);
+    });
+
+    setSelectedKey(matchedRoute?.key || ROUTES_URL.HOME);
   }, [location]);
   return (
     <Menu
       theme="light"
       selectedKeys={[selectedKey]}
-      defaultSelectedKeys={['1']}
+      defaultSelectedKeys={[ROUTES_URL.HOME]}
       mode="inline"
     >
+      {getInfoDevice().device === 'DESKTOP' ? null : (
+        <Menu.Item>
+          <ConnectButton />
+        </Menu.Item>
+      )}
       {MENU.map((menu: any) =>
         !menu.children ? (
           <Menu.Item key={menu.key} icon={menu.icon}>
@@ -38,6 +53,9 @@ const NavBar = () => {
           </Menu.SubMenu>
         ),
       )}
+      <Menu.Item onClick={logout} key="logout" icon={<LogoutOutlined />}>
+        Logout
+      </Menu.Item>
     </Menu>
   );
 };

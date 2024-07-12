@@ -48,7 +48,7 @@ const Countdown = memo(({ endTime, setTimer }: CountdownProps) => {
     }
 
     timerComponents.push(
-      <span key={interval} className="count-down-timer">
+      <span key={interval} className="count-down-timer neutral-color-500">
         {timeLeft[interval]} {interval}{' '}
       </span>,
     );

@@ -12,7 +12,11 @@ function ConnectedButton() {
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: <button onClick={disconnect}>Disconnect</button>,
+      label: (
+        <Button type="text" onClick={disconnect}>
+          Disconnect
+        </Button>
+      ),
     },
   ];
 
@@ -20,6 +24,8 @@ function ConnectedButton() {
     <Dropdown menu={{ items }}>
       <Button
         loading={disconnecting}
+        type="primary"
+        className="btn-connect-wallet"
         icon={<Avatar src={wallet.adapter.icon} alt="icon" size={20} />}
       >
         {(publicKey?.toBase58()?.slice(0, 5) || '') +
