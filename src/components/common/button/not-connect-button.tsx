@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { RightOutlined } from '@ant-design/icons';
 import { WalletReadyState } from '@solana/wallet-adapter-base';
@@ -41,7 +39,7 @@ function NotConnectButton() {
       key: '1',
       label: 'Other Wallets',
       children: (
-        <Flex wrap>
+        <Flex wrap gap={10}>
           {wallets
             .filter((wl) => !['Phantom'].includes(wl.adapter.name))
             .map((wl) => {
@@ -102,8 +100,8 @@ function NotConnectButton() {
 
   return (
     <>
-      <Button type="primary" onClick={onOpen}>
-        Connect to wallet
+      <Button type="primary" className="btn-connect-wallet" onClick={onOpen}>
+        Connect wallet
       </Button>
       <Modal
         open={open}
@@ -113,7 +111,7 @@ function NotConnectButton() {
         title={
           <Space size={'small'} align="center">
             <img
-              src="/public/image/wallet.svg"
+              src="/image/wallet.svg"
               width={40}
               height={40}
               alt="wallet"

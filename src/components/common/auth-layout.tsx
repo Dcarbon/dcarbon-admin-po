@@ -22,7 +22,7 @@ const AuthLayout = ({
           <img src={logoBlack} alt="logo" width={175} height={32} />
         </Flex>
       </Flex>
-      <Col span={14} className="auth-side-left">
+      <Col xs={24} lg={14} className="auth-side-left">
         <div className="auth-modal">
           <div className="auth-title">
             <Title className="auth-title-heading">{title}</Title>
@@ -31,7 +31,7 @@ const AuthLayout = ({
           {children}
         </div>
       </Col>
-      <Col span={10} className="auth-side-right">
+      <Col lg={10} xs={0} className="auth-side-right">
         <img
           src={bgImage}
           alt="auth"

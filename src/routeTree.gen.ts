@@ -22,10 +22,6 @@ import { Route as AuthUpdatePasswordImport } from './routes/_auth/update-passwor
 // Create Virtual Routes
 
 const AuthIndexLazyImport = createFileRoute('/_auth/')()
-const AuthProjectIndexLazyImport = createFileRoute('/_auth/project/')()
-const AuthProjectCreateProjectLazyImport = createFileRoute(
-  '/_auth/project/create-project',
-)()
 
 // Create/Update Routes
 
@@ -58,21 +54,6 @@ const AuthUpdatePasswordRoute = AuthUpdatePasswordImport.update({
   path: '/update-password',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthProjectIndexLazyRoute = AuthProjectIndexLazyImport.update({
-  path: '/project/',
-  getParentRoute: () => AuthRoute,
-} as any).lazy(() =>
-  import('./routes/_auth/project/index.lazy').then((d) => d.Route),
-)
-
-const AuthProjectCreateProjectLazyRoute =
-  AuthProjectCreateProjectLazyImport.update({
-    path: '/project/create-project',
-    getParentRoute: () => AuthRoute,
-  } as any).lazy(() =>
-    import('./routes/_auth/project/create-project.lazy').then((d) => d.Route),
-  )
 
 // Populate the FileRoutesByPath interface
 
@@ -120,20 +101,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthIndexLazyImport
       parentRoute: typeof AuthImport
     }
-    '/_auth/project/create-project': {
-      id: '/_auth/project/create-project'
-      path: '/project/create-project'
-      fullPath: '/project/create-project'
-      preLoaderRoute: typeof AuthProjectCreateProjectLazyImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/project/': {
-      id: '/_auth/project/'
-      path: '/project'
-      fullPath: '/project'
-      preLoaderRoute: typeof AuthProjectIndexLazyImport
-      parentRoute: typeof AuthImport
-    }
   }
 }
 
@@ -143,8 +110,6 @@ export const routeTree = rootRoute.addChildren({
   AuthRoute: AuthRoute.addChildren({
     AuthUpdatePasswordRoute,
     AuthIndexLazyRoute,
-    AuthProjectCreateProjectLazyRoute,
-    AuthProjectIndexLazyRoute,
   }),
   ResetPasswordRoute,
   SetPasswordRoute,
@@ -169,9 +134,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/update-password",
-        "/_auth/",
-        "/_auth/project/create-project",
-        "/_auth/project/"
+        "/_auth/"
       ]
     },
     "/reset-password": {
@@ -189,14 +152,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_auth/": {
       "filePath": "_auth/index.lazy.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/project/create-project": {
-      "filePath": "_auth/project/create-project.lazy.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/project/": {
-      "filePath": "_auth/project/index.lazy.tsx",
       "parent": "/_auth"
     }
   }
