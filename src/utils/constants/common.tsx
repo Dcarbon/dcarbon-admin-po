@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { ApartmentOutlined, SettingFilled } from '@ant-design/icons';
+import { AppstoreOutlined, SettingFilled } from '@ant-design/icons';
 
 type MenuType = {
   key: string;
@@ -25,7 +25,7 @@ const MENU: MenuType = [
     key: '/',
     label: 'Dashboard',
     path: ROUTES_URL.HOME,
-    icon: <ApartmentOutlined />,
+    icon: <AppstoreOutlined />,
   },
   {
     key: 'update-password',

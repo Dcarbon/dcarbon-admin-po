@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { doLogin } from '@/adapters/auth';
+import { doLogin, verifyLoginCode } from '@/adapters/auth';
 import {
   ACCESS_TOKEN_STORAGE_KEY,
   REFRESH_TOKEN_STORAGE_KEY,
 } from '@/utils/constants';
 import { useMutation } from '@tanstack/react-query';
-import { message, Modal, notification } from 'antd';
+import { message, notification } from 'antd';
 
 export interface AuthContext {
   isAuthenticated: boolean;
@@ -13,6 +13,7 @@ export interface AuthContext {
   logout: () => Promise<void>;
   user: string | null;
   isLoading: boolean;
+  loginBycode: (data: { code: string }) => Promise<void>;
 }
 
 const AuthContext = React.createContext<AuthContext>({
@@ -21,6 +22,7 @@ const AuthContext = React.createContext<AuthContext>({
   logout: async () => {},
   user: null,
   isLoading: false,
+  loginBycode: async () => {},
 });
 
 function getStoredAccessToken() {
@@ -46,7 +48,7 @@ function setStoredAccessToken(token: string | null) {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<string | null>(getStoredAccessToken());
   const isAuthenticated = !!user;
-  const mutation = useMutation({
+  const handleLogin = useMutation({
     mutationFn: doLogin,
     onSuccess: (data: IAuth) => {
       setUser(data.user_info.username);
@@ -61,41 +63,44 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
     },
   });
-  const logout = React.useCallback(async () => {
-    if (isAuthenticated) {
-      Modal.confirm({
-        centered: true,
-        maskClosable: true,
-        destroyOnClose: true,
-        okButtonProps: {
-          danger: true,
-          type: 'default',
-        },
-        title: 'Do you want to logout?',
-        onOk: () => {
-          Modal.destroyAll();
-          setTimeout(() => {
-            setUser(null);
-            setStoredAccessToken(null);
-            setStoredRefreshToken(null);
-          }, 300);
-        },
+  const handleLoginByCode = useMutation({
+    mutationFn: verifyLoginCode,
+    onSuccess: (data: IAuth) => {
+      setUser(data.user_info.username);
+      setStoredAccessToken(data.access_token);
+      setStoredRefreshToken(data.refresh_token);
+      message.success('Login success');
+    },
+    onError: (error: any) => {
+      notification.error({
+        message: 'Login failed',
+        description: error,
       });
-    }
-  }, [isAuthenticated]);
+    },
+  });
+  const logout = React.useCallback(async () => {
+    setStoredAccessToken(null);
+    setStoredRefreshToken(null);
+    setUser(null);
+  }, []);
 
   const login = React.useCallback(
     async (data: { username: string; password: string }) => {
-      return mutation.mutate(data);
+      return handleLogin.mutate(data);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-
+  const loginBycode = React.useCallback(
+    async (data: { code: string }) => {
+      return handleLoginByCode.mutate(data);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
   React.useEffect(() => {
     setUser(getStoredAccessToken());
   }, []);
-
   return (
     <AuthContext.Provider
       value={{
@@ -103,7 +108,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         login,
         logout,
-        isLoading: mutation.isPending,
+        isLoading: handleLogin.isSuccess || handleLoginByCode.isSuccess,
+        loginBycode,
       }}
     >
       {children}
