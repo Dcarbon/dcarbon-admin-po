@@ -1,4 +1,3 @@
-import ConnectButton from '@/components/common/button/connect-button';
 import { MENU } from '@/utils/constants';
 import { getInfoDevice } from '@/utils/helpers';
 import { useLocation } from '@tanstack/react-router';
@@ -37,11 +36,6 @@ const Header = () => {
             </Typography.Text>
           </Flex>
         </Space>
-        {getInfoDevice().device === 'DESKTOP' ? (
-          <Flex gap={10}>
-            <ConnectButton />
-          </Flex>
-        ) : null}
       </Header>
     </Layout>
   );

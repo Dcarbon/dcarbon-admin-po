@@ -1,14 +1,11 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/auth-context';
 import { MENU, ROUTES_URL } from '@/utils/constants';
-import { getInfoDevice } from '@/utils/helpers';
 import { LogoutOutlined } from '@ant-design/icons';
 import { Link, useLocation } from '@tanstack/react-router';
 import { Menu } from 'antd';
 
-import ConnectButton from './button/connect-button';
-
-const NavBar = () => {
+const NavBar = memo(() => {
   const location = useLocation();
   const { logout } = useAuth();
   const [selectedKey, setSelectedKey] = useState<string>(
@@ -31,11 +28,6 @@ const NavBar = () => {
       defaultSelectedKeys={[ROUTES_URL.HOME]}
       mode="inline"
     >
-      {getInfoDevice().device === 'DESKTOP' ? null : (
-        <Menu.Item>
-          <ConnectButton />
-        </Menu.Item>
-      )}
       {MENU.map((menu: any) =>
         !menu.children ? (
           <Menu.Item key={menu.key} icon={menu.icon}>
@@ -58,6 +50,6 @@ const NavBar = () => {
       </Menu.Item>
     </Menu>
   );
-};
+});
 
 export default NavBar;
