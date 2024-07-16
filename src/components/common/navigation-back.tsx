@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useNavigate } from '@tanstack/react-router';
 import { Typography } from 'antd';
 
-const NavigationBack = ({ href }: { href?: string }) => {
+const NavigationBack = memo(({ href }: { href?: string }) => {
   const navigate = useNavigate();
   return (
     <Typography.Title
@@ -17,6 +18,6 @@ const NavigationBack = ({ href }: { href?: string }) => {
       <ArrowLeftOutlined /> Back
     </Typography.Title>
   );
-};
+});
 
 export default NavigationBack;

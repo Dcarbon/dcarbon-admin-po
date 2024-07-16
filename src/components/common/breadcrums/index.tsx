@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { HomeOutlined } from '@ant-design/icons';
 import { Link, useLocation } from '@tanstack/react-router';
 import { Breadcrumb } from 'antd';
 
-function Breadcrumbs() {
+const Breadcrumbs = memo(() => {
   const location = useLocation();
   const pathSnippets = location.pathname.split('/').filter((i) => i);
   const extraBreadcrumbItems = pathSnippets.map((snippet, index) => {
@@ -29,6 +30,6 @@ function Breadcrumbs() {
   return (
     <Breadcrumb className="breadcrumbs-container">{breadcrumbItems}</Breadcrumb>
   );
-}
+});
 
 export default Breadcrumbs;

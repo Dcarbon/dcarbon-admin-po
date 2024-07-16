@@ -402,6 +402,10 @@ button {
   height: 100%;
 }
 
+.dashboard-card .ant-typography {
+  margin-top: 0.75rem;
+}
+
 .ant-card {
   border-radius: 8px !important;
 }
@@ -449,6 +453,71 @@ button {
   content: url('/image/common/error.svg');
 }
 
+.dashboard-project-value {
+  font-size: 48px;
+  font-weight: 600;
+}
+
+.dashboard-statistic {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.dashboard-statistic .ant-statistic-content {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-total-project .ant-typography {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.dashboard-project-row .ant-typography {
+  margin: 0;
+}
+
+.dashboard-project-row .ant-typography-secondary {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.dashboard-project-row .dashboard-project-link {
+  font-size: 15px;
+  font-weight: 500;
+  color: #019dab !important;
+}
+
+.dashboard-project-row .project-column-item {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.ant-col {
+  width: 100%;
+}
+
+/* stylelint-disable-next-line media-feature-range-notation */
+@media screen and (min-width: 1024px) {
+  .dashboard-project-list {
+    height: 35vh;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+  }
+}
+
+/* stylelint-disable-next-line media-feature-range-notation */
+@media screen and (max-width: 1500px) {
+  .site-layout-background {
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+}
+
 /* stylelint-disable-next-line media-feature-range-notation */
 @media screen and (max-width: 1024px) {
   .navbar-box {
@@ -469,10 +538,6 @@ button {
     height: 94%;
     z-index: 100;
     transition: all 0.3s linear !important;
-  }
-
-  .site-layout-background {
-    overflow-y: auto;
   }
 
   .dashboard-row {

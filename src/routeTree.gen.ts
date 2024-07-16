@@ -18,6 +18,7 @@ import { Route as SetPasswordImport } from './routes/set-password'
 import { Route as ResetPasswordImport } from './routes/reset-password'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as AuthUpdatePasswordImport } from './routes/_auth/update-password'
+import { Route as AuthSlugImport } from './routes/_auth/$slug'
 
 // Create Virtual Routes
 
@@ -55,6 +56,11 @@ const AuthUpdatePasswordRoute = AuthUpdatePasswordImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthSlugRoute = AuthSlugImport.update({
+  path: '/$slug',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -87,6 +93,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SigninImport
       parentRoute: typeof rootRoute
     }
+    '/_auth/$slug': {
+      id: '/_auth/$slug'
+      path: '/$slug'
+      fullPath: '/$slug'
+      preLoaderRoute: typeof AuthSlugImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/update-password': {
       id: '/_auth/update-password'
       path: '/update-password'
@@ -108,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   AuthRoute: AuthRoute.addChildren({
+    AuthSlugRoute,
     AuthUpdatePasswordRoute,
     AuthIndexLazyRoute,
   }),
@@ -133,6 +147,7 @@ export const routeTree = rootRoute.addChildren({
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
+        "/_auth/$slug",
         "/_auth/update-password",
         "/_auth/"
       ]
@@ -145,6 +160,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/signin": {
       "filePath": "signin.tsx"
+    },
+    "/_auth/$slug": {
+      "filePath": "_auth/$slug.tsx",
+      "parent": "/_auth"
     },
     "/_auth/update-password": {
       "filePath": "_auth/update-password.tsx",
