@@ -1,5 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
-import { AppstoreOutlined, SettingFilled } from '@ant-design/icons';
+import {
+  AppstoreOutlined,
+  SettingFilled,
+  WalletFilled,
+} from '@ant-design/icons';
 
 type MenuType = {
   key: string;
@@ -18,10 +22,14 @@ const QUERY_KEYS = {
   GET_PROJECTS_GENERAL: 'GET_PROJECTS_GENERAL',
   GET_PROJECTS_GENERAL_CHART: 'GET_PROJECTS_GENERAL_CHART',
   GET_PROJECT_BY_SLUG: 'GET_PROJECT_BY_SLUG',
+  GET_WALLET: 'GET_WALLET',
+  GET_WALLET_TRANSACTIONS: 'GET_WALLET_TRANSACTIONS',
 };
 const ROUTES_URL = {
   HOME: '/',
   PROJECT: '/project',
+  SETTING: '/update-password',
+  WALLET: '/wallet',
 };
 const MENU: MenuType = [
   {
@@ -29,6 +37,12 @@ const MENU: MenuType = [
     label: 'Dashboard',
     path: ROUTES_URL.HOME,
     icon: <AppstoreOutlined />,
+  },
+  {
+    key: '/wallet',
+    label: 'Wallet',
+    path: '/wallet',
+    icon: <WalletFilled />,
   },
   {
     key: 'update-password',

@@ -30,11 +30,11 @@ export const Route = createFileRoute('/signin')({
     context: any;
   }) => {
     const { code } = search;
-    const { loginBycode } = context as any;
+    const { auth } = context as any;
     if (code) {
       localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
       localStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY);
-      await loginBycode({ code });
+      await auth.loginBycode({ code });
       return redirect({
         to: '/',
         viewTransition: true,

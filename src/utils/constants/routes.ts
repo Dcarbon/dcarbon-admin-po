@@ -9,5 +9,7 @@ const API_ROUTES = {
   GET_GENERAL_PROJECTS: 'dashboard/project-credit',
   GET_GENERAL_PROJECTS_CHART: 'dashboard/minted-credit-chart',
   PROJECT_API: 'projects',
+  GET_WALLET: 'wallet',
+  GET_WALLET_TRANSACTIONS: 'wallet/transactions',
 };
 export { API_ROUTES };

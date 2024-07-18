@@ -5,6 +5,7 @@ import {
 import ColumnChart from '@/components/features/dashboard/column-chart';
 import Donutchart from '@/components/features/dashboard/donut-chart';
 import { QUERY_KEYS } from '@/utils/constants';
+import { formatByEnUsNum } from '@/utils/helpers';
 import { useQueries } from '@tanstack/react-query';
 import { createLazyFileRoute, Link } from '@tanstack/react-router';
 import {
@@ -18,6 +19,7 @@ import {
   Statistic,
   Typography,
 } from 'antd';
+import deviceLogo from 'public/image/dashboard/icon-dcarbon-blue.svg';
 
 import arrowDown from '/image/dashboard/arrow-down.svg';
 import arrowUp from '/image/dashboard/arrow-up.svg';
@@ -112,7 +114,9 @@ function Index() {
                       </Space>
                       <Space size={10} align="baseline">
                         <span className="primary-color-600 dashboard-project-value">
-                          {generalData?.aggregation?.minted.total ?? 0}
+                          {formatByEnUsNum(
+                            generalData?.aggregation?.minted.total ?? 0,
+                          )}
                         </span>
                         <Typography.Title level={4}>CARBON</Typography.Title>
                       </Space>
@@ -179,7 +183,9 @@ function Index() {
                       </Space>
                       <Space size={10} align="baseline">
                         <span className="primary-color-600 dashboard-project-value">
-                          {generalData?.aggregation?.sold.total ?? 0}
+                          {formatByEnUsNum(
+                            generalData?.aggregation?.sold.total ?? 0,
+                          )}
                         </span>
                         <Typography.Title level={4}>CARBON</Typography.Title>
                       </Space>
@@ -242,7 +248,7 @@ function Index() {
                     <Row className="dashboard-project-row" gutter={[12, 12]}>
                       <Col sm={24} className="project-column-item" xl={2}>
                         <img
-                          src="/image/dashboard/icon-dcarbon-blue.svg"
+                          src={deviceLogo}
                           width={60}
                           height={60}
                           alt="icon"
@@ -266,7 +272,7 @@ function Index() {
                         xl={6}
                       >
                         <Typography.Text>
-                          {device.minted.total} Dcarbon
+                          {formatByEnUsNum(device.minted.total)} Dcarbon
                         </Typography.Text>
                         <Typography.Text type="secondary">
                           Number of tokens has mint
@@ -279,7 +285,7 @@ function Index() {
                         xl={6}
                       >
                         <Typography.Text>
-                          {device.sold.total} Dcarbon
+                          {formatByEnUsNum(device.sold.total)} Dcarbon
                         </Typography.Text>
                         <Typography.Text type="secondary">
                           Total carbon sold{' '}

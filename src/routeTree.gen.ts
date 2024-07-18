@@ -17,6 +17,7 @@ import { Route as SigninImport } from './routes/signin'
 import { Route as SetPasswordImport } from './routes/set-password'
 import { Route as ResetPasswordImport } from './routes/reset-password'
 import { Route as AuthImport } from './routes/_auth'
+import { Route as AuthWalletImport } from './routes/_auth/wallet'
 import { Route as AuthUpdatePasswordImport } from './routes/_auth/update-password'
 import { Route as AuthSlugImport } from './routes/_auth/$slug'
 
@@ -50,6 +51,11 @@ const AuthIndexLazyRoute = AuthIndexLazyImport.update({
   path: '/',
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/index.lazy').then((d) => d.Route))
+
+const AuthWalletRoute = AuthWalletImport.update({
+  path: '/wallet',
+  getParentRoute: () => AuthRoute,
+} as any)
 
 const AuthUpdatePasswordRoute = AuthUpdatePasswordImport.update({
   path: '/update-password',
@@ -107,6 +113,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthUpdatePasswordImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/wallet': {
+      id: '/_auth/wallet'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof AuthWalletImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/': {
       id: '/_auth/'
       path: '/'
@@ -123,6 +136,7 @@ export const routeTree = rootRoute.addChildren({
   AuthRoute: AuthRoute.addChildren({
     AuthSlugRoute,
     AuthUpdatePasswordRoute,
+    AuthWalletRoute,
     AuthIndexLazyRoute,
   }),
   ResetPasswordRoute,
@@ -149,6 +163,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/_auth/$slug",
         "/_auth/update-password",
+        "/_auth/wallet",
         "/_auth/"
       ]
     },
@@ -167,6 +182,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_auth/update-password": {
       "filePath": "_auth/update-password.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/wallet": {
+      "filePath": "_auth/wallet.tsx",
       "parent": "/_auth"
     },
     "/_auth/": {
