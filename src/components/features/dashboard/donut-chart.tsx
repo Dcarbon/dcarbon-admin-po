@@ -51,10 +51,6 @@ const Donutchart = memo(({ data }: { data: number[] }) => {
       },
       events: {
         dataPointSelection: (event) => {
-          console.info(
-            'Clicked label:',
-            event.target.parentNode.attributes[2].value,
-          );
           navigate({
             to: '/$slug',
             params: {
@@ -139,6 +135,8 @@ const Donutchart = memo(({ data }: { data: number[] }) => {
           },
           legend: {
             position: 'right',
+            height: '100%',
+            width: 100,
           },
         },
       },
