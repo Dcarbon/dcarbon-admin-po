@@ -4,6 +4,7 @@ import GlobalLoading from '@/components/common/loading/global-loading';
 import NavBar from '@/components/common/side-bar';
 import { Button, Flex, Layout } from 'antd';
 
+import Breadcrumbs from './breadcrums';
 import helper from '/image/helper.svg';
 
 const { Content, Sider } = Layout;
@@ -32,6 +33,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         </Sider>
         <Layout>
           <Layout>
+            <Breadcrumbs />
             <Content className="site-layout-background">
               <GlobalLoading />
               {children}

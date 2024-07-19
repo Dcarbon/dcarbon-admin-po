@@ -12,9 +12,10 @@ const TransactionTable = memo(({ data }: { data: TransactionPages }) => {
         <Table
           columns={columns}
           dataSource={data?.data as ITransactionTable[]}
-          scroll={{ x: 500, y: 500 }}
-          virtual={true}
-          size="small"
+          scroll={{ x: 600, y: 500 }}
+          tableLayout="auto"
+          rowKey={'tx_id'}
+          size="middle"
           loading={!data.data}
           pagination={{
             pageSize: 12,

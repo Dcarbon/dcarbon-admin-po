@@ -19,12 +19,12 @@ import {
   Statistic,
   Typography,
 } from 'antd';
-import deviceLogo from 'public/image/dashboard/icon-dcarbon-blue.svg';
 
 import arrowDown from '/image/dashboard/arrow-down.svg';
 import arrowUp from '/image/dashboard/arrow-up.svg';
 import down from '/image/dashboard/down.svg';
 import growth from '/image/dashboard/growth.svg';
+import deviceLogo from '/image/dashboard/icon-dcarbon-blue.svg';
 import totalSold from '/image/dashboard/total-carbon-sold.svg';
 import totalMinted from '/image/dashboard/total-minted.svg';
 
@@ -64,7 +64,7 @@ function Index() {
     );
   };
   return (
-    <Flex className="h-full" vertical gap={13}>
+    <Flex className="dashboard-container" vertical gap={13}>
       <Row className="dashboard-row" gutter={[16, 16]}>
         <Col className="dashboard-card" xs={24} lg={8}>
           <Card>
@@ -118,7 +118,12 @@ function Index() {
                             generalData?.aggregation?.minted.total ?? 0,
                           )}
                         </span>
-                        <Typography.Title level={4}>CARBON</Typography.Title>
+                        <Typography.Title
+                          level={4}
+                          className="dashboard-project-currency"
+                        >
+                          CARBON
+                        </Typography.Title>
                       </Space>
                     </Flex>
                     {generalData ? (
@@ -187,7 +192,12 @@ function Index() {
                             generalData?.aggregation?.sold.total ?? 0,
                           )}
                         </span>
-                        <Typography.Title level={4}>CARBON</Typography.Title>
+                        <Typography.Title
+                          level={4}
+                          className="dashboard-project-currency"
+                        >
+                          CARBON
+                        </Typography.Title>
                       </Space>
                     </Flex>
                     {generalData ? (
@@ -244,7 +254,7 @@ function Index() {
             <Flex vertical gap={16} className="dashboard-project-list">
               {generalData && generalData?.projects.length > 0 ? (
                 generalData.devices.map((device) => (
-                  <Card>
+                  <Card key={device.id}>
                     <Row className="dashboard-project-row" gutter={[12, 12]}>
                       <Col sm={24} className="project-column-item" xl={2}>
                         <img

@@ -141,10 +141,11 @@ const Donutchart = memo(({ data }: { data: number[] }) => {
         },
       },
       {
-        breakpoint: 1500,
+        breakpoint: 1700,
         options: {
           chart: {
             width: '100%',
+            height: '270px',
           },
         },
       },
@@ -156,7 +157,7 @@ const Donutchart = memo(({ data }: { data: number[] }) => {
         options={options}
         series={data || [44, 55, 41, 17, 15, 12, 23, 12]}
         type="donut"
-        height={330}
+        height={300}
       />
     </div>
   );
