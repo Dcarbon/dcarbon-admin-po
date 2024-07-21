@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom/client';
 import '@styles/global.css';
 
 import { AuthProvider, useAuth } from '@/contexts/auth-context';
-import SolanaWalletProvider from '@/contexts/solana-wallets-provider';
 import { routeTree } from '@/routeTree.gen';
 import {
   legacyLogicalPropertiesTransformer,
@@ -70,15 +69,13 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             colorPrimary: '#7bda08',
             fontFamily: 'Lexend',
             fontFamilyCode: 'Lexend',
-            colorBgMask: 'rgba(0, 0, 0, 0.07)',
+            colorBgMask: 'rgba(0, 0, 0, 0.1)',
             boxShadow: '3px 3px 5px 1px rgba(0, 0, 0, 0.03)',
-            colorPrimaryBgHover: '#5daf01',
             colorBgTextHover: '#F6F6F6',
             fontSize: 20,
             borderRadius: 4,
             colorBorder: '#F6F6F6',
             lineHeight: 1.5,
-            fontSizeLG: 14,
           },
           components: {
             Layout: {
@@ -101,15 +98,17 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               colorText: '#000 !important',
               colorTextDisabled: '#727272 !important',
               colorLink: '#5daf01 !important',
+              colorPrimary: '#7bda08',
+              colorPrimaryHover: '#5daf01',
+              defaultHoverBorderColor: '#5daf01',
+              fontSizeLG: 14,
             },
           },
         }}
       >
         <StyleProvider transformers={[legacyLogicalPropertiesTransformer]}>
           <App notification={{ placement: 'topRight' }}>
-            <SolanaWalletProvider>
-              <AppProvider />
-            </SolanaWalletProvider>
+            <AppProvider />
           </App>
         </StyleProvider>
       </ConfigProvider>

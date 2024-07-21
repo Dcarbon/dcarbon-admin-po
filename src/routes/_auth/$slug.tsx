@@ -59,7 +59,7 @@ const ProjectDetail = () => {
           <Col className="dashboard-card">
             <Flex vertical gap={12}>
               <Row gutter={[12, 12]}>
-                <Col sm={24} lg={12}>
+                <Col sm={24} xxl={12}>
                   <Card>
                     <Flex justify="space-between">
                       <Flex vertical justify="space-between">
@@ -74,11 +74,16 @@ const ProjectDetail = () => {
                             Total Carbon Minted
                           </span>
                         </Space>
-                        <Space size={10} align="baseline">
+                        <Space size={10} align="baseline" wrap>
                           <span className="primary-color-600 dashboard-project-value">
                             {data?.carbon_aggregation?.minted.total ?? 0}
                           </span>
-                          <Typography.Title level={4}>CARBON</Typography.Title>
+                          <Typography.Title
+                            level={4}
+                            className="dashboard-project-currency"
+                          >
+                            CARBON
+                          </Typography.Title>
                         </Space>
                       </Flex>
                       {data ? (
@@ -126,7 +131,7 @@ const ProjectDetail = () => {
                     </Flex>
                   </Card>
                 </Col>
-                <Col sm={24} lg={12}>
+                <Col sm={24} xxl={12}>
                   <Card>
                     <Flex justify="space-between">
                       <Flex vertical justify="space-between">
@@ -141,11 +146,16 @@ const ProjectDetail = () => {
                             Total Carbon Sold
                           </span>
                         </Space>
-                        <Space size={10} align="baseline">
+                        <Space size={10} align="baseline" wrap>
                           <span className="primary-color-600 dashboard-project-value">
                             {data.carbon_aggregation?.sold.total ?? 0}
                           </span>
-                          <Typography.Title level={4}>CARBON</Typography.Title>
+                          <Typography.Title
+                            level={4}
+                            className="dashboard-project-currency"
+                          >
+                            CARBON
+                          </Typography.Title>
                         </Space>
                       </Flex>
                       {data ? (

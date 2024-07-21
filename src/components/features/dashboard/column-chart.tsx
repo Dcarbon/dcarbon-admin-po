@@ -140,11 +140,11 @@ const ColumnChart = memo(
           },
         },
         {
-          breakpoint: 1500,
+          breakpoint: 1700,
           options: {
             chart: {
               width: '100%',
-              height: 280,
+              height: '240',
             },
             xaxis: {
               labels: {
@@ -182,7 +182,7 @@ const ColumnChart = memo(
             },
           ]}
           type="bar"
-          height={300}
+          height={250}
         />
       </div>
     );

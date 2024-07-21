@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import {
   AppstoreOutlined,
   SettingFilled,
@@ -41,7 +40,7 @@ const MENU: MenuType = [
   {
     key: '/wallet',
     label: 'Wallet',
-    path: '/wallet',
+    path: ROUTES_URL.WALLET,
     icon: <WalletFilled />,
   },
   {

@@ -5,13 +5,14 @@ import {
   REFRESH_TOKEN_STORAGE_KEY,
 } from '@/utils/constants';
 import { useMutation } from '@tanstack/react-query';
-import { message, notification } from 'antd';
+import { message, Modal, notification } from 'antd';
+import jwt from 'jsonwebtoken';
 
 export interface AuthContext {
   isAuthenticated: boolean;
   login: (data: { username: string; password: string }) => Promise<void>;
-  logout: () => Promise<void>;
-  user: string | null;
+  logout: () => void;
+  user: IUser | undefined;
   isLoading: boolean;
   loginBycode: (data: { code: string }) => Promise<void>;
 }
@@ -20,7 +21,7 @@ const AuthContext = React.createContext<AuthContext>({
   isAuthenticated: false,
   login: async () => {},
   logout: async () => {},
-  user: null,
+  user: undefined,
   isLoading: false,
   loginBycode: async () => {},
 });
@@ -44,14 +45,24 @@ function setStoredAccessToken(token: string | null) {
     localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
   }
 }
+function userInfo(): IUser | undefined {
+  let user: IUser | undefined;
+  const token = getStoredAccessToken();
+  if (token) {
+    user = jwt.decode(token) as IUser;
+  }
+  return user;
+}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = React.useState<string | null>(getStoredAccessToken());
-  const isAuthenticated = !!user;
+  const [user, setUser] = React.useState<IUser | undefined>(userInfo());
+
+  // const isAuthenticated = !!user;
+
   const handleLogin = useMutation({
     mutationFn: doLogin,
     onSuccess: (data: IAuth) => {
-      setUser(data.user_info.username);
+      setUser(data.user_info);
       setStoredAccessToken(data.access_token);
       setStoredRefreshToken(data.refresh_token);
       message.success('Login success');
@@ -66,7 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const handleLoginByCode = useMutation({
     mutationFn: verifyLoginCode,
     onSuccess: (data: IAuth) => {
-      setUser(data.user_info.username);
+      setUser(data.user_info);
       setStoredAccessToken(data.access_token);
       setStoredRefreshToken(data.refresh_token);
       message.success('Login success');
@@ -79,9 +90,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     },
   });
   const logout = React.useCallback(async () => {
-    setStoredAccessToken(null);
-    setStoredRefreshToken(null);
-    setUser(null);
+    return Modal.confirm({
+      title: 'Do you want to logout?',
+      onOk: () => {
+        Modal.destroyAll();
+        setUser(undefined);
+        setStoredAccessToken(null);
+        setStoredRefreshToken(null);
+      },
+      centered: true,
+      maskClosable: true,
+      destroyOnClose: true,
+    });
   }, []);
 
   const login = React.useCallback(
@@ -98,17 +118,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-  React.useEffect(() => {
-    setUser(getStoredAccessToken());
-  }, []);
+
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated,
+        isAuthenticated: !!user,
         user,
         login,
         logout,
-        isLoading: handleLogin.isSuccess || handleLoginByCode.isSuccess,
+        isLoading: handleLogin.isPending,
         loginBycode,
       }}
     >

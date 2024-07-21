@@ -1,44 +1,43 @@
-import { MENU } from '@/utils/constants';
-import { getInfoDevice } from '@/utils/helpers';
-import { useLocation } from '@tanstack/react-router';
-import { Flex, Layout, Space, Typography } from 'antd';
+import { memo } from 'react';
+import { useAuth } from '@/contexts/auth-context';
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Flex, Layout, Typography } from 'antd';
 
 import logo from '/image/dcarbon-logo-black.svg';
 
-const Header = () => {
+const Header = memo(() => {
   const { Header } = Layout;
-  const location = useLocation();
-  const capitalizeFirstLetter = (string: string) => {
-    if (!string) return '';
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
+  const { isAuthenticated, user } = useAuth();
+
   return (
     <Layout>
       <Header className="header-container">
-        <Space
-          size={getInfoDevice().device === 'DESKTOP' ? 120 : 60}
-          align="center"
-        >
-          <Flex justify="center" align="center" gap={7}>
-            <img src={logo} alt="logo" width={25} height={25} />
-            <Typography.Title className="header-title" level={5}>
-              DCARBON
-            </Typography.Title>
-          </Flex>
-          <Flex>
-            <Typography.Text className="breadcrumb">
-              {capitalizeFirstLetter(
-                (location.pathname.split('/')[1] || MENU[0].label).replace(
-                  '-',
-                  ' ',
-                ),
-              )}
-            </Typography.Text>
-          </Flex>
-        </Space>
+        <Flex justify="center" align="center" gap={7}>
+          <img src={logo} alt="logo" width={25} height={25} />
+          <Typography.Title className="header-title" level={5}>
+            DCARBON
+          </Typography.Title>
+        </Flex>
+        <>
+          {isAuthenticated && user ? (
+            <Flex align={'center'} gap={5}>
+              <Avatar size={'default'} icon={<UserOutlined />} />
+              <Flex vertical style={{ lineHeight: '15px' }}>
+                <span style={{ fontWeight: '500', fontSize: '.8em' }}>
+                  {user.profile_name}
+                </span>
+                <span style={{ fontSize: '.55em', color: 'gray' }}>
+                  {user.role?.toUpperCase()}
+                </span>
+              </Flex>
+            </Flex>
+          ) : (
+            ''
+          )}
+        </>
       </Header>
     </Layout>
   );
-};
+});
 
 export default Header;

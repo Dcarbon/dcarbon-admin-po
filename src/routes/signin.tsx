@@ -5,13 +5,8 @@ import {
   ACCESS_TOKEN_STORAGE_KEY,
   REFRESH_TOKEN_STORAGE_KEY,
 } from '@/utils/constants';
-import {
-  createFileRoute,
-  redirect,
-  useNavigate,
-  useSearch,
-} from '@tanstack/react-router';
-import { Button, Flex, Form, Input, Spin } from 'antd';
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
+import { Button, Flex, Form, Input } from 'antd';
 
 type ProductSearch = {
   code?: string;
@@ -37,30 +32,29 @@ export const Route = createFileRoute('/signin')({
       await auth.loginBycode({ code });
       return redirect({
         to: '/',
+        search: undefined,
         viewTransition: true,
       });
     }
     return;
   },
+  loader: () => import('./signin'),
   component: () => <LoginPage />,
 });
 const LoginPage = () => {
   const { login, isAuthenticated, isLoading } = useAuth();
-  const search = useSearch({ from: '/signin' });
   const navigate = useNavigate();
   const [form] = Form.useForm();
   useEffect(() => {
     if (isAuthenticated) {
       navigate({
-        from: '/',
+        to: '/',
+        search: undefined,
         viewTransition: true,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
-  if (search.code && !isAuthenticated && isLoading) {
-    return <Spin size="large" fullscreen spinning />;
-  }
   return (
     <AuthLayout
       title="Welcome Back"
