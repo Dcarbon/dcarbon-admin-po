@@ -219,6 +219,20 @@ button {
   margin: auto !important;
 }
 
+.header-user {
+  line-height: 15px;
+}
+
+.header-user .header-user-name {
+  font-weight: 500;
+  font-size: 0.8em;
+}
+
+.header-user .header-user-role {
+  font-size: 0.55em;
+  color: gray;
+}
+
 .btn-select-wallet {
   width: 100%;
   border: 1px solid #e4e7ec;

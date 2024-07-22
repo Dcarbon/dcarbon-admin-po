@@ -22,11 +22,9 @@ const Header = memo(() => {
           {isAuthenticated && user ? (
             <Flex align={'center'} gap={5}>
               <Avatar size={'default'} icon={<UserOutlined />} />
-              <Flex vertical style={{ lineHeight: '15px' }}>
-                <span style={{ fontWeight: '500', fontSize: '.8em' }}>
-                  {user.profile_name}
-                </span>
-                <span style={{ fontSize: '.55em', color: 'gray' }}>
+              <Flex vertical className="header-user">
+                <span className="header-user-name">{user.profile_name}</span>
+                <span className="header-user-role">
                   {user.role?.toUpperCase()}
                 </span>
               </Flex>
