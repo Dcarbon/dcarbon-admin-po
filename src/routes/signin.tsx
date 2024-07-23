@@ -7,6 +7,7 @@ import {
 } from '@/utils/constants';
 import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 import { Button, Flex, Form, Input } from 'antd';
+import SubmitButton from '@components/common/button/submit-button.tsx';
 
 type ProductSearch = {
   code?: string;
@@ -110,14 +111,14 @@ const LoginPage = () => {
         </Flex>
 
         <Flex justify="center">
-          <Button
+          <SubmitButton
             className="w-full"
             type="primary"
             htmlType="submit"
             loading={isLoading}
           >
             Sign In
-          </Button>
+          </SubmitButton>
         </Flex>
       </Form>
     </AuthLayout>

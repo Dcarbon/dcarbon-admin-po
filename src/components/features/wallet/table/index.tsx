@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { Empty, Table } from 'antd';
+import { Empty } from 'antd';
+import MyTable from '@components/common/table/my-table.tsx';
 
 import { columns } from './column';
 
@@ -9,7 +10,7 @@ const TransactionTable = memo(({ data }: { data: TransactionPages }) => {
   return (
     <>
       {data ? (
-        <Table
+        <MyTable
           columns={columns}
           dataSource={data?.data as ITransactionTable[]}
           scroll={{ x: 600, y: 500 }}

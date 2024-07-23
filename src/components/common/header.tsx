@@ -21,7 +21,14 @@ const Header = memo(() => {
         <>
           {isAuthenticated && user ? (
             <Flex align={'center'} gap={5}>
-              <Avatar size={'default'} icon={<UserOutlined />} />
+              <Avatar
+                style={{
+                  backgroundColor: 'var(--main-color)',
+                  marginRight: '5px',
+                }}
+                size={'default'}
+                icon={<UserOutlined />}
+              />
               <Flex vertical className="header-user">
                 <span className="header-user-name">{user.profile_name}</span>
                 <span className="header-user-role">

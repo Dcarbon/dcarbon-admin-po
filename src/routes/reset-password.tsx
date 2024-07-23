@@ -9,8 +9,11 @@ import {
   useNavigate,
   useSearch,
 } from '@tanstack/react-router';
-import { Button, Flex, Form, Input, message, notification, Space } from 'antd';
+import { Flex, Form, message, notification, Space } from 'antd';
 import jwt from 'jsonwebtoken';
+import SubmitButton from '@components/common/button/submit-button.tsx';
+import MyInputPassword from '@components/common/input/my-input-password.tsx';
+import MyInput from '@components/common/input/my-input.tsx';
 
 export const Route = createFileRoute('/reset-password')({
   validateSearch: (search: Record<string, unknown>): { code?: string } => {
@@ -109,11 +112,11 @@ const ResetPassword = () => {
               },
             ]}
           >
-            <Input />
+            <MyInput />
           </Form.Item>
 
           <Flex justify="center">
-            <Button
+            <SubmitButton
               className="w-full"
               type="primary"
               htmlType="submit"
@@ -125,7 +128,7 @@ const ResetPassword = () => {
               ) : (
                 'Send'
               )}
-            </Button>
+            </SubmitButton>
           </Flex>
         </Form>
       ) : (
@@ -158,7 +161,7 @@ const ResetPassword = () => {
               },
             ]}
           >
-            <Input.Password type="password" allowClear />
+            <MyInputPassword type="password" allowClear />
           </Form.Item>
           <Form.Item
             name="repassword"
@@ -180,7 +183,7 @@ const ResetPassword = () => {
             ]}
             dependencies={['password']}
           >
-            <Input.Password type="password" allowClear />
+            <MyInputPassword type="password" allowClear />
           </Form.Item>
           <Flex justify="end">
             {decode?.expired_at && timer ? (
@@ -188,18 +191,18 @@ const ResetPassword = () => {
                 <Countdown endTime={decode.expired_at} setTimer={setTimer} />
               </Space>
             ) : (
-              <Button
+              <SubmitButton
                 type="link"
                 onClick={() => navigate({ to: '/reset-password' })}
               >
                 <span className="count-down-timer primary-color-600">
                   Resend?
                 </span>
-              </Button>
+              </SubmitButton>
             )}
           </Flex>
           <Flex justify="center">
-            <Button
+            <SubmitButton
               className="w-full"
               type="primary"
               htmlType="submit"
@@ -207,7 +210,7 @@ const ResetPassword = () => {
               loading={handleSetPsw.isPending}
             >
               Save
-            </Button>
+            </SubmitButton>
           </Flex>
         </Form>
       )}

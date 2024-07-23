@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { doLogin, verifyLoginCode } from '@/adapters/auth';
+import { ERROR_MSG, SUCCESS_MSG } from '@/constants';
 import {
   ACCESS_TOKEN_STORAGE_KEY,
   REFRESH_TOKEN_STORAGE_KEY,
 } from '@/utils/constants';
+import useModalAction from '@/utils/helpers/back-action.tsx';
+import useMyNotification from '@/utils/helpers/my-notification.tsx';
 import { useMutation } from '@tanstack/react-query';
 import { message, Modal, notification } from 'antd';
 import jwt from 'jsonwebtoken';
@@ -45,6 +48,7 @@ function setStoredAccessToken(token: string | null) {
     localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
   }
 }
+
 function userInfo(): IUser | undefined {
   let user: IUser | undefined;
   const token = getStoredAccessToken();
@@ -56,21 +60,37 @@ function userInfo(): IUser | undefined {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<IUser | undefined>(userInfo());
-
-  // const isAuthenticated = !!user;
-
+  const [myNotification] = useMyNotification();
+  const isAuthenticated = !!user;
+  const logoutConfirm = useModalAction({
+    title: 'Do you want to logout?',
+    fn: () => {
+      Modal.destroyAll();
+      setUser(undefined);
+      setStoredAccessToken(null);
+      setStoredRefreshToken(null);
+    },
+    option: {
+      centered: true,
+      maskClosable: true,
+      destroyOnClose: true,
+    },
+  });
   const handleLogin = useMutation({
     mutationFn: doLogin,
     onSuccess: (data: IAuth) => {
       setUser(data.user_info);
       setStoredAccessToken(data.access_token);
       setStoredRefreshToken(data.refresh_token);
-      message.success('Login success');
+      myNotification({
+        type: 'success',
+        description: SUCCESS_MSG.AUTH.SIGN_IN_SUCCESS,
+      });
     },
     onError: (error: any) => {
-      notification.error({
-        message: 'Login failed',
-        description: error,
+      myNotification({
+        message: ERROR_MSG.AUTH.SIGN_ERROR,
+        description: error || 'Something went wrong',
       });
     },
   });
@@ -90,18 +110,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     },
   });
   const logout = React.useCallback(async () => {
-    return Modal.confirm({
-      title: 'Do you want to logout?',
-      onOk: () => {
-        Modal.destroyAll();
-        setUser(undefined);
-        setStoredAccessToken(null);
-        setStoredRefreshToken(null);
-      },
-      centered: true,
-      maskClosable: true,
-      destroyOnClose: true,
-    });
+    if (isAuthenticated) {
+      logoutConfirm();
+    }
   }, []);
 
   const login = React.useCallback(

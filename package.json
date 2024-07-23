@@ -20,6 +20,7 @@
     "@tanstack/react-query": "5.45.1",
     "@tanstack/react-router": "^1.40.0",
     "antd": "5.18.3",
+    "antd-style": "3.6.2",
     "apexcharts": "3.50.0",
     "axios": "^1.7.2",
     "jsonwebtoken": "9.0.2",
@@ -27,7 +28,8 @@
     "nextjs-toploader": "1.6.12",
     "react": "^18.3.1",
     "react-apexcharts": "1.4.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "styled-components": "6.1.12"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
