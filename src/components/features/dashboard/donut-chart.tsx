@@ -116,12 +116,20 @@ const DonutChart = memo(
           options: {
             chart: {
               width: '100%',
-              height: 'auto',
             },
             legend: {
               position: 'right',
               height: '100%',
-              width: 100,
+              width: 150,
+            },
+          },
+        },
+        {
+          breakpoint: 1300,
+          options: {
+            chart: {
+              width: '100%',
+              height: 300,
             },
           },
         },
@@ -130,7 +138,7 @@ const DonutChart = memo(
           options: {
             chart: {
               width: '100%',
-              height: '270px',
+              height: 310,
             },
           },
         },

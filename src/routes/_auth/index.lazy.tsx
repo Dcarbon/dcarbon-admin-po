@@ -4,28 +4,15 @@ import {
 } from '@/adapters/dashboard';
 import ColumnChart from '@/components/features/dashboard/column-chart';
 import DonutChart from '@/components/features/dashboard/donut-chart';
+import TotalOutputCard from '@/components/features/dashboard/total-output-card';
 import DCarbonIc from '@/icons/dcarbon.icon.tsx';
 import { QUERY_KEYS } from '@/utils/constants';
 import { formatByEnUsNum } from '@/utils/helpers';
 import Icon from '@ant-design/icons';
 import { useQueries } from '@tanstack/react-query';
 import { createLazyFileRoute, Link } from '@tanstack/react-router';
-import {
-  Card,
-  Col,
-  Empty,
-  Flex,
-  Row,
-  Select,
-  Space,
-  Statistic,
-  Typography,
-} from 'antd';
+import { Card, Col, Empty, Flex, Row, Select, Typography } from 'antd';
 
-import arrowDown from '/image/dashboard/arrow-down.svg';
-import arrowUp from '/image/dashboard/arrow-up.svg';
-import down from '/image/dashboard/down.svg';
-import growth from '/image/dashboard/growth.svg';
 import totalSold from '/image/dashboard/total-carbon-sold.svg';
 import totalMinted from '/image/dashboard/total-minted.svg';
 
@@ -76,12 +63,6 @@ function Index() {
       },
     ],
   });
-  const percentCalculate = (value: number, lastValue: number) => {
-    if (lastValue === 0) {
-      return value > 0 ? 100 : 0;
-    }
-    return Math.abs((value - lastValue) / lastValue) * 100;
-  };
   const percentCalculateWithTag = (value: number, lastValue: number) => {
     if (lastValue === 0) {
       return value > 0 ? 100 : 0;
@@ -143,154 +124,20 @@ function Index() {
           <Flex vertical gap={12}>
             <Typography.Title level={4}> Total project output</Typography.Title>
             <Row gutter={[12, 12]}>
-              <Col sm={24} lg={12} xl={24}>
-                <Card>
-                  <Flex justify="space-between">
-                    <Flex vertical justify="space-between">
-                      <Space align="center" size={20}>
-                        <img
-                          src={totalMinted}
-                          width={38}
-                          height={38}
-                          alt="icon"
-                        />
-                        <span className="neutral-color-400">
-                          Total Carbon Minted
-                        </span>
-                      </Space>
-                      <Space size={10} align="baseline">
-                        <span className="primary-color-600 dashboard-project-value">
-                          {formatByEnUsNum(
-                            generalData?.aggregation?.minted.total ?? 0,
-                          )}
-                        </span>
-                        <Typography.Title
-                          level={4}
-                          className="dashboard-project-currency"
-                        >
-                          CARBON
-                        </Typography.Title>
-                      </Space>
-                    </Flex>
-                    {generalData ? (
-                      <div className="dashboard-total-project">
-                        <Statistic
-                          title={
-                            <img
-                              src={
-                                generalData.aggregation.sold.total <
-                                generalData?.aggregation.sold.last_week_total
-                                  ? down
-                                  : growth
-                              }
-                              height={58}
-                              alt="down"
-                            />
-                          }
-                          value={percentCalculate(
-                            generalData?.aggregation?.minted.total,
-                            generalData?.aggregation?.minted.last_week_total,
-                          )}
-                          precision={2}
-                          className="dashboard-statistic"
-                          prefix={
-                            <Flex align="center">
-                              <img
-                                src={
-                                  generalData.aggregation.sold.total <
-                                  generalData?.aggregation.sold.last_week_total
-                                    ? arrowDown
-                                    : arrowUp
-                                }
-                                height={30}
-                                alt="arrow-up"
-                              />
-                            </Flex>
-                          }
-                          suffix="%"
-                        />
-                        <Typography.Text type="secondary">
-                          VS Last Week
-                        </Typography.Text>
-                      </div>
-                    ) : null}
-                  </Flex>
-                </Card>
-              </Col>
-              <Col sm={24} lg={12} xl={24}>
-                <Card>
-                  <Flex justify="space-between">
-                    <Flex vertical justify="space-between">
-                      <Space align="center" size={20}>
-                        <img
-                          src={totalSold}
-                          width={38}
-                          height={38}
-                          alt="icon"
-                        />
-                        <span className="neutral-color-400">
-                          Total Carbon Sold
-                        </span>
-                      </Space>
-                      <Space size={10} align="baseline">
-                        <span className="primary-color-600 dashboard-project-value">
-                          {formatByEnUsNum(
-                            generalData?.aggregation?.sold.total ?? 0,
-                          )}
-                        </span>
-                        <Typography.Title
-                          level={4}
-                          className="dashboard-project-currency"
-                        >
-                          CARBON
-                        </Typography.Title>
-                      </Space>
-                    </Flex>
-                    {generalData ? (
-                      <div className="dashboard-total-project">
-                        <Statistic
-                          title={
-                            <img
-                              src={
-                                generalData.aggregation.sold.total <
-                                generalData?.aggregation.sold.last_week_total
-                                  ? down
-                                  : growth
-                              }
-                              height={58}
-                              alt="down"
-                            />
-                          }
-                          value={percentCalculate(
-                            generalData?.aggregation?.sold.total,
-                            generalData?.aggregation?.sold.last_week_total,
-                          )}
-                          precision={2}
-                          className="dashboard-statistic"
-                          prefix={
-                            <Flex align="center">
-                              <img
-                                src={
-                                  generalData.aggregation.sold.total <
-                                  generalData?.aggregation.sold.last_week_total
-                                    ? arrowDown
-                                    : arrowUp
-                                }
-                                height={30}
-                                alt="arrow-up"
-                              />
-                            </Flex>
-                          }
-                          suffix="%"
-                        />
-                        <Typography.Text type="secondary">
-                          VS Last Week
-                        </Typography.Text>
-                      </div>
-                    ) : null}
-                  </Flex>
-                </Card>
-              </Col>
+              {generalData ? (
+                <>
+                  <TotalOutputCard
+                    img={totalMinted}
+                    data={generalData?.aggregation.minted}
+                    title="Total project output"
+                  />
+                  <TotalOutputCard
+                    img={totalSold}
+                    data={generalData?.aggregation.sold}
+                    title="Total project sold"
+                  />
+                </>
+              ) : null}
             </Row>
           </Flex>
         </Col>

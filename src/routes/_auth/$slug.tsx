@@ -59,7 +59,7 @@ const ProjectDetail = () => {
           <Col className="dashboard-card">
             <Flex vertical gap={12}>
               <Row gutter={[12, 12]}>
-                <Col sm={24} xxl={12}>
+                <Col sm={24} lg={12}>
                   <Card>
                     <Flex justify="space-between">
                       <Flex vertical justify="space-between">
@@ -131,7 +131,7 @@ const ProjectDetail = () => {
                     </Flex>
                   </Card>
                 </Col>
-                <Col sm={24} xxl={12}>
+                <Col sm={24} lg={12}>
                   <Card>
                     <Flex justify="space-between">
                       <Flex vertical justify="space-between">
@@ -215,7 +215,6 @@ const ProjectDetail = () => {
                 options={[
                   { label: 'Month', value: 'month' },
                   { label: 'Week', value: 'week' },
-                  { label: 'Day', value: 'day' },
                   { label: 'Year', value: 'year' },
                 ]}
                 size="middle"

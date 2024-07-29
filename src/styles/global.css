@@ -24,6 +24,7 @@
   background-color: #f9fcff;
 }
 
+/* Primary Colors */
 .primary-color-50 {
   color: #f7ffe5;
 }
@@ -52,6 +53,7 @@
   color: #5daf01;
 }
 
+/* Neutral Colors */
 .neutral-color-50 {
   color: #f6f6f6;
 }
@@ -92,6 +94,7 @@
   color: #1b1b1b;
 }
 
+/* Links */
 a {
   font-weight: 500;
   color: #646cff;
@@ -103,6 +106,7 @@ a:hover {
   color: #535bf2;
 }
 
+/* Body */
 body {
   margin: 0;
   display: flex;
@@ -112,15 +116,18 @@ body {
   font-family: var(--font-family), serif;
 }
 
+/* Headings */
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
 
+/* Paragraphs */
 p {
   margin: 0;
 }
 
+/* Buttons */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -148,10 +155,12 @@ button {
   padding: 16px 32px;
 }
 
+/* Layout */
 .ant-layout-sider-children {
   height: 100%;
 }
 
+/* Modals */
 .auth-modal button,
 .update-password-modal button {
   min-height: 40px !important;
@@ -162,8 +171,9 @@ button {
   font-family: var(--font-family), serif;
 }
 
+/* Sidebar */
 .sidebar-container {
-  height: 97%;
+  height: 100%;
   padding: 5px;
 }
 
@@ -218,6 +228,18 @@ button {
   color: #1b1b1b !important;
 }
 
+.auth-container .ant-statistic-content {
+  line-height: 24px;
+}
+
+.auth-container .ant-statistic-content-value {
+  font-size: 14px;
+  color: #848484;
+  font-weight: 400;
+  margin: -100px 5px 0;
+}
+
+/* Utility Classes */
 .w-full {
   width: 100%;
 }
@@ -237,6 +259,7 @@ button {
   border-radius: 10px;
 }
 
+/* Header */
 .header-container {
   display: flex;
   align-items: center;
@@ -262,6 +285,7 @@ button {
   color: gray;
 }
 
+/* Buttons */
 .btn-select-wallet {
   width: 100%;
   border: 1px solid #e4e7ec;
@@ -276,6 +300,7 @@ button {
   color: #1b1b1b;
 }
 
+/* Authentication */
 .auth-container {
   width: 100vw;
   height: 100vh;
@@ -333,10 +358,12 @@ button {
   margin: 0;
 }
 
+/* Sidebar Trigger */
 .ant-layout-sider-zero-width-trigger {
   background-color: #888 !important;
 }
 
+/* Authentication Modal */
 .auth-modal .ant-input-outlined {
   background-color: #f6f6f6 !important;
 }
@@ -373,12 +400,14 @@ button {
   font-size: 14px !important;
 }
 
+/* Site Layout Background */
 .site-layout-background {
-  height: calc(100vh - 80px);
-  margin: 10px;
+  height: calc(100vh - 100px);
+  margin: 10px 16px;
   border-radius: 10px;
 }
 
+/* Sidebar Helper */
 .sidebar-helper {
   width: 100%;
   height: 170px;
@@ -410,6 +439,7 @@ button {
   font-size: 12px;
 }
 
+/* Project Action Bar */
 .project-action-bar {
   margin: 20px 0;
 }
@@ -418,10 +448,12 @@ button {
   width: 250px;
 }
 
+/* Not Found Layout */
 .not-found-layout {
   height: 100vh;
 }
 
+/* Footer */
 .footer {
   text-align: center;
 }
@@ -430,6 +462,7 @@ button {
   color: #5daf01;
 }
 
+/* Table */
 .ant-table-thead th {
   background-color: #fff !important;
 }
@@ -438,12 +471,14 @@ button {
   display: none;
 }
 
+/* Breadcrumb */
 .breadcrumb {
   font-size: 24px;
   line-height: 36px;
   font-weight: 400;
 }
 
+/* Dashboard Container */
 .dashboard-container {
   height: 96%;
 }
@@ -469,6 +504,7 @@ button {
   height: 100%;
 }
 
+/* Update Password Modal */
 .update-password-modal {
   max-width: 380px;
   margin: 10px auto;
@@ -485,6 +521,7 @@ button {
   margin-top: 1rem;
 }
 
+/* Notification */
 .ant-notification-notice-message,
 .ant-notification-notice-description {
   margin-left: 50px !important;
@@ -508,11 +545,13 @@ button {
   content: url('/image/common/error.svg');
 }
 
+/* Dashboard Project Value */
 .dashboard-project-value {
   font-size: 48px;
   font-weight: 600;
 }
 
+/* Dashboard Statistic */
 .dashboard-statistic {
   font-size: 14px;
   font-weight: 400;
@@ -552,10 +591,12 @@ button {
   justify-content: center;
 }
 
+/* Grid */
 .ant-col {
   width: 100%;
 }
 
+/* Wallet Container */
 .wallet-container .apexcharts-tooltip {
   background-color: #ffffff80 !important;
   border-radius: 90px !important;
@@ -610,6 +651,7 @@ button {
   border-radius: 20px 0 0 20px;
 }
 
+/* Transaction Container */
 .transaction-container {
   padding: 8px;
 }
@@ -623,6 +665,7 @@ button {
   color: #019dab;
 }
 
+/* Spinner */
 .ant-spin-dot-holder {
   color: #7bda08 !important;
 }
@@ -644,35 +687,19 @@ button {
   font-size: 14px !important;
 }
 
-/* stylelint-disable-next-line media-feature-range-notation */
-@media screen and (min-width: 1024px) {
-  .dashboard-project-list {
-    height: 35vh;
-    overflow-y: scroll;
-    scrollbar-width: thin;
-  }
+/* Table Body */
+.ant-table-body {
+  scrollbar-width: thin;
 }
 
-/* stylelint-disable-next-line media-feature-range-notation */
-@media screen and (max-width: 1700px) {
-  .site-layout-background {
-    overflow-y: auto;
-    scrollbar-width: thin;
-  }
-
-  .dashboard-project-value {
-    font-size: 32px;
-  }
-
-  .dashboard-project-currency {
-    font-size: 22px !important;
-  }
-
-  .ant-statistic-title img {
-    height: 40px;
-  }
+/* Dashboard Project List */
+.dashboard-project-list {
+  height: calc(36vh);
+  overflow-y: scroll;
+  scrollbar-width: thin;
 }
 
+/* Media Queries */
 /* stylelint-disable-next-line media-feature-range-notation */
 @media screen and (max-width: 1024px) {
   .dashboard-container {
@@ -686,6 +713,10 @@ button {
 
   .auth-container .auth-side-right {
     width: 100%;
+  }
+
+  .dashboard-project-list {
+    height: auto;
   }
 
   .auth-container .auth-modal {
@@ -717,5 +748,63 @@ button {
 
   .wallet-balance h2 {
     font-size: 20px !important;
+  }
+}
+
+/* stylelint-disable-next-line media-feature-range-notation */
+@media screen and (min-width: 1200px) {
+  .project-description {
+    height: 78vh;
+    overflow-y: auto;
+  }
+}
+
+/* stylelint-disable-next-line media-feature-range-notation */
+@media screen and (min-width: 1024px) and (max-width: 1600px) {
+  .dashboard-project-list {
+    height: auto;
+  }
+
+  .dashboard-row {
+    height: 100%;
+    max-height: 100%;
+  }
+
+  .dashboard-card {
+    height: auto;
+  }
+
+  .dashboard-container {
+    min-height: 800px;
+  }
+}
+
+/* stylelint-disable-next-line media-feature-range-notation */
+@media screen and (max-width: 1700px) {
+  .site-layout-background {
+    overflow-y: auto;
+    /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+    overflow-x: hidden;
+    scrollbar-width: thin;
+  }
+
+  .dashboard-card:first-child {
+    height: auto;
+  }
+
+  .dashboard-card h4 {
+    margin: 0 !important;
+  }
+
+  .dashboard-project-value {
+    font-size: 32px;
+  }
+
+  .dashboard-project-currency {
+    font-size: 22px !important;
+  }
+
+  .ant-statistic-title img {
+    height: 40px;
   }
 }

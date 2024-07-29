@@ -53,7 +53,7 @@ const ResetPassword = () => {
   const handleResetPsw = useMutation({
     mutationFn: requestResetPassword,
     onSuccess: (data: { email: string; next_request_at: string }) => {
-      message.success('request reset password successfully');
+      message.success('Request reset password successfully');
       setTimer(data.next_request_at);
     },
     onError: (error: string) => {
