@@ -75,12 +75,6 @@ const LineChart = memo(({ data }: { data: number[] }) => {
     },
     yaxis: {
       show: false,
-      min(min) {
-        return min - 50 < 0 ? 0 : min - 30;
-      },
-      max(max) {
-        return max + 50;
-      },
     },
     tooltip: {
       fillSeriesColor: false,
@@ -105,13 +99,13 @@ const LineChart = memo(({ data }: { data: number[] }) => {
         options={options}
         series={[
           {
-            name: 'DCARBON',
+            name: 'Carbon',
             data: data,
           },
         ]}
         type="line"
         width="100%"
-        height={250}
+        height={150}
       />
     </div>
   );

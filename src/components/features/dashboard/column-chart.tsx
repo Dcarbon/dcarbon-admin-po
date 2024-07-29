@@ -121,6 +121,7 @@ const ColumnChart = memo(
           options: {
             chart: {
               width: '100%',
+              height: 300,
             },
             plotOptions: {
               bar: {
@@ -130,21 +131,13 @@ const ColumnChart = memo(
             },
           },
         },
-        {
-          breakpoint: 1300,
-          options: {
-            chart: {
-              width: '100%',
-              height: 265,
-            },
-          },
-        },
+
         {
           breakpoint: 1700,
           options: {
             chart: {
               width: '100%',
-              height: '240',
+              height: 265,
             },
             xaxis: {
               labels: {
@@ -152,20 +145,6 @@ const ColumnChart = memo(
                   fontSize: '10px',
                 },
               },
-              categories: times || [
-                'jan',
-                'feb',
-                'mar',
-                'apr',
-                'may',
-                'jun',
-                'jul',
-                'aug',
-                'sep',
-                'oct',
-                'nov',
-                'dec',
-              ],
             },
           },
         },
@@ -182,7 +161,7 @@ const ColumnChart = memo(
             },
           ]}
           type="bar"
-          height={250}
+          height={260}
         />
       </div>
     );

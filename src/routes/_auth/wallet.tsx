@@ -38,7 +38,7 @@ const Wallet = () => {
         <Card className="wallet-container">
           <Typography.Title level={4}>My Wallet</Typography.Title>
           <span className="wallet-growth-dcarbon">
-            {formatByEnUsNum(chartData?.dcarbon || 0)} Carbon
+            {formatByEnUsNum(chartData?.dcarbon || 0)} DCarbon
           </span>
           {chartData ? (
             <LineChart data={chartData?.carbon_chart.data || []} />

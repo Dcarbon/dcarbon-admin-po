@@ -61,7 +61,9 @@ function userInfo(): IUser | undefined {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<IUser | undefined>(userInfo());
   const [myNotification] = useMyNotification();
-  const isAuthenticated = !!user;
+  React.useEffect(() => {
+    setUser(userInfo());
+  }, []);
   const logoutConfirm = useModalAction({
     title: 'Do you want to logout?',
     fn: () => {
@@ -110,10 +112,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     },
   });
   const logout = React.useCallback(async () => {
-    if (isAuthenticated) {
-      logoutConfirm();
+    if (user) {
+      return logoutConfirm();
     }
-  }, []);
+  }, [user, logoutConfirm]);
 
   const login = React.useCallback(
     async (data: { username: string; password: string }) => {
