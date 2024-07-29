@@ -3,9 +3,11 @@ import {
   getProjectsGeneralChart,
 } from '@/adapters/dashboard';
 import ColumnChart from '@/components/features/dashboard/column-chart';
-import Donutchart from '@/components/features/dashboard/donut-chart';
+import DonutChart from '@/components/features/dashboard/donut-chart';
+import DCarbonIc from '@/icons/dcarbon.icon.tsx';
 import { QUERY_KEYS } from '@/utils/constants';
 import { formatByEnUsNum } from '@/utils/helpers';
+import Icon from '@ant-design/icons';
 import { useQueries } from '@tanstack/react-query';
 import { createLazyFileRoute, Link } from '@tanstack/react-router';
 import {
@@ -24,9 +26,38 @@ import arrowDown from '/image/dashboard/arrow-down.svg';
 import arrowUp from '/image/dashboard/arrow-up.svg';
 import down from '/image/dashboard/down.svg';
 import growth from '/image/dashboard/growth.svg';
-import deviceLogo from '/image/dashboard/icon-dcarbon-blue.svg';
 import totalSold from '/image/dashboard/total-carbon-sold.svg';
 import totalMinted from '/image/dashboard/total-minted.svg';
+
+const colors = [
+  '#FFBB38', // Red-Orange
+  '#16DBCC', // Lime Green
+  '#4C78FF', // Blue
+  '#FF82AC', // Pink
+  '#33FFA6', // Aquamarine
+  '#FF33FF', // Magenta
+  '#33A6FF', // Light Blue
+  '#A6FF33', // Yellow-Green
+  '#5733FF', // Indigo
+  '#A633FF', // Purple
+  '#FFAA33', // Amber
+  '#33FFAA', // Sea Green
+  '#FF33AA', // Hot Pink
+  '#33AAFF', // Sky Blue
+  '#AAFF33', // Chartreuse
+  '#FF5733', // Coral
+  '#FFAA33', // Gold
+  '#FF33FF', // Deep Pink
+  '#AA33FF', // Violet
+  '#33FFAA', // Mint
+  '#AA33FF', // Orchid
+  '#FF33AA', // Fuchsia
+  '#33FFAA', // Emerald
+  '#FF33A6', // Magenta-Pink
+];
+const DCarbonIcon = ({ size, color }: { size: number; color: string }) => (
+  <Icon component={() => <DCarbonIc size={size} color={color} />} />
+);
 
 export const Route = createLazyFileRoute('/_auth/')({
   component: () => <Index />,
@@ -45,23 +76,36 @@ function Index() {
       },
     ],
   });
-  const percentCaculate = (value: number, lastValue: number) => {
+  const percentCalculate = (value: number, lastValue: number) => {
     if (lastValue === 0) {
       return value > 0 ? 100 : 0;
     }
-    const change = Math.abs((value - lastValue) / lastValue) * 100;
-    return change;
+    return Math.abs((value - lastValue) / lastValue) * 100;
   };
-  const percentCaculateWithTag = (value: number, lastValue: number) => {
+  const percentCalculateWithTag = (value: number, lastValue: number) => {
     if (lastValue === 0) {
       return value > 0 ? 100 : 0;
     }
     const change = (value - lastValue) / lastValue;
     return change < 0 ? (
-      <Typography.Text type="danger">{change * 100}%</Typography.Text>
+      <Typography.Text type="danger">
+        {Number((change * 100).toFixed(2))}%
+      </Typography.Text>
     ) : (
-      <Typography.Text type="success">{change * 100}%</Typography.Text>
+      <Typography.Text type="success">
+        {Number((change * 100).toFixed(2))}%
+      </Typography.Text>
     );
+  };
+  const getDonutChartData = (projects: IProjectDashBoardDto[]) => {
+    const labels = projects?.map((project) => project.project_name);
+    const data = projects?.map((info) => Number(info.minted?.total || 1));
+    return {
+      labels,
+      data,
+      isAllEmpty: !data?.find((info) => info > 0),
+      colors,
+    };
   };
   return (
     <Flex className="dashboard-container" vertical gap={13}>
@@ -69,7 +113,9 @@ function Index() {
         <Col className="dashboard-card" xs={24} lg={8}>
           <Card>
             <Typography.Title level={4}>Over View</Typography.Title>
-            <Donutchart data={[40, 53, 34, 23, 25, 23]} />
+            <DonutChart
+              config={getDonutChartData(generalData?.projects || [])}
+            />
           </Card>
         </Col>
         <Col xs={24} lg={16} className="dashboard-card">
@@ -141,7 +187,7 @@ function Index() {
                               alt="down"
                             />
                           }
-                          value={percentCaculate(
+                          value={percentCalculate(
                             generalData?.aggregation?.minted.total,
                             generalData?.aggregation?.minted.last_week_total,
                           )}
@@ -215,7 +261,7 @@ function Index() {
                               alt="down"
                             />
                           }
-                          value={percentCaculate(
+                          value={percentCalculate(
                             generalData?.aggregation?.sold.total,
                             generalData?.aggregation?.sold.last_week_total,
                           )}
@@ -250,91 +296,97 @@ function Index() {
         </Col>
         <Col xs={24} xxl={16} className="dashboard-card">
           <Flex vertical gap={12}>
-            <Typography.Title level={4}>Device List</Typography.Title>
+            <Typography.Title level={4}>Project List</Typography.Title>
             <Flex vertical gap={16} className="dashboard-project-list">
               {generalData && generalData?.projects.length > 0 ? (
-                generalData.devices.map((device) => (
-                  <Card key={device.id}>
-                    <Row className="dashboard-project-row" gutter={[12, 12]}>
-                      <Col sm={24} className="project-column-item" xl={2}>
-                        <img
-                          src={deviceLogo}
-                          width={60}
-                          height={60}
-                          alt="icon"
-                        />
-                      </Col>
-                      <Col
-                        sm={24}
-                        md={12}
-                        className="project-column-item"
-                        xl={3}
-                      >
-                        <Typography.Text>{device.device_name}</Typography.Text>
-                        <Typography.Text type="secondary">
-                          Device name{' '}
-                        </Typography.Text>
-                      </Col>
-                      <Col
-                        sm={24}
-                        md={12}
-                        className="project-column-item"
-                        xl={6}
-                      >
-                        <Typography.Text>
-                          {formatByEnUsNum(device.minted.total)} Dcarbon
-                        </Typography.Text>
-                        <Typography.Text type="secondary">
-                          Number of tokens has mint
-                        </Typography.Text>
-                      </Col>
-                      <Col
-                        sm={24}
-                        md={12}
-                        className="project-column-item"
-                        xl={6}
-                      >
-                        <Typography.Text>
-                          {formatByEnUsNum(device.sold.total)} Dcarbon
-                        </Typography.Text>
-                        <Typography.Text type="secondary">
-                          Total carbon sold{' '}
-                        </Typography.Text>
-                      </Col>
-                      <Col
-                        sm={24}
-                        md={12}
-                        className="project-column-item"
-                        xl={4}
-                      >
-                        <Typography.Text type="success">
-                          {percentCaculateWithTag(
-                            device.minted.total,
-                            device.minted.last_week_total,
-                          )}
-                          %
-                        </Typography.Text>
-                        <Typography.Text type="secondary">
-                          VS Last Week
-                        </Typography.Text>
-                      </Col>
-                      <Col
-                        sm={24}
-                        md={12}
-                        className="project-column-item"
-                        xl={3}
-                      >
-                        <Link
-                          to="/$slug"
-                          params={{ slug: device.project.slug }}
-                          className="dashboard-project-link"
+                generalData.projects.map((project, idx) => {
+                  const color = colors[idx] || colors[0];
+                  return (
+                    <Card key={project.id}>
+                      <Row className="dashboard-project-row" gutter={[12, 12]}>
+                        <Col sm={24} className="project-column-item" xl={2}>
+                          <div
+                            style={{
+                              borderRadius: 20,
+                              display: 'flex',
+                              padding: '10px',
+                              backgroundColor: `${color}40`,
+                            }}
+                          >
+                            <DCarbonIcon size={32} color={color} />
+                          </div>
+                        </Col>
+                        <Col
+                          sm={24}
+                          md={12}
+                          className="project-column-item"
+                          xl={4}
                         >
-                          View Details
-                        </Link>
-                      </Col>
-                    </Row>
-                  </Card>
-                ))
+                          <Typography.Text>
+                            {project.project_name}
+                          </Typography.Text>
+                          <Typography.Text type="secondary"></Typography.Text>
+                        </Col>
+                        <Col
+                          sm={24}
+                          md={12}
+                          className="project-column-item"
+                          xl={6}
+                        >
+                          <Typography.Text>
+                            {formatByEnUsNum(project.minted.total)} Dcarbon
+                          </Typography.Text>
+                          <Typography.Text type="secondary">
+                            Number of tokens has mint
+                          </Typography.Text>
+                        </Col>
+                        <Col
+                          sm={24}
+                          md={12}
+                          className="project-column-item"
+                          xl={6}
+                        >
+                          <Typography.Text>
+                            {formatByEnUsNum(project.sold.total)} Dcarbon
+                          </Typography.Text>
+                          <Typography.Text type="secondary">
+                            Total carbon sold{' '}
+                          </Typography.Text>
+                        </Col>
+                        <Col
+                          sm={24}
+                          md={12}
+                          className="project-column-item"
+                          xl={4}
+                        >
+                          <Typography.Text type="success">
+                            {percentCalculateWithTag(
+                              project.minted.total,
+                              project.minted.last_week_total,
+                            )}
+                          </Typography.Text>
+                          <Typography.Text type="secondary">
+                            VS Last Week
+                          </Typography.Text>
+                        </Col>
+                        <Col
+                          sm={24}
+                          md={12}
+                          className="project-column-item"
+                          xl={2}
+                        >
+                          <Link
+                            to="/$slug"
+                            params={{ slug: project.slug }}
+                            className="dashboard-project-link"
+                          >
+                            View
+                          </Link>
+                        </Col>
+                      </Row>
+                    </Card>
+                  );
+                })
               ) : (
                 <Empty description="There are no projects yet" />
               )}

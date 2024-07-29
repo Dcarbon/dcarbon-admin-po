@@ -4,7 +4,7 @@ import { request } from './xhr';
 
 const getProjectsGeneral = async () => {
   try {
-    const response = await request<GeneralResponse<IProject>>(
+    const response = await request<GeneralResponse<IProjectsDashBoard>>(
       REQ_METHODS.GET,
       API_ROUTES.GET_GENERAL_PROJECTS,
     );

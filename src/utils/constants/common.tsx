@@ -1,7 +1,7 @@
 import {
   AppstoreOutlined,
+  DollarOutlined,
   SettingFilled,
-  WalletFilled,
 } from '@ant-design/icons';
 
 type MenuType = {
@@ -41,7 +41,7 @@ const MENU: MenuType = [
     key: '/wallet',
     label: 'Wallet',
     path: ROUTES_URL.WALLET,
-    icon: <WalletFilled />,
+    icon: <DollarOutlined />,
   },
   {
     key: 'update-password',

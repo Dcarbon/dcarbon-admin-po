@@ -1,35 +1,25 @@
-interface IProject {
-  projects: { id: string; project_name: string; slug: string }[];
+interface IAggregationDashboardDto {
+  total: number;
+
+  last_week_total: number;
+}
+interface IProjectDashBoardDto {
+  id: string;
+
+  slug: string;
+
+  project_name: string;
+
+  minted: IAggregationDashboardDto;
+
+  sold: IAggregationDashboardDto;
+}
+interface IProjectsDashBoard {
+  projects: IProjectDashBoardDto[];
   aggregation: {
-    minted: {
-      total: number;
-      last_week_total: number;
-    };
-    sold: {
-      total: number;
-      last_week_total: number;
-    };
+    minted: IAggregationDashboardDto;
+    sold: IAggregationDashboardDto;
   };
-  devices: {
-    id: string;
-    credit: {};
-    device_name: string;
-    iot_device_id: string;
-    is_active: boolean;
-    minted: {
-      total: number;
-      last_week_total: number;
-    };
-    sold: {
-      total: number;
-      last_week_total: number;
-    };
-    project: {
-      id: string;
-      project_name: string;
-      slug: string;
-    };
-  }[];
 }
 
 interface IProjectChart {
@@ -41,6 +31,7 @@ interface IProjectDetail {
   slug: string;
   project_name: string;
   description: string;
+  carbon_minted?: number;
   carbon_aggregation: {
     minted: {
       total: number;
