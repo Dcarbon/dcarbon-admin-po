@@ -63,24 +63,20 @@ function Index() {
       },
     ],
   });
-  const percentCalculateWithTag = (value: number, lastValue: number) => {
-    if (lastValue === 0) {
-      return value > 0 ? 100 : 0;
-    }
-    const change = (value - lastValue) / lastValue;
-    return change < 0 ? (
+  const percentCalculateWithTag = (value: number) => {
+    return value < 0 ? (
       <Typography.Text type="danger">
-        {Number((change * 100).toFixed(2))}%
+        {Number((value * 100).toFixed(2))} %
       </Typography.Text>
     ) : (
       <Typography.Text type="success">
-        {Number((change * 100).toFixed(2))}%
+        {Number((value * 100).toFixed(2))} %
       </Typography.Text>
     );
   };
   const getDonutChartData = (projects: IProjectDashBoardDto[]) => {
     const labels = projects?.map((project) => project.project_name);
-    const data = projects?.map((info) => Number(info.minted?.total || 1));
+    const data = projects?.map((info) => Number(info.minted?.total || 0));
     return {
       labels,
       data,
@@ -181,7 +177,7 @@ function Index() {
                           xl={6}
                         >
                           <Typography.Text>
-                            {formatByEnUsNum(project.minted.total)} Dcarbon
+                            {formatByEnUsNum(project.minted.total)} Carbon
                           </Typography.Text>
                           <Typography.Text type="secondary">
                             Number of tokens has mint
@@ -194,7 +190,7 @@ function Index() {
                           xl={6}
                         >
                           <Typography.Text>
-                            {formatByEnUsNum(project.sold.total)} Dcarbon
+                            {formatByEnUsNum(project.sold.total)} Carbon
                           </Typography.Text>
                           <Typography.Text type="secondary">
                             Total carbon sold{' '}
@@ -208,9 +204,8 @@ function Index() {
                         >
                           <Typography.Text type="success">
                             {percentCalculateWithTag(
-                              project.minted.total,
-                              project.minted.last_week_total,
-                            )}
+                              project.minted.compare_last_week_ratio,
+                            )}{' '}
                           </Typography.Text>
                           <Typography.Text type="secondary">
                             VS Last Week

@@ -9,18 +9,15 @@ import growth from '/image/dashboard/growth.svg';
 interface IGeneralData {
   data: {
     total: number;
-    last_week_total: number;
+    compare_last_week_ratio: number;
   };
 
   img: string;
   title: string;
 }
 const TotalOutputCard = ({ img, data, title }: IGeneralData) => {
-  const percentCalculate = (value: number, lastValue: number) => {
-    if (lastValue === 0) {
-      return value > 0 ? 100 : 0;
-    }
-    return Math.abs((value - lastValue) / lastValue) * 100;
+  const percentCalculate = (value: number) => {
+    return value * 100;
   };
   return (
     <Col sm={24} lg={12} xl={24}>
@@ -48,19 +45,19 @@ const TotalOutputCard = ({ img, data, title }: IGeneralData) => {
               <Statistic
                 title={
                   <img
-                    src={data.total < data.last_week_total ? down : growth}
+                    src={data.compare_last_week_ratio < 0 ? down : growth}
                     height={58}
                     alt="down"
                   />
                 }
-                value={percentCalculate(data.total, data.last_week_total)}
+                value={percentCalculate(data.compare_last_week_ratio)}
                 precision={2}
                 className="dashboard-statistic"
                 prefix={
                   <Flex align="center">
                     <img
                       src={
-                        data.total < data.last_week_total ? arrowDown : arrowUp
+                        data.compare_last_week_ratio < 0 ? arrowDown : arrowUp
                       }
                       height={30}
                       alt="arrow-up"

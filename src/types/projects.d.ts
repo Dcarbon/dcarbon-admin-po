@@ -1,7 +1,7 @@
 interface IAggregationDashboardDto {
   total: number;
 
-  last_week_total: number;
+  compare_last_week_ratio: number;
 }
 interface IProjectDashBoardDto {
   id: string;
@@ -35,11 +35,11 @@ interface IProjectDetail {
   carbon_aggregation: {
     minted: {
       total: number;
-      last_week_total: number;
+      compare_last_week_ratio: number;
     };
     sold: {
       total: number;
-      last_week_total: number;
+      compare_last_week_ratio: number;
     };
   };
   carbon_minted_chart: {

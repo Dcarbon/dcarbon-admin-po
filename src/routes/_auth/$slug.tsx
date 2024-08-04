@@ -36,12 +36,8 @@ export const Route = createFileRoute('/_auth/$slug')({
 const ProjectDetail = () => {
   const slug = Route.useParams().slug;
   const { data } = useSuspenseQuery(postQueryOptions(slug));
-  const percentCaculate = (value: number, lastValue: number) => {
-    if (lastValue === 0) {
-      return value > 0 ? 100 : 0;
-    }
-    const change = Math.abs((value - lastValue) / lastValue) * 100;
-    return change;
+  const percentCaculate = (value: number) => {
+    return value * 100;
   };
   return (
     <Row gutter={[16, 16]}>
@@ -92,8 +88,8 @@ const ProjectDetail = () => {
                             title={
                               <img
                                 src={
-                                  data.carbon_aggregation.sold.total <
-                                  data.carbon_aggregation.sold.last_week_total
+                                  data.carbon_aggregation.sold
+                                    .compare_last_week_ratio
                                     ? down
                                     : growth
                                 }
@@ -102,8 +98,8 @@ const ProjectDetail = () => {
                               />
                             }
                             value={percentCaculate(
-                              data.carbon_aggregation?.minted.total,
-                              data.carbon_aggregation?.minted.last_week_total,
+                              data.carbon_aggregation?.minted
+                                .compare_last_week_ratio,
                             )}
                             precision={2}
                             className="dashboard-statistic"
@@ -111,8 +107,8 @@ const ProjectDetail = () => {
                               <Flex align="center">
                                 <img
                                   src={
-                                    data.carbon_aggregation.sold.total <
-                                    data.carbon_aggregation.sold.last_week_total
+                                    data.carbon_aggregation.sold
+                                      .compare_last_week_ratio < 0
                                       ? arrowDown
                                       : arrowUp
                                   }
@@ -164,8 +160,8 @@ const ProjectDetail = () => {
                             title={
                               <img
                                 src={
-                                  data.carbon_aggregation.sold.total <
-                                  data.carbon_aggregation.sold.last_week_total
+                                  data.carbon_aggregation.sold
+                                    .compare_last_week_ratio < 0
                                     ? down
                                     : growth
                                 }
@@ -174,8 +170,8 @@ const ProjectDetail = () => {
                               />
                             }
                             value={percentCaculate(
-                              data.carbon_aggregation?.sold.total,
-                              data.carbon_aggregation?.sold.last_week_total,
+                              data.carbon_aggregation?.sold
+                                .compare_last_week_ratio,
                             )}
                             precision={2}
                             className="dashboard-statistic"
@@ -183,8 +179,8 @@ const ProjectDetail = () => {
                               <Flex align="center">
                                 <img
                                   src={
-                                    data.carbon_aggregation.sold.total <
-                                    data.carbon_aggregation.sold.last_week_total
+                                    data.carbon_aggregation.sold
+                                      .compare_last_week_ratio < 0
                                       ? arrowDown
                                       : arrowUp
                                   }
