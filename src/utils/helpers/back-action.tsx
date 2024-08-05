@@ -45,7 +45,14 @@ const useModalAction = (option?: IOption) => {
     // eslint-disable-next-line @typescript-eslint/ban-types
     cancelFn?: Function;
     content?: string;
+    dataForm?: { [key: string]: any };
   }) => {
+    if (
+      option2?.dataForm &&
+      Object.values(option2.dataForm).filter((e) => !!e).length === 0
+    ) {
+      return router.history.go(-1);
+    }
     Modal.confirm({
       title: option?.title || 'Are you sure?',
       centered: true,

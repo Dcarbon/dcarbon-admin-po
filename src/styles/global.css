@@ -450,7 +450,22 @@ button {
 
 /* Not Found Layout */
 .not-found-layout {
-  height: 100vh;
+  height: 88vh;
+  margin: 0 auto;
+  background-color: #e4e4e4;
+}
+
+.not-found-layout h1,
+h2 {
+  margin: 0 !important;
+}
+
+.not-found-layout h1 {
+  font-size: 7rem;
+}
+
+.not-found-layout h2 {
+  font-size: 3rem;
 }
 
 /* Footer */
@@ -692,11 +707,37 @@ button {
   scrollbar-width: thin;
 }
 
+.table-skeleton-row {
+  height: 70px;
+}
+
+.table-skeleton .table-skeleton-row:nth-child(odd) {
+  background-color: #f6f6f6;
+}
+
 /* Dashboard Project List */
 .dashboard-project-list {
   height: calc(36vh);
   overflow-y: scroll;
   scrollbar-width: thin;
+}
+
+.update-pws-form {
+  width: 100%;
+  max-width: 520px;
+  margin: auto;
+}
+
+.update-new-pws .ant-form-item-control-input-content {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  column-gap: 10px;
+  flex-wrap: wrap;
+}
+
+.update-pws-field {
+  flex: 1 1 250px;
 }
 
 /* Media Queries */
