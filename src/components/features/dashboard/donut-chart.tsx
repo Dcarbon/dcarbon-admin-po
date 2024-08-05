@@ -5,6 +5,7 @@ import ApexCharts, { Props } from 'react-apexcharts';
 
 interface IProps {
   config: {
+    id: number[];
     labels: string[];
     data: number[];
     isAllEmpty?: boolean;
@@ -13,7 +14,7 @@ interface IProps {
 }
 
 const DonutChart = memo(
-  ({ config: { labels, data, isAllEmpty, colors } }: IProps) => {
+  ({ config: { labels, data, isAllEmpty, colors, id } }: IProps) => {
     const navigate = useNavigate();
     const options: Props['options'] = {
       chart: {
@@ -42,7 +43,7 @@ const DonutChart = memo(
                     event.target.parentNode.attributes[2].value,
                   ),
                 },
-              }).then();
+              });
           },
         },
         redrawOnParentResize: true,
@@ -56,12 +57,20 @@ const DonutChart = memo(
       },
       legend: {
         position: 'bottom',
-        height: 50,
+        height: 60,
         horizontalAlign: 'center',
         fontSize: '14px',
         itemMargin: {
           horizontal: 5,
           vertical: 5,
+        },
+        customLegendItems: labels,
+      },
+      tooltip: {
+        y: {
+          title: {
+            formatter: () => 'Carbon:',
+          },
         },
       },
       noData: {
@@ -84,7 +93,7 @@ const DonutChart = memo(
           expandOnClick: !isAllEmpty,
         },
       },
-      labels: isAllEmpty ? ['No data'] : labels,
+      labels: isAllEmpty ? ['1'] : id.map((id) => id.toString()),
       states: {
         active: {
           filter: {
@@ -94,7 +103,7 @@ const DonutChart = memo(
         hover: {
           filter: {
             type: isAllEmpty ? 'none' : 'darken',
-            value: 0.5,
+            value: 0.8,
           },
         },
       },
@@ -120,7 +129,7 @@ const DonutChart = memo(
             legend: {
               position: 'right',
               height: '100%',
-              width: 150,
+              width: 250,
             },
           },
         },

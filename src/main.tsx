@@ -15,6 +15,8 @@ import { App, ConfigProvider, Spin, theme } from 'antd';
 import NextTopLoader from 'nextjs-toploader';
 import NotFoundPage from '@components/common/not-found';
 
+import Error from './components/common/error';
+
 // Create a new router instance
 const router = createRouter({
   routeTree,
@@ -22,6 +24,7 @@ const router = createRouter({
     auth: undefined!,
     queryClient: undefined!,
   },
+  defaultErrorComponent: Error,
   defaultNotFoundComponent: NotFoundPage,
 });
 const queryClient = new QueryClient({

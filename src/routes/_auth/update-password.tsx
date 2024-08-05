@@ -33,7 +33,7 @@ const UpdatePassword = () => {
   });
   return (
     <div className={'main-gray-div'}>
-      <CenterContentLayout contentWidth={'45%'}>
+      <CenterContentLayout className="update-pws-form" contentWidth="100%">
         <Form
           form={form}
           onFinish={(value) => updatePsw.mutate(value)}
@@ -51,10 +51,11 @@ const UpdatePassword = () => {
           >
             <MyInputPassword type="password" allowClear />
           </Form.Item>
-          <Form.Item style={{ marginBottom: 0 }}>
+          <Form.Item className="update-new-pws">
             <Form.Item
               name="new_password"
               label="New password"
+              className="update-pws-field"
               rules={[
                 {
                   required: true,
@@ -71,12 +72,12 @@ const UpdatePassword = () => {
                   },
                 },
               ]}
-              style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
             >
               <MyInputPassword type="password" allowClear />
             </Form.Item>
             <Form.Item
               name="repassword"
+              className="update-pws-field"
               label="Confirm new password"
               rules={[
                 {
@@ -93,11 +94,6 @@ const UpdatePassword = () => {
                   },
                 },
               ]}
-              style={{
-                display: 'inline-block',
-                width: 'calc(50%)',
-                margin: '0px 0px 0px 8px',
-              }}
               dependencies={['new_password']}
             >
               <MyInputPassword type="password" allowClear />
@@ -107,7 +103,10 @@ const UpdatePassword = () => {
             <SubmitButtonAction loading={updatePsw.isPending}>
               Save
             </SubmitButtonAction>
-            <CancelButtonAction disabled={updatePsw.isPending} onClick={goBack}>
+            <CancelButtonAction
+              disabled={updatePsw.isPending}
+              onClick={() => goBack({ dataForm: form.getFieldsValue() })}
+            >
               Cancel
             </CancelButtonAction>
           </Flex>

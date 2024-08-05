@@ -77,11 +77,13 @@ function Index() {
   const getDonutChartData = (projects: IProjectDashBoardDto[]) => {
     const labels = projects?.map((project) => project.project_name);
     const data = projects?.map((info) => Number(info.minted?.total || 0));
+    const id = projects?.map((info) => +info.id);
     return {
       labels,
       data,
       isAllEmpty: !data?.find((info) => info > 0),
       colors,
+      id,
     };
   };
   return (
