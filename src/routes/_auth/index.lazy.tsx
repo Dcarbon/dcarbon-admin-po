@@ -5,6 +5,7 @@ import {
 import ColumnChart from '@/components/features/dashboard/column-chart';
 import DonutChart from '@/components/features/dashboard/donut-chart';
 import TotalOutputCard from '@/components/features/dashboard/total-output-card';
+import { useAuth } from '@/contexts/auth-context';
 import DCarbonIc from '@/icons/dcarbon.icon.tsx';
 import { QUERY_KEYS } from '@/utils/constants';
 import { formatByEnUsNum } from '@/utils/helpers';
@@ -51,15 +52,18 @@ export const Route = createLazyFileRoute('/_auth/')({
 });
 
 function Index() {
+  const { user, isAuthenticated } = useAuth();
   const [{ data: generalData }, { data: projectChartData }] = useQueries({
     queries: [
       {
-        queryKey: [QUERY_KEYS.GET_PROJECTS_GENERAL],
+        queryKey: [QUERY_KEYS.GET_PROJECTS_GENERAL, user?.username],
         queryFn: () => getProjectsGeneral(),
+        enabled: isAuthenticated,
       },
       {
-        queryKey: [QUERY_KEYS.GET_PROJECTS_GENERAL_CHART],
+        queryKey: [QUERY_KEYS.GET_PROJECTS_GENERAL_CHART, user?.username],
         queryFn: () => getProjectsGeneralChart(),
+        enabled: isAuthenticated,
       },
     ],
   });
