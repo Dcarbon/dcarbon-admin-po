@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { isEmpty } from '@/utils/helpers';
 import ApexCharts, { Props } from 'react-apexcharts';
 
 const ColumnChart = memo(
@@ -157,7 +158,7 @@ const ColumnChart = memo(
           series={[
             {
               name: 'Carbon',
-              data,
+              data: isEmpty(data) ? [] : data,
             },
           ]}
           type="bar"

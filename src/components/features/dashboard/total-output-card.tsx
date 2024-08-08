@@ -1,5 +1,5 @@
 import { formatByEnUsNum } from '@/utils/helpers';
-import { Card, Col, Flex, Space, Statistic, Typography } from 'antd';
+import { Card, Flex, Space, Statistic, Typography } from 'antd';
 
 import arrowDown from '/image/dashboard/arrow-down.svg';
 import arrowUp from '/image/dashboard/arrow-up.svg';
@@ -20,58 +20,51 @@ const TotalOutputCard = ({ img, data, title }: IGeneralData) => {
     return value * 100;
   };
   return (
-    <Col sm={24} lg={12} xl={24}>
-      <Card>
-        <Flex justify="space-between">
-          <Flex vertical justify="space-between">
-            <Space align="center" size={20}>
-              <img src={img} width={38} height={38} alt="icon" />
-              <span className="neutral-color-400">{title}</span>
-            </Space>
-            <Space size={10} align="baseline">
-              <span className="primary-color-600 dashboard-project-value">
-                {formatByEnUsNum(data.total ?? 0)}
-              </span>
-              <Typography.Title
-                level={4}
-                className="dashboard-project-currency"
-              >
-                CARBON
-              </Typography.Title>
-            </Space>
-          </Flex>
-          {data ? (
-            <div className="dashboard-total-project">
-              <Statistic
-                title={
-                  <img
-                    src={data.compare_last_week_ratio < 0 ? down : growth}
-                    height={58}
-                    alt="down"
-                  />
-                }
-                value={percentCalculate(data.compare_last_week_ratio)}
-                precision={2}
-                className="dashboard-statistic"
-                prefix={
-                  <Flex align="center">
-                    <img
-                      src={
-                        data.compare_last_week_ratio < 0 ? arrowDown : arrowUp
-                      }
-                      height={30}
-                      alt="arrow-up"
-                    />
-                  </Flex>
-                }
-                suffix="%"
-              />
-              <Typography.Text type="secondary">VS Last Week</Typography.Text>
-            </div>
-          ) : null}
+    <Card>
+      <Flex justify="space-between">
+        <Flex vertical justify="space-between">
+          <Space align="center" size={20}>
+            <img src={img} width={38} height={38} alt="icon" />
+            <span className="neutral-color-400">{title}</span>
+          </Space>
+          <Space size={10} align="baseline">
+            <span className="primary-color-600 dashboard-project-value">
+              {formatByEnUsNum(data.total ?? 0)}
+            </span>
+            <Typography.Title level={4} className="dashboard-project-currency">
+              CARBON
+            </Typography.Title>
+          </Space>
         </Flex>
-      </Card>
-    </Col>
+        {data ? (
+          <div className="dashboard-total-project">
+            <Statistic
+              title={
+                <img
+                  src={data.compare_last_week_ratio < 0 ? down : growth}
+                  height={58}
+                  alt="down"
+                />
+              }
+              value={percentCalculate(data.compare_last_week_ratio)}
+              precision={2}
+              className="dashboard-statistic"
+              prefix={
+                <Flex align="center">
+                  <img
+                    src={data.compare_last_week_ratio < 0 ? arrowDown : arrowUp}
+                    height={30}
+                    alt="arrow-up"
+                  />
+                </Flex>
+              }
+              suffix="%"
+            />
+            <Typography.Text type="secondary">VS Last Week</Typography.Text>
+          </div>
+        ) : null}
+      </Flex>
+    </Card>
   );
 };
 
