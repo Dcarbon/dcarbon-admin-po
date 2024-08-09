@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { getWallet, getWalletTransactions } from '@/adapters/wallet';
 import LineChart from '@/components/features/wallet/line-chart';
 import TransactionTable from '@/components/features/wallet/table';
 import { QUERY_KEYS } from '@/utils/constants';
 import { formatByEnUsNum } from '@/utils/helpers';
-import { EyeOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { keepPreviousData, useQueries } from '@tanstack/react-query';
 import { createFileRoute, useSearch } from '@tanstack/react-router';
 import { Card, Col, Row, Space, Typography } from 'antd';
@@ -18,6 +19,7 @@ export const Route = createFileRoute('/_auth/wallet')({
 });
 const Wallet = () => {
   const search = useSearch({ from: '/_auth/wallet' });
+  const [isHidden, setisHidden] = useState(true);
   const [{ data: chartData }, { data: tableData }] = useQueries({
     queries: [
       {
@@ -32,6 +34,7 @@ const Wallet = () => {
       },
     ],
   });
+  console.info(isHidden);
   return (
     <Row gutter={[16, 16]}>
       <Col xl={8}>
@@ -45,17 +48,30 @@ const Wallet = () => {
           ) : null}
           <Typography.Title level={4}>
             <Space size={6}>
-              Wallet Balance <EyeOutlined />
+              Wallet Balance{' '}
+              <span onClick={() => setisHidden(!isHidden)}>
+                {isHidden ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+              </span>
             </Space>
           </Typography.Title>
           <Card className="wallet-balance">
             <span className="neutral-color-700">Crypto</span>
             <Typography.Title level={2}>
-              ≈ {formatByEnUsNum(chartData?.carbon || 0)} DB CARBON
+              {isHidden ? (
+                <Space>********</Space>
+              ) : (
+                <span>≈ {formatByEnUsNum(chartData?.carbon || 0)} CARBON</span>
+              )}
             </Typography.Title>
             <span className="neutral-color-700">
-              ≈ {formatByEnUsNum(chartData?.exchange_rate || 0)}{' '}
-              {chartData?.exchange_rate_currency || 'VND'}
+              {isHidden ? (
+                <Space>**********</Space>
+              ) : (
+                <span>
+                  ≈ {formatByEnUsNum(chartData?.exchange_rate || 0)}{' '}
+                  {chartData?.exchange_rate_currency || 'VND'}
+                </span>
+              )}
             </span>
             <img
               className="wallet-image"

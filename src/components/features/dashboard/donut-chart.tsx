@@ -64,7 +64,7 @@ const DonutChart = memo(
           horizontal: 5,
           vertical: 5,
         },
-        customLegendItems: labels,
+        customLegendItems: isAllEmpty ? ['No data'] : labels,
       },
       tooltip: {
         y: {
@@ -93,7 +93,7 @@ const DonutChart = memo(
           expandOnClick: !isAllEmpty,
         },
       },
-      labels: isAllEmpty ? ['1'] : id.map((id) => id.toString()),
+      labels: isAllEmpty ? ['No data'] : id.map((id) => id.toString()),
       states: {
         active: {
           filter: {

@@ -69,6 +69,12 @@ const convertToSlug = (value: string) => {
     .replace(/^-+|-+$/g, '');
 };
 const formatByEnUsNum = (value: number) => {
+  if (isFloat(value)) {
+    return value.toLocaleString('en-US', {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 3,
+    });
+  }
   return value.toLocaleString('en-US');
 };
 

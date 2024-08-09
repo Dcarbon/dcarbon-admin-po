@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { formatByEnUsNum, isEmpty } from '@/utils/helpers/common';
 import ApexCharts, { Props } from 'react-apexcharts';
 
 const LineChart = memo(({ data }: { data: number[] }) => {
@@ -90,6 +91,9 @@ const LineChart = memo(({ data }: { data: number[] }) => {
       x: {
         show: false,
       },
+      y: {
+        formatter: (value: number) => formatByEnUsNum(value),
+      },
     },
   };
 
@@ -100,7 +104,7 @@ const LineChart = memo(({ data }: { data: number[] }) => {
         series={[
           {
             name: 'Carbon',
-            data: data,
+            data: isEmpty(data) ? [0] : data,
           },
         ]}
         type="line"
