@@ -64,7 +64,7 @@ const DonutChart = memo(
           horizontal: 5,
           vertical: 5,
         },
-        customLegendItems: isAllEmpty ? ['No data'] : labels,
+        customLegendItems: isAllEmpty ? [] : labels,
       },
       tooltip: {
         y: {
@@ -74,13 +74,13 @@ const DonutChart = memo(
         },
       },
       noData: {
-        text: undefined,
+        text: 'No data',
         align: 'center',
         verticalAlign: 'middle',
         offsetX: 0,
-        offsetY: 0,
+        offsetY: -20,
         style: {
-          color: undefined,
+          color: '#b1b1b1',
           fontSize: '14px',
           fontFamily: undefined,
         },
@@ -93,7 +93,7 @@ const DonutChart = memo(
           expandOnClick: !isAllEmpty,
         },
       },
-      labels: isAllEmpty ? ['No data'] : id.map((id) => id.toString()),
+      labels: isAllEmpty ? [] : id.map((id) => id.toString()),
       states: {
         active: {
           filter: {
@@ -157,7 +157,7 @@ const DonutChart = memo(
       <div>
         <ApexCharts
           options={options}
-          series={isAllEmpty ? [1] : data}
+          series={isAllEmpty ? [] : data}
           type="donut"
           height={300}
         />
