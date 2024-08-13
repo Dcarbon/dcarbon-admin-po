@@ -1,11 +1,20 @@
 import { memo } from 'react';
 import { HomeOutlined } from '@ant-design/icons';
 import { Link, useLocation, useRouterState } from '@tanstack/react-router';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Tooltip } from 'antd';
 
 const capitalizeFirstLetter = (string: string) => {
   if (!string) return '';
-  return string.charAt(0).toUpperCase() + string.slice(1).replace(/-/g, ' ');
+  const title =
+    string.charAt(0).toUpperCase() + string.slice(1).replace(/-/g, ' ');
+  if (title.length > 20) {
+    return (
+      <Tooltip title={title} placement="bottom" color="#b1b1b1" fresh>
+        {title.slice(0, 20) + '...'}
+      </Tooltip>
+    );
+  }
+  return title;
 };
 
 const Breadcrumbs = memo(() => {
