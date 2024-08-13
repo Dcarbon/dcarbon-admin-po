@@ -13,7 +13,7 @@ const Header = memo(() => {
     <Layout>
       <Header className="header-container">
         <Space>
-          <Link href="/">
+          <Link to={'/'}>
             <Flex justify="center" align="center" gap={7}>
               <img src={logo} alt="logo" width={25} height={25} />
               <Typography.Title className="header-title" level={5}>

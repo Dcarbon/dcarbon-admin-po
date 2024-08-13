@@ -12,7 +12,7 @@ import { formatByEnUsNum } from '@/utils/helpers';
 import Icon from '@ant-design/icons';
 import { useQueries } from '@tanstack/react-query';
 import { createLazyFileRoute, Link } from '@tanstack/react-router';
-import { Card, Col, Empty, Flex, Row, Select, Typography } from 'antd';
+import { Card, Col, Empty, Flex, Row, Select, Tooltip, Typography } from 'antd';
 
 import totalSold from '/image/dashboard/total-carbon-sold.svg';
 import totalMinted from '/image/dashboard/total-minted.svg';
@@ -176,7 +176,15 @@ function Index() {
                           xl={4}
                         >
                           <Typography.Text>
-                            {project.project_name}
+                            <Tooltip
+                              title={project.project_name}
+                              color="#b1b1b1"
+                              fresh
+                            >
+                              {project.project_name.length > 20
+                                ? project.project_name.slice(0, 20) + '...'
+                                : project.project_name}
+                            </Tooltip>
                           </Typography.Text>
                           <Typography.Text type="secondary"></Typography.Text>
                         </Col>
