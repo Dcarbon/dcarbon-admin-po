@@ -2,12 +2,16 @@ import { API_ROUTES, REQ_METHODS } from '@/utils/constants';
 
 import { request } from './xhr';
 
-const getProjectBySlug = async (slug: string, type?: string) => {
+const getProjectBySlug = async (
+  slug: string,
+  type?: string,
+  chartyear?: string,
+) => {
   try {
     const response = await request<GeneralResponse<IProjectDetail>>(
       REQ_METHODS.GET,
       API_ROUTES.PROJECT_API + '/' + slug,
-      { type: type },
+      { type: type || 'contract', chart_year: chartyear },
     );
     return response.data.data;
   } catch (error) {

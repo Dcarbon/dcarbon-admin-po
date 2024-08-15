@@ -25,6 +25,7 @@ interface IProjectsDashBoard {
 interface IProjectChart {
   minted_token: number[];
   times: string[];
+  list_contract_years: number[];
 }
 interface IProjectDetail {
   id: string;
@@ -45,5 +46,6 @@ interface IProjectDetail {
   carbon_minted_chart: {
     minted_token: number[];
     times: string[];
+    list_contract_years: number[];
   };
 }
