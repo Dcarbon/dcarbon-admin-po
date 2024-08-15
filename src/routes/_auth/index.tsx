@@ -53,8 +53,11 @@ const DCarbonIcon = ({ size, color }: { size: number; color: string }) => (
 );
 
 export const Route = createFileRoute('/_auth/')({
-  validateSearch: (search: Record<string, unknown>): { type?: string } => ({
-    type: search.type as string,
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { type: string; chartYear?: string } => ({
+    type: (search.type as string) || 'contract',
+    chartYear: search.chartYear as string,
   }),
   component: () => <Index />,
 });
@@ -75,10 +78,11 @@ function Index() {
           QUERY_KEYS.GET_PROJECTS_GENERAL_CHART,
           user?.username,
           search.type,
+          search.chartYear,
         ],
-        queryFn: () => getProjectsGeneralChart(search.type),
+        queryFn: () => getProjectsGeneralChart(search.type, search.chartYear),
         staleTime: 1000 * 60 * 1,
-        enabled: isAuthenticated || !!search.type,
+        enabled: isAuthenticated || !!search.type || !!search.chartYear,
       },
     ],
   });
@@ -119,22 +123,52 @@ function Index() {
         <Col xs={24} lg={16} className="dashboard-card">
           <Card>
             <Typography.Title level={4}>Total tokens has mint</Typography.Title>
-            <Select
-              style={{ minWidth: 100 }}
-              options={[
-                { label: 'Month', value: 'month' },
-                { label: 'Contract', value: 'contract' },
-              ]}
-              onChange={(value) =>
-                navigate({
-                  search: {
-                    type: value,
-                  },
-                })
-              }
-              size="middle"
-              defaultValue={search.type || 'month'}
-            />
+            <Row gutter={[8, 8]}>
+              <Col span={8} md={4} lg={3}>
+                <Select
+                  options={[
+                    { label: 'Month', value: 'month' },
+                    { label: 'Contract', value: 'contract' },
+                  ]}
+                  onChange={(value) => {
+                    navigate({
+                      search: {
+                        type: value,
+                      },
+                    });
+                  }}
+                  style={{ width: 120 }}
+                  size="middle"
+                  defaultValue={search.type || 'contract'}
+                />
+              </Col>
+              <Col span={8} md={4} lg={3}>
+                {search.type === 'contract' &&
+                projectChartData &&
+                projectChartData.list_contract_years.length > 0 ? (
+                  <Select
+                    options={projectChartData.list_contract_years.map(
+                      (year) => ({
+                        label: year,
+                        value: year,
+                      }),
+                    )}
+                    defaultValue={
+                      search.chartYear || new Date().getFullYear().toString()
+                    }
+                    onChange={(value) => {
+                      navigate({
+                        search: {
+                          ...search,
+                          chartYear: value,
+                        },
+                      });
+                    }}
+                    size="middle"
+                  />
+                ) : null}
+              </Col>
+            </Row>
             <ColumnChart
               data={projectChartData?.minted_token || []}
               times={projectChartData?.times || []}
@@ -270,7 +304,7 @@ function Index() {
                           <Link
                             to="/$slug"
                             params={{ slug: project.slug }}
-                            search={{ type: 'month' }}
+                            search={{ type: 'contract' }}
                             className="dashboard-project-link"
                           >
                             View
