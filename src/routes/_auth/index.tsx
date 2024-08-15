@@ -11,7 +11,12 @@ import { QUERY_KEYS } from '@/utils/constants';
 import { formatByEnUsNum } from '@/utils/helpers';
 import Icon from '@ant-design/icons';
 import { useQueries } from '@tanstack/react-query';
-import { createLazyFileRoute, Link } from '@tanstack/react-router';
+import {
+  createFileRoute,
+  Link,
+  useNavigate,
+  useSearch,
+} from '@tanstack/react-router';
 import { Card, Col, Empty, Flex, Row, Select, Tooltip, Typography } from 'antd';
 
 import totalSold from '/image/dashboard/total-carbon-sold.svg';
@@ -47,12 +52,17 @@ const DCarbonIcon = ({ size, color }: { size: number; color: string }) => (
   <Icon component={() => <DCarbonIc size={size} color={color} />} />
 );
 
-export const Route = createLazyFileRoute('/_auth/')({
+export const Route = createFileRoute('/_auth/')({
+  validateSearch: (search: Record<string, unknown>): { type?: string } => ({
+    type: search.type as string,
+  }),
   component: () => <Index />,
 });
 
 function Index() {
   const { user, isAuthenticated } = useAuth();
+  const search = useSearch({ from: '/_auth/' });
+  const navigate = useNavigate();
   const [{ data: generalData }, { data: projectChartData }] = useQueries({
     queries: [
       {
@@ -61,9 +71,14 @@ function Index() {
         enabled: isAuthenticated,
       },
       {
-        queryKey: [QUERY_KEYS.GET_PROJECTS_GENERAL_CHART, user?.username],
-        queryFn: () => getProjectsGeneralChart(),
-        enabled: isAuthenticated,
+        queryKey: [
+          QUERY_KEYS.GET_PROJECTS_GENERAL_CHART,
+          user?.username,
+          search.type,
+        ],
+        queryFn: () => getProjectsGeneralChart(search.type),
+        staleTime: 1000 * 60 * 1,
+        enabled: isAuthenticated || !!search.type,
       },
     ],
   });
@@ -105,14 +120,20 @@ function Index() {
           <Card>
             <Typography.Title level={4}>Total tokens has mint</Typography.Title>
             <Select
+              style={{ minWidth: 100 }}
               options={[
                 { label: 'Month', value: 'month' },
-                { label: 'Week', value: 'week' },
-                { label: 'Day', value: 'day' },
-                { label: 'Year', value: 'year' },
+                { label: 'Contract', value: 'contract' },
               ]}
+              onChange={(value) =>
+                navigate({
+                  search: {
+                    type: value,
+                  },
+                })
+              }
               size="middle"
-              defaultValue={'month'}
+              defaultValue={search.type || 'month'}
             />
             <ColumnChart
               data={projectChartData?.minted_token || []}
@@ -249,6 +270,7 @@ function Index() {
                           <Link
                             to="/$slug"
                             params={{ slug: project.slug }}
+                            search={{ type: 'month' }}
                             className="dashboard-project-link"
                           >
                             View
