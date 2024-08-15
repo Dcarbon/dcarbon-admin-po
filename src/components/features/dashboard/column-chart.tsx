@@ -134,7 +134,7 @@ const ColumnChart = memo(
         },
 
         {
-          breakpoint: 1700,
+          breakpoint: 1300,
           options: {
             chart: {
               width: '100%',
@@ -144,6 +144,9 @@ const ColumnChart = memo(
               labels: {
                 style: {
                   fontSize: '10px',
+                },
+                formatter: (value: string) => {
+                  return value.slice(0, 3);
                 },
               },
             },

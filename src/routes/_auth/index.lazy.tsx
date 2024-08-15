@@ -157,7 +157,12 @@ function Index() {
                   return (
                     <Card key={project.id}>
                       <Row className="dashboard-project-row" gutter={[12, 12]}>
-                        <Col sm={24} className="project-column-item" xl={2}>
+                        <Col
+                          sm={2}
+                          span={5}
+                          className="project-column-item"
+                          xl={2}
+                        >
                           <div
                             style={{
                               borderRadius: 20,
@@ -170,10 +175,11 @@ function Index() {
                           </div>
                         </Col>
                         <Col
-                          sm={24}
-                          md={12}
+                          sm={19}
+                          md={19}
+                          span={19}
                           className="project-column-item"
-                          xl={4}
+                          xl={5}
                         >
                           <Typography.Text>
                             <Tooltip
@@ -189,10 +195,11 @@ function Index() {
                           <Typography.Text type="secondary"></Typography.Text>
                         </Col>
                         <Col
-                          sm={24}
-                          md={12}
+                          sm={12}
                           className="project-column-item"
                           xl={6}
+                          lg={7}
+                          md={8}
                         >
                           <Typography.Text>
                             {formatByEnUsNum(project.minted.total)} Carbon
@@ -202,10 +209,12 @@ function Index() {
                           </Typography.Text>
                         </Col>
                         <Col
-                          sm={24}
-                          md={12}
+                          sm={12}
                           className="project-column-item"
                           xl={6}
+                          lg={7}
+                          md={8}
+                          span={12}
                         >
                           <Typography.Text>
                             {formatByEnUsNum(project.sold.total)} Carbon
@@ -215,10 +224,11 @@ function Index() {
                           </Typography.Text>
                         </Col>
                         <Col
-                          sm={24}
-                          md={12}
+                          span={12}
+                          sm={6}
+                          lg={7}
                           className="project-column-item"
-                          xl={4}
+                          xl={3}
                         >
                           <Typography.Text type="success">
                             {percentCalculateWithTag(
@@ -230,10 +240,11 @@ function Index() {
                           </Typography.Text>
                         </Col>
                         <Col
-                          sm={24}
-                          md={12}
+                          sm={12}
                           className="project-column-item"
                           xl={2}
+                          md={2}
+                          lg={2}
                         >
                           <Link
                             to="/$slug"

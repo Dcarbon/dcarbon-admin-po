@@ -63,7 +63,7 @@ const ProjectDetail = () => {
           </Col>
           <Col>
             <Card className="w-full">
-              <Typography.Title level={4}>
+              <Typography.Title level={4} style={{ margin: '5px 0' }}>
                 Total tokens has mint
               </Typography.Title>
               <Select
