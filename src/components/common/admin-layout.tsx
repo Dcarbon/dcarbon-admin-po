@@ -14,7 +14,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     <Layout>
       <Header />
       <Layout className="site-layout">
-        <Sider width={250} breakpoint="xl" collapsedWidth="0">
+        <Sider width={250} breakpoint="xxl" collapsedWidth="0">
           <Flex className="sidebar-container" vertical justify="space-between">
             <NavBar />
             <Flex vertical className="sidebar-helper" justify="space-between">

@@ -29,7 +29,10 @@ const ProjectDetail = () => {
     <Row gutter={[16, 16]}>
       <Col sm={24} xl={10}>
         <Card>
-          <Typography.Title level={4}> Description</Typography.Title>
+          <Typography.Title level={4} style={{ margin: '0 0 10px 0' }}>
+            {' '}
+            Description
+          </Typography.Title>
           <div
             className="project-description"
             dangerouslySetInnerHTML={{ __html: data.description }}

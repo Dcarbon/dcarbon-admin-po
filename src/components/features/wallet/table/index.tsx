@@ -11,7 +11,7 @@ const TransactionTable = memo(({ data }: { data: TransactionPages }) => {
       <MyTable
         columns={columns}
         dataSource={data?.data as ITransactionTable[]}
-        scroll={{ x: 500, y: 500 }}
+        scroll={{ x: 500, y: '58vh' }}
         tableLayout="auto"
         rowKey={'tx_id'}
         size="middle"

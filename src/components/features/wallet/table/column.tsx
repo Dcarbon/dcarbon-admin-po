@@ -1,20 +1,5 @@
-import {
-  Button,
-  Dropdown,
-  MenuProps,
-  Space,
-  TableColumnsType,
-  Typography,
-} from 'antd';
+import { Space, TableColumnsType, Typography } from 'antd';
 
-import imgAction from '/image/icon-action.svg';
-
-const items: MenuProps['items'] = [
-  {
-    label: 'Action',
-    key: '1',
-  },
-];
 const columns: TableColumnsType<ITransactionTable> = [
   {
     title: 'Date',
@@ -40,18 +25,6 @@ const columns: TableColumnsType<ITransactionTable> = [
     render: (amount: number) => (
       <Space wrap>
         <Typography.Text>${amount}</Typography.Text>
-      </Space>
-    ),
-  },
-  {
-    width: 50,
-    render: () => (
-      <Space wrap>
-        <Dropdown menu={{ items }} trigger={['click']}>
-          <Button type="text">
-            <img src={imgAction} alt="" />
-          </Button>
-        </Dropdown>
       </Space>
     ),
   },

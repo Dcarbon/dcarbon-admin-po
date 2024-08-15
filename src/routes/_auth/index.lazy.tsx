@@ -128,14 +128,14 @@ function Index() {
             <Row gutter={[12, 12]}>
               {generalData ? (
                 <>
-                  <Col sm={24} lg={12} xl={24}>
+                  <Col sm={24} lg={12} xxl={24}>
                     <TotalOutputCard
                       img={totalMinted}
                       data={generalData?.aggregation.minted}
                       title="Total project output"
                     />
                   </Col>
-                  <Col sm={24} lg={12} xl={24}>
+                  <Col sm={24} lg={12} xxl={24}>
                     <TotalOutputCard
                       img={totalSold}
                       data={generalData?.aggregation.sold}

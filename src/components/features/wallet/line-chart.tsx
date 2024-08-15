@@ -104,7 +104,7 @@ const LineChart = memo(({ data }: { data: number[] }) => {
         series={[
           {
             name: 'Carbon',
-            data: isEmpty(data) ? [0] : data,
+            data: isEmpty(data) ? [0, 0] : data,
           },
         ]}
         type="line"
