@@ -101,6 +101,11 @@ const ColumnChart = memo(
           },
         },
       },
+      tooltip: {
+        x: {
+          show: false,
+        },
+      },
       yaxis: {
         axisTicks: {
           show: false,

@@ -14,11 +14,12 @@ const getProjectsGeneral = async () => {
     throw error;
   }
 };
-const getProjectsGeneralChart = async () => {
+const getProjectsGeneralChart = async (type?: string) => {
   try {
     const response = await request<GeneralResponse<IProjectChart>>(
       REQ_METHODS.GET,
       API_ROUTES.GET_GENERAL_PROJECTS_CHART,
+      { type: type },
     );
     return response.data.data;
   } catch (error) {

@@ -43,6 +43,9 @@ const DonutChart = memo(
                     event.target.parentNode.attributes[2].value,
                   ),
                 },
+                search: {
+                  type: 'month',
+                },
               });
           },
         },

@@ -9,21 +9,26 @@ import { Card, Col, Flex, Row, Select, Typography } from 'antd';
 import totalSold from '/image/dashboard/total-carbon-sold.svg';
 import totalMinted from '/image/dashboard/total-minted.svg';
 
-const postQueryOptions = (slug: string) =>
+const postQueryOptions = (slug: string, search?: { type?: string }) =>
   queryOptions({
-    queryKey: [QUERY_KEYS.GET_PROJECT_BY_SLUG, slug],
-    queryFn: () => getProjectBySlug(slug),
+    queryKey: [QUERY_KEYS.GET_PROJECT_BY_SLUG, slug, search?.type],
+    queryFn: () => getProjectBySlug(slug, search?.type),
   });
 export const Route = createFileRoute('/_auth/$slug')({
-  loader: ({ context, params: { slug } }) => {
+  validateSearch: (search: Record<string, unknown>): { type: string } => ({
+    type: search.type as string,
+  }),
+  loader: ({ context, params: { slug }, location }) => {
     const { queryClient } = context as any;
-    return queryClient.ensureQueryData(postQueryOptions(slug));
+    return queryClient.ensureQueryData(postQueryOptions(slug, location.search));
   },
   component: () => <ProjectDetail />,
 });
 const ProjectDetail = () => {
   const slug = Route.useParams().slug;
-  const { data } = useSuspenseQuery(postQueryOptions(slug));
+  const search = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const { data } = useSuspenseQuery(postQueryOptions(slug, search));
 
   return (
     <Row gutter={[16, 16]}>
@@ -69,11 +74,17 @@ const ProjectDetail = () => {
               <Select
                 options={[
                   { label: 'Month', value: 'month' },
-                  { label: 'Week', value: 'week' },
-                  { label: 'Year', value: 'year' },
+                  { label: 'Contract', value: 'contract' },
                 ]}
+                onChange={(value) =>
+                  navigate({
+                    search: {
+                      type: value,
+                    },
+                  })
+                }
                 size="middle"
-                defaultValue={'month'}
+                defaultValue={search.type || 'month'}
               />
               <ColumnChart
                 data={data.carbon_minted_chart.minted_token || []}
