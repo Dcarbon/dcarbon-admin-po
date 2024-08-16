@@ -12,7 +12,7 @@ import totalMinted from '/image/dashboard/total-minted.svg';
 
 const postQueryOptions = (
   slug: string,
-  search: { chart_type?: string; chartYear?: string },
+  search: { chart_type?: string; chart_year?: string },
 ) =>
   queryOptions({
     queryKey: [QUERY_KEYS.GET_PROJECT_BY_SLUG, slug, search],
@@ -22,12 +22,12 @@ const postQueryOptions = (
         !isEmpty(search) ? search : { chart_type: 'contract' },
       ),
     staleTime: 1000 * 60 * 2,
-    enabled: !!slug || !!search?.chart_type || !!search?.chartYear,
+    enabled: !!slug || !!search?.chart_type || !!search?.chart_year,
   });
 export const Route = createFileRoute('/_auth/$slug')({
   validateSearch: (
     search?: Record<string, unknown>,
-  ): { chart_type?: string; chartYear?: string } => ({
+  ): { chart_type?: string; chart_year?: string } => ({
     ...search,
   }),
   loader: ({ context, params: { slug }, location }) => {
@@ -127,7 +127,7 @@ const ProjectDetail = () => {
                         slug,
                       },
                       search: {
-                        chartYear: value,
+                        chart_year: value,
                       },
                     });
                   }
@@ -135,7 +135,7 @@ const ProjectDetail = () => {
                 style={{ width: 120 }}
                 size="middle"
                 defaultValue={
-                  search.chart_type || search.chartYear || 'contract'
+                  search.chart_type || search.chart_year || 'contract'
                 }
               />
               <ColumnChart

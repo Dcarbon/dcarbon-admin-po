@@ -55,7 +55,7 @@ const DCarbonIcon = ({ size, color }: { size: number; color: string }) => (
 export const Route = createFileRoute('/_auth/')({
   validateSearch: (
     search: Record<string, unknown>,
-  ): { type?: string; chartYear?: string } => ({
+  ): { type?: string; chart_year?: string } => ({
     ...search,
   }),
   component: () => <Index />,
@@ -83,7 +83,7 @@ function Index() {
           );
         },
         staleTime: 1000 * 60 * 2,
-        enabled: isAuthenticated || !!search.type || !!search.chartYear,
+        enabled: isAuthenticated || !!search.type || !!search.chart_year,
       },
     ],
   });
@@ -147,14 +147,14 @@ function Index() {
                   navigate({
                     to: '/',
                     search: {
-                      chartYear: value,
+                      chart_year: value,
                     },
                   });
                 }
               }}
               style={{ width: 120 }}
               size="middle"
-              defaultValue={search.type || search.chartYear || 'contract'}
+              defaultValue={search.type || search.chart_year || 'contract'}
             />
 
             <ColumnChart
