@@ -113,6 +113,13 @@ const ColumnChart = memo(
         axisBorder: {
           show: false,
         },
+        decimalsInFloat: undefined,
+        floating: false,
+        opposite: false,
+        stepSize:
+          data.length > 0 && Math.max(...data) >= 10
+            ? Math.max(...data) / 10
+            : 1,
         min: 0,
         labels: {
           style: {
