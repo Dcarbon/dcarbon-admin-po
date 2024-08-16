@@ -34,7 +34,6 @@ const Wallet = () => {
       },
     ],
   });
-  console.info(isHidden);
   return (
     <Row gutter={[16, 16]}>
       <Col xl={8}>

@@ -19,7 +19,7 @@ const getProjectsGeneralChart = async (type?: string, chartYear?: string) => {
     const response = await request<GeneralResponse<IProjectChart>>(
       REQ_METHODS.GET,
       API_ROUTES.GET_GENERAL_PROJECTS_CHART,
-      { type: type || 'contract', chart_year: chartYear },
+      { type: type, chart_year: chartYear },
     );
     return response.data.data;
   } catch (error) {

@@ -11,7 +11,7 @@ const getProjectBySlug = async (
     const response = await request<GeneralResponse<IProjectDetail>>(
       REQ_METHODS.GET,
       API_ROUTES.PROJECT_API + '/' + slug,
-      { type: type || 'contract', chart_year: chartyear },
+      { chart_type: type, chart_year: chartyear },
     );
     return response.data.data;
   } catch (error) {

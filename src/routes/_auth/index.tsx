@@ -55,9 +55,8 @@ const DCarbonIcon = ({ size, color }: { size: number; color: string }) => (
 export const Route = createFileRoute('/_auth/')({
   validateSearch: (
     search: Record<string, unknown>,
-  ): { type: string; chartYear?: string } => ({
-    type: (search.type as string) || 'contract',
-    chartYear: search.chartYear as string,
+  ): { type?: string; chartYear?: string } => ({
+    ...search,
   }),
   component: () => <Index />,
 });
@@ -71,7 +70,6 @@ function Index() {
       {
         queryKey: [QUERY_KEYS.GET_PROJECTS_GENERAL, user?.username],
         queryFn: () => getProjectsGeneral(),
-        enabled: isAuthenticated,
       },
       {
         queryKey: [
@@ -81,7 +79,7 @@ function Index() {
           search.chartYear,
         ],
         queryFn: () => getProjectsGeneralChart(search.type, search.chartYear),
-        staleTime: 1000 * 60 * 1,
+        staleTime: 1000 * 60 * 2,
         enabled: isAuthenticated || !!search.type || !!search.chartYear,
       },
     ],
@@ -123,52 +121,39 @@ function Index() {
         <Col xs={24} lg={16} className="dashboard-card">
           <Card>
             <Typography.Title level={4}>Total tokens has mint</Typography.Title>
-            <Row gutter={[8, 8]}>
-              <Col span={8} md={4} lg={3}>
-                <Select
-                  options={[
-                    { label: 'Month', value: 'month' },
-                    { label: 'Contract', value: 'contract' },
-                  ]}
-                  onChange={(value) => {
-                    navigate({
-                      search: {
-                        type: value,
-                      },
-                    });
-                  }}
-                  style={{ width: 120 }}
-                  size="middle"
-                  defaultValue={search.type || 'contract'}
-                />
-              </Col>
-              <Col span={8} md={4} lg={3}>
-                {search.type === 'contract' &&
-                projectChartData &&
-                projectChartData.list_contract_years.length > 0 ? (
-                  <Select
-                    options={projectChartData.list_contract_years.map(
-                      (year) => ({
-                        label: year,
-                        value: year,
-                      }),
-                    )}
-                    defaultValue={
-                      search.chartYear || new Date().getFullYear().toString()
-                    }
-                    onChange={(value) => {
-                      navigate({
-                        search: {
-                          ...search,
-                          chartYear: value,
-                        },
-                      });
-                    }}
-                    size="middle"
-                  />
-                ) : null}
-              </Col>
-            </Row>
+            <Select
+              options={[
+                { label: 'Contract', value: 'contract' },
+                ...(projectChartData &&
+                projectChartData.list_contract_years.length > 0
+                  ? projectChartData.list_contract_years.map((year) => ({
+                      label: year,
+                      value: year,
+                    }))
+                  : []),
+              ]}
+              onChange={(value) => {
+                if (value === 'contract') {
+                  navigate({
+                    to: '/',
+                    search: {
+                      type: value,
+                    },
+                  });
+                } else {
+                  navigate({
+                    to: '/',
+                    search: {
+                      chartYear: value,
+                    },
+                  });
+                }
+              }}
+              style={{ width: 120 }}
+              size="middle"
+              defaultValue={search.type || search.chartYear || 'contract'}
+            />
+
             <ColumnChart
               data={projectChartData?.minted_token || []}
               times={projectChartData?.times || []}
