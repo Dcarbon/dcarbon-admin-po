@@ -63,7 +63,7 @@ const TotalOutputCard = ({ img, data, title, loading }: IGeneralData) => {
                 )
               }
               value={
-                loading ? percentCalculate(data.compare_last_week_ratio) : 0
+                !loading ? percentCalculate(data.compare_last_week_ratio) : 0
               }
               precision={2}
               className="dashboard-statistic"
