@@ -8,7 +8,7 @@ import TotalOutputCard from '@/components/features/dashboard/total-output-card';
 import { useAuth } from '@/contexts/auth-context';
 import DCarbonIc from '@/icons/dcarbon.icon.tsx';
 import { QUERY_KEYS } from '@/utils/constants';
-import { formatByEnUsNum } from '@/utils/helpers';
+import { formatByEnUsNum, isEmpty } from '@/utils/helpers';
 import Icon from '@ant-design/icons';
 import { useQueries } from '@tanstack/react-query';
 import {
@@ -75,10 +75,13 @@ function Index() {
         queryKey: [
           QUERY_KEYS.GET_PROJECTS_GENERAL_CHART,
           user?.username,
-          search.type,
-          search.chartYear,
+          search,
         ],
-        queryFn: () => getProjectsGeneralChart(search.type, search.chartYear),
+        queryFn: () => {
+          return getProjectsGeneralChart(
+            !isEmpty(search) ? search : { type: 'contract' },
+          );
+        },
         staleTime: 1000 * 60 * 2,
         enabled: isAuthenticated || !!search.type || !!search.chartYear,
       },
@@ -289,7 +292,7 @@ function Index() {
                           <Link
                             to="/$slug"
                             params={{ slug: project.slug }}
-                            search={{ type: 'contract' }}
+                            search={{ chart_type: 'contract' }}
                             className="dashboard-project-link"
                           >
                             View

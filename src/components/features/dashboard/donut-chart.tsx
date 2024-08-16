@@ -44,7 +44,7 @@ const DonutChart = memo(
                   ),
                 },
                 search: {
-                  type: 'contract',
+                  chart_type: 'contract',
                 },
               });
           },
