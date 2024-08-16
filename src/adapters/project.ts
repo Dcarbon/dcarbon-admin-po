@@ -4,14 +4,13 @@ import { request } from './xhr';
 
 const getProjectBySlug = async (
   slug: string,
-  type?: string,
-  chartyear?: string,
+  data: { [key: string]: string | undefined },
 ) => {
   try {
     const response = await request<GeneralResponse<IProjectDetail>>(
       REQ_METHODS.GET,
       API_ROUTES.PROJECT_API + '/' + slug,
-      { chart_type: type, chart_year: chartyear },
+      data,
     );
     return response.data.data;
   } catch (error) {

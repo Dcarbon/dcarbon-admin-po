@@ -791,6 +791,7 @@ h2 {
 @media screen and (min-width: 1200px) {
   .project-description {
     max-height: 73vh;
+    min-height: 50vh;
     height: 100%;
     overflow-y: auto;
     scrollbar-width: thin;
