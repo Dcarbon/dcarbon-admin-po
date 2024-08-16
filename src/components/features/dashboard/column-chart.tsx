@@ -151,7 +151,10 @@ const ColumnChart = memo(
                   fontSize: '10px',
                 },
                 formatter: (value: string) => {
-                  return value.slice(0, 3);
+                  if (value.length > 4) {
+                    return value.slice(0, 3);
+                  }
+                  return value;
                 },
               },
             },
