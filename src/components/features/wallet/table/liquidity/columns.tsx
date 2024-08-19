@@ -1,22 +1,23 @@
 import { Space, TableColumnsType, Typography } from 'antd';
 
-const columns: TableColumnsType<ITransactionTable> = [
+const columns: TableColumnsType<ILiquidityTransaction> = [
   {
     title: 'Date',
-    dataIndex: 'tx_date_time',
+    dataIndex: 'tx_time',
     render: (date: string) => new Date(date).toLocaleString(),
     key: 'date',
   },
   {
     title: 'Account',
-    dataIndex: 'account',
+    dataIndex: 'payer',
     key: 'account',
+    render: (payer) => <span>{payer.name}</span>,
   },
   {
     title: 'Type',
     dataIndex: 'type',
     key: 'type',
-    render: (type: string) => <span className="transactions-type">{type}</span>,
+    render: (type) => <span className="transactions-type">{type}</span>,
   },
   {
     title: 'Amount',
@@ -27,6 +28,12 @@ const columns: TableColumnsType<ITransactionTable> = [
         <Typography.Text>${amount}</Typography.Text>
       </Space>
     ),
+  },
+  {
+    title: 'Fee',
+    dataIndex: 'fees',
+    key: 'fee',
+    render: (fee) => <span>${fee}</span>,
   },
 ];
 

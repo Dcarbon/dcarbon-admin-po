@@ -6,7 +6,7 @@ const getWallet = async () => {
   try {
     const response = await request<GeneralResponse<IWallet>>(
       REQ_METHODS.GET,
-      API_ROUTES.GET_WALLET,
+      API_ROUTES.WALLET.GET_WALLET,
     );
     return response.data.data;
   } catch (error) {
@@ -14,11 +14,11 @@ const getWallet = async () => {
     throw error;
   }
 };
-const getWalletTransactions = async (data: { page: number }) => {
+const getUserTransactions = async (data: { page: number }) => {
   try {
-    const response = await request<TransactionPages>(
+    const response = await request<TransactionUserPages>(
       REQ_METHODS.GET,
-      API_ROUTES.GET_WALLET_TRANSACTIONS,
+      API_ROUTES.WALLET.GET_USER_TRANSACTIONS,
       data,
     );
     return response.data;
@@ -27,4 +27,17 @@ const getWalletTransactions = async (data: { page: number }) => {
     throw error;
   }
 };
-export { getWallet, getWalletTransactions };
+const getLiquidityTransactions = async (data: { page: number }) => {
+  try {
+    const response = await request<TransactionLiquidityPages>(
+      REQ_METHODS.GET,
+      API_ROUTES.WALLET.GET_LIQUIDITY_TRANSACTIONS,
+      data,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('getGeneralProjectsChart error', error);
+    throw error;
+  }
+};
+export { getWallet, getLiquidityTransactions, getUserTransactions };

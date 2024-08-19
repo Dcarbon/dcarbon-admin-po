@@ -4,6 +4,36 @@ interface ITransactionTable {
   type: string;
   amount: number;
 }
+type ILiquidityTransaction = {
+  id: string;
+  tx_time: string;
+  payer: {
+    id: string;
+    name: string;
+  };
+  type: string;
+  status: string;
+  amount: number;
+  fees: number;
+};
+
+interface IUserTransactions {
+  tx: string;
+  tx_time: string;
+  mint: string;
+  quality: number;
+  amount: number;
+  payment_info: {
+    currency: {
+      mint: string;
+      name: string;
+      symbol: string;
+      icon: string;
+    };
+    exchange_rate: number;
+  };
+}
+
 interface IWallet {
   wallet: number;
   carbon: number;
@@ -15,16 +45,17 @@ interface IWallet {
   };
   dcarbon: number;
 }
-interface IWalletState {
-  tx_id: string;
-  tx_date_time: string;
-  account: string;
-  type: transfer;
-  amount: number;
-  currency: string;
-}
-type TransactionPages = {
-  data: IWalletState[];
+
+type TransactionLiquidityPages = {
+  data: ILiquidityTransaction[];
+  paging: {
+    total: number;
+    page: number;
+    limit: number;
+  };
+};
+type TransactionUserPages = {
+  data: IUserTransactions[];
   paging: {
     total: number;
     page: number;
