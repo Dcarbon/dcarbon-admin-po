@@ -65,7 +65,7 @@ const columns: TableColumnsType<IUserTransactions> = [
         <Button
           type="link"
           target="_blank"
-          href={`https://explorer.solana.com/address/${data?.payment_info?.currency.mint || ''}${import.meta.env.MODE === 'prod' ? '' : '?cluster=devnet'}`}
+          href={`https://explorer.solana.com/address/${data?.payment_info?.currency.mint || ''}${import.meta.env.VITE_STAGE === 'prod' ? '' : '?cluster=devnet'}`}
         >
           <Tooltip title="View transaction on Solana explorer">
             <img
@@ -79,7 +79,7 @@ const columns: TableColumnsType<IUserTransactions> = [
         <Button
           type="link"
           target="_blank"
-          href={`https://solscan.io/account/${data?.payment_info?.currency.mint || ''}${import.meta.env.MODE === 'prod' ? '' : '?cluster=devnet'}`}
+          href={`https://solscan.io/account/${data?.payment_info?.currency.mint || ''}${import.meta.env.VITE_STAGE === 'prod' ? '' : '?cluster=devnet'}`}
         >
           <Tooltip title="View transaction on Solscan">
             <img
