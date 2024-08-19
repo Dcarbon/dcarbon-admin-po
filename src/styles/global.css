@@ -787,6 +787,28 @@ h2 {
   }
 }
 
+.ant-segmented-group {
+  gap: 10px !important;
+}
+
+.ant-segmented {
+  background-color: transparent;
+}
+
+.ant-segmented-thumb {
+  background-color: #f6f6f6 !important;
+}
+
+.ant-segmented-item-label {
+  color: #1b1b1b !important;
+  font-size: 23px !important;
+  padding: 10px 24px !important;
+}
+
+.ant-segmented-item-selected {
+  background-color: #f6f6f6 !important;
+}
+
 /* stylelint-disable-next-line media-feature-range-notation */
 @media screen and (min-width: 1200px) {
   .project-description {

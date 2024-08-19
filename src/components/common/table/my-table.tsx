@@ -6,7 +6,7 @@ interface IProps extends TableProps {}
 const MyTable = styled(Table).attrs<IProps>((props: IProps) => ({
   ...props,
   columns:
-    props?.dataSource && props.dataSource.length > 0
+    (props?.dataSource && props.dataSource.length > 0) || !props.loading
       ? props.columns
       : props.columns?.map((column) => ({
           ...column,
@@ -22,7 +22,7 @@ const MyTable = styled(Table).attrs<IProps>((props: IProps) => ({
           ),
         })),
   dataSource:
-    props?.dataSource && props.dataSource.length > 0
+    (props?.dataSource && props.dataSource.length > 0) || !props.loading
       ? props.dataSource
       : [...Array(7)].map((_, index) => ({
           key: `key${index}`,

@@ -1,39 +1,32 @@
 import { useState } from 'react';
-import { getWallet, getWalletTransactions } from '@/adapters/wallet';
+import { getWallet } from '@/adapters/wallet';
 import LineChart from '@/components/features/wallet/line-chart';
-import TransactionTable from '@/components/features/wallet/table';
+import WalletTabs from '@/components/features/wallet/tabs';
 import { QUERY_KEYS } from '@/utils/constants';
 import { formatByEnUsNum } from '@/utils/helpers';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-import { keepPreviousData, useQueries } from '@tanstack/react-query';
-import { createFileRoute, useSearch } from '@tanstack/react-router';
+import { useQuery } from '@tanstack/react-query';
+import { createFileRoute } from '@tanstack/react-router';
 import { Card, Col, Row, Space, Typography } from 'antd';
 
 import logo from '/image/dcarbon-logo-black.svg';
 
 export const Route = createFileRoute('/_auth/wallet')({
-  validateSearch: (search: Record<string, unknown>): { page: number } => ({
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { page: number; tab: number } => ({
+    tab: [1, 2].includes(search.tab as number) ? (search.tab as number) : 1,
     page: (search.page as number) || 1,
   }),
   component: () => <Wallet />,
 });
 const Wallet = () => {
-  const search = useSearch({ from: '/_auth/wallet' });
   const [isHidden, setisHidden] = useState(true);
-  const [{ data: chartData }, { data: tableData }] = useQueries({
-    queries: [
-      {
-        queryKey: [QUERY_KEYS.GET_WALLET],
-        queryFn: getWallet,
-      },
-      {
-        queryKey: [QUERY_KEYS.GET_WALLET_TRANSACTIONS, search],
-        queryFn: () => getWalletTransactions(search as { page: number }),
-        placeholderData: keepPreviousData,
-        enabled: !!search.page || true,
-      },
-    ],
+  const { data: chartData } = useQuery({
+    queryKey: [QUERY_KEYS.GET_WALLET],
+    queryFn: getWallet,
   });
+
   return (
     <Row gutter={[16, 16]}>
       <Col xl={8}>
@@ -84,8 +77,7 @@ const Wallet = () => {
       </Col>
       <Col xl={16}>
         <Card className="transaction-container">
-          <Typography.Title level={4}>Transaction history</Typography.Title>
-          <TransactionTable data={tableData as TransactionPages} />
+          <WalletTabs />
         </Card>
       </Col>
     </Row>
