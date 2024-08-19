@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_auth/wallet')({
   validateSearch: (
     search: Record<string, unknown>,
   ): { page: number; tab: number } => ({
-    tab: [1, 2].includes(search.tab as number) ? (search.tab as number) : 1,
+    tab: (search.tab as number) || 1,
     page: (search.page as number) || 1,
   }),
   component: () => <Wallet />,

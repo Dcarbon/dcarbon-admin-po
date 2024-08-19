@@ -19,7 +19,14 @@ const TransactionLiquidityTable = memo(
           columns={columns}
           dataSource={data?.data as ILiquidityTransaction[]}
           scroll={{ x: 500, y: '58vh' }}
-          loading={isLoading}
+          loading={
+            isLoading
+              ? {
+                  spinning: isLoading || !data,
+                  indicator: <div />,
+                }
+              : false
+          }
           tableLayout="auto"
           rowKey={'tx_id'}
           size="middle"

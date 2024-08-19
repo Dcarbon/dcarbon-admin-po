@@ -7,7 +7,7 @@ import {
 } from '@/utils/constants';
 import useModalAction from '@/utils/helpers/back-action.tsx';
 import useMyNotification from '@/utils/helpers/my-notification.tsx';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message, Modal, notification } from 'antd';
 import jwt from 'jsonwebtoken';
 
@@ -60,6 +60,7 @@ function userInfo(): IUser | undefined {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<IUser | undefined>(userInfo());
+  const client = useQueryClient();
   const [myNotification] = useMyNotification();
   React.useEffect(() => {
     setUser(userInfo());
@@ -68,6 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     title: 'Do you want to logout?',
     fn: () => {
       Modal.destroyAll();
+      client.clear();
       setUser(undefined);
       setStoredAccessToken(null);
       setStoredRefreshToken(null);

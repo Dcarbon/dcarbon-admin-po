@@ -1,4 +1,4 @@
-import { truncateText } from '@/utils/helpers';
+import { formatByEnUsNum, truncateText } from '@/utils/helpers';
 import { Button, Flex, Space, TableColumnsType, Tooltip } from 'antd';
 
 const style = {
@@ -49,7 +49,7 @@ const columns: TableColumnsType<IUserTransactions> = [
             {data.amount} {data.payment_info.currency.symbol}
           </span>
           <span style={style.description}>
-            ≈ {data.payment_info.exchange_rate * data.amount}
+            ≈ {formatByEnUsNum(data.payment_info.exchange_rate * data.amount)}
             {' $'}
           </span>
         </Flex>
