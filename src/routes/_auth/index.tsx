@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   getProjectsGeneral,
   getProjectsGeneralChart,
@@ -11,12 +12,7 @@ import { QUERY_KEYS } from '@/utils/constants';
 import { formatByEnUsNum, isEmpty } from '@/utils/helpers';
 import Icon from '@ant-design/icons';
 import { useQueries } from '@tanstack/react-query';
-import {
-  createFileRoute,
-  Link,
-  useNavigate,
-  useSearch,
-} from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { Card, Col, Empty, Flex, Row, Select, Tooltip, Typography } from 'antd';
 
 import totalSold from '/image/dashboard/total-carbon-sold.svg';
@@ -63,8 +59,9 @@ export const Route = createFileRoute('/_auth/')({
 
 function Index() {
   const { user, isAuthenticated } = useAuth();
-  const search = useSearch({ from: '/_auth/' });
-  const navigate = useNavigate();
+  const [search, setSearch] = useState<{ type?: string; chart_year?: string }>({
+    type: 'contract',
+  });
   const [{ data: generalData }, { data: projectChartData }] = useQueries({
     queries: [
       {
@@ -137,19 +134,9 @@ function Index() {
               ]}
               onChange={(value) => {
                 if (value === 'contract') {
-                  navigate({
-                    to: '/',
-                    search: {
-                      type: value,
-                    },
-                  });
+                  setSearch({ type: value });
                 } else {
-                  navigate({
-                    to: '/',
-                    search: {
-                      chart_year: value,
-                    },
-                  });
+                  setSearch({ chart_year: value });
                 }
               }}
               style={{ width: 120 }}
@@ -292,7 +279,6 @@ function Index() {
                           <Link
                             to="/$slug"
                             params={{ slug: project.slug }}
-                            search={{ chart_type: 'contract' }}
                             className="dashboard-project-link"
                           >
                             View

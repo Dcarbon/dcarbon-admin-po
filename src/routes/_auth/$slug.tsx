@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { getProjectBySlug } from '@/adapters/project';
 import ColumnChart from '@/components/features/dashboard/column-chart';
 import TotalOutputCard from '@/components/features/dashboard/total-output-card';
@@ -9,6 +10,8 @@ import { Card, Col, Flex, Row, Select, Skeleton, Typography } from 'antd';
 
 import totalSold from '/image/dashboard/total-carbon-sold.svg';
 import totalMinted from '/image/dashboard/total-minted.svg';
+
+import '@/styles/quill.css';
 
 const postQueryOptions = (
   slug: string,
@@ -25,11 +28,6 @@ const postQueryOptions = (
     enabled: !!slug || !!search?.chart_type || !!search?.chart_year,
   });
 export const Route = createFileRoute('/_auth/$slug')({
-  validateSearch: (
-    search?: Record<string, unknown>,
-  ): { chart_type?: string; chart_year?: string } => ({
-    ...search,
-  }),
   loader: ({ context, params: { slug }, location }) => {
     const { queryClient } = context as any;
     return queryClient.ensureQueryData(
@@ -39,9 +37,11 @@ export const Route = createFileRoute('/_auth/$slug')({
   component: () => <ProjectDetail />,
 });
 const ProjectDetail = () => {
+  const [search, setSearch] = useState<{
+    chart_type?: string;
+    chart_year?: string;
+  }>({ chart_type: 'contract' });
   const slug = Route.useParams().slug;
-  const search = Route.useSearch();
-  const navigate = Route.useNavigate();
   const { data, isLoading } = useQuery(postQueryOptions(slug, search));
   return (
     <Row gutter={[16, 16]}>
@@ -54,9 +54,11 @@ const ProjectDetail = () => {
           {isLoading ? (
             <Skeleton active paragraph={{ rows: 15 }} />
           ) : (
-            <div
-              className="project-description"
-              dangerouslySetInnerHTML={{ __html: data?.description || '' }}
+            <section
+              className="project-description ql-content"
+              dangerouslySetInnerHTML={{
+                __html: data?.description || '',
+              }}
             />
           )}
         </Card>
@@ -111,24 +113,12 @@ const ProjectDetail = () => {
                 ]}
                 onChange={(value) => {
                   if (value === 'contract') {
-                    navigate({
-                      to: '/$slug',
-                      params: {
-                        slug,
-                      },
-                      search: {
-                        chart_type: value,
-                      },
+                    setSearch({
+                      chart_type: value,
                     });
                   } else {
-                    navigate({
-                      to: '/$slug',
-                      params: {
-                        slug,
-                      },
-                      search: {
-                        chart_year: value,
-                      },
+                    setSearch({
+                      chart_year: value,
                     });
                   }
                 }}
