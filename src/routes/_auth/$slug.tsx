@@ -76,7 +76,7 @@ const ProjectDetail = () => {
                       data?.carbon_aggregation.minted ||
                       ({} as IProjectDetail['carbon_aggregation']['minted'])
                     }
-                    title="Total Carbon Minted"
+                    title="Total DCO2 Minted"
                   />
                 </Col>
                 <Col lg={12}>
@@ -87,7 +87,7 @@ const ProjectDetail = () => {
                       data?.carbon_aggregation.sold ||
                       ({} as IProjectDetail['carbon_aggregation']['sold'])
                     }
-                    title="Total Carbon Sold"
+                    title="Total DCO2 Sold"
                   />
                 </Col>
               </Row>

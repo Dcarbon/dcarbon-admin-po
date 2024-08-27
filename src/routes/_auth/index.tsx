@@ -232,7 +232,7 @@ function Index() {
                           md={8}
                         >
                           <Typography.Text>
-                            {formatByEnUsNum(project.minted.total)} Carbon
+                            {formatByEnUsNum(project.minted.total)} DCO2
                           </Typography.Text>
                           <Typography.Text type="secondary">
                             Number of tokens has mint
@@ -247,10 +247,10 @@ function Index() {
                           span={12}
                         >
                           <Typography.Text>
-                            {formatByEnUsNum(project.sold.total)} Carbon
+                            {formatByEnUsNum(project.sold.total)} DCO2
                           </Typography.Text>
                           <Typography.Text type="secondary">
-                            Total carbon sold{' '}
+                            Total DCO2 sold{' '}
                           </Typography.Text>
                         </Col>
                         <Col
