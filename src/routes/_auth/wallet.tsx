@@ -52,7 +52,7 @@ const Wallet = () => {
               {isHidden ? (
                 <Space>********</Space>
               ) : (
-                <span>≈ {formatByEnUsNum(chartData?.carbon || 0)} CARBON</span>
+                <span>≈ {formatByEnUsNum(chartData?.carbon || 0)} DCO2</span>
               )}
             </Typography.Title>
             <span className="neutral-color-700">

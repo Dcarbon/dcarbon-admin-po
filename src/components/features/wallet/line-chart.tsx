@@ -103,7 +103,7 @@ const LineChart = memo(({ data }: { data: number[] }) => {
         options={options}
         series={[
           {
-            name: 'Carbon',
+            name: 'DCO2',
             data: isEmpty(data) ? [0, 0] : data,
           },
         ]}

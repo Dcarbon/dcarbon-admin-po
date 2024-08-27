@@ -171,7 +171,7 @@ const ColumnChart = memo(
           options={options}
           series={[
             {
-              name: 'Carbon',
+              name: 'DCO2',
               data: isEmpty(data) ? [] : data,
             },
           ]}

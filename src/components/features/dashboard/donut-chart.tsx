@@ -72,7 +72,7 @@ const DonutChart = memo(
       tooltip: {
         y: {
           title: {
-            formatter: () => 'Carbon:',
+            formatter: () => 'DCO2:',
           },
         },
       },
