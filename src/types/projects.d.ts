@@ -19,6 +19,7 @@ interface IProjectsDashBoard {
   aggregation: {
     minted: IAggregationDashboardDto;
     sold: IAggregationDashboardDto;
+    listing: number;
   };
 }
 
