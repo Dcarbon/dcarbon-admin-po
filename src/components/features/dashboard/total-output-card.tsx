@@ -7,21 +7,31 @@ import down from '/image/dashboard/down.svg';
 import growth from '/image/dashboard/growth.svg';
 
 interface IGeneralData {
-  data: {
+  data?: {
     total: number;
     compare_last_week_ratio: number;
   };
-
+  listing?: number;
   img: string;
   title: string;
   loading?: boolean;
+  analyticsDisabled?: boolean;
+  style?: React.CSSProperties;
 }
-const TotalOutputCard = ({ img, data, title, loading }: IGeneralData) => {
+const TotalOutputCard = ({
+  img,
+  data,
+  title,
+  loading,
+  analyticsDisabled,
+  listing,
+  style,
+}: IGeneralData) => {
   const percentCalculate = (value: number) => {
     return value * 100;
   };
   return (
-    <Card>
+    <Card style={style}>
       <Flex justify="space-between">
         <Flex vertical justify="space-between">
           <Space align="center" size={20}>
@@ -31,7 +41,7 @@ const TotalOutputCard = ({ img, data, title, loading }: IGeneralData) => {
           {!loading ? (
             <Space size={10} align="baseline">
               <span className="primary-color-600 dashboard-project-value">
-                {formatByEnUsNum(data.total ?? 0)}
+                {data ? formatByEnUsNum(data.total ?? 0) : listing}
               </span>
               <Typography.Title
                 level={4}
@@ -44,7 +54,7 @@ const TotalOutputCard = ({ img, data, title, loading }: IGeneralData) => {
             <Skeleton.Input active style={{ height: 60 }} />
           )}
         </Flex>
-        {data ? (
+        {data && !analyticsDisabled ? (
           <div className="dashboard-total-project">
             <Statistic
               title={

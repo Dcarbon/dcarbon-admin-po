@@ -20,7 +20,7 @@ const capitalizeFirstLetter = (string: string) => {
 const Breadcrumbs = memo(() => {
   const location = useLocation();
   const routerState = useRouterState();
-  const data = routerState.matches.find(
+  const data: any = routerState.matches.find(
     (match) => match.routeId === '/_auth/$slug',
   )?.loaderData;
   const pathSnippets = location.pathname.split('/').filter((i) => i);
