@@ -176,7 +176,7 @@ function Index() {
                     <TotalOutputCard
                       img={totalSold}
                       analyticsDisabled
-                      data={generalData?.aggregation.sold}
+                      listing={generalData?.aggregation.listing}
                       title="Total DCO2 Listing"
                     />
                   </Col>
