@@ -155,21 +155,29 @@ function Index() {
         <Col xs={24} xxl={8} className="dashboard-card">
           <Flex vertical gap={12}>
             <Typography.Title level={4}> Total project output</Typography.Title>
-            <Row gutter={[12, 12]}>
+            <Row gutter={[12, 12]} className="dashboard-projects-output">
               {generalData ? (
                 <>
                   <Col sm={24} lg={12} xxl={24}>
                     <TotalOutputCard
                       img={totalMinted}
                       data={generalData?.aggregation.minted}
-                      title="Total project output"
+                      title="Total DCO2 Minted"
                     />
                   </Col>
                   <Col sm={24} lg={12} xxl={24}>
                     <TotalOutputCard
                       img={totalSold}
                       data={generalData?.aggregation.sold}
-                      title="Total project sold"
+                      title="Total DCO2 Sold"
+                    />
+                  </Col>
+                  <Col sm={24} lg={12} xxl={24}>
+                    <TotalOutputCard
+                      img={totalSold}
+                      analyticsDisabled
+                      data={generalData?.aggregation.sold}
+                      title="Total DCO2 Listing"
                     />
                   </Col>
                 </>

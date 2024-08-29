@@ -42,6 +42,7 @@ interface IProjectDetail {
       total: number;
       compare_last_week_ratio: number;
     };
+    listing: number;
   };
   carbon_minted_chart: {
     minted_token: number[];
